@@ -229,6 +229,14 @@ class SendEventController extends Controller
             $company = $user->company;
         }
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan3->state == false)
             return [
                 'success' => false,
@@ -633,7 +641,8 @@ class SendEventController extends Controller
                     'success' => true,
                     'message' => "{$typeDocument->name} #{$documentReference->getPrefixAttribute()}{$documentReference->getNumberAttribute()} generada con éxito",
                     'ResponseDian' => $respuestadian,
-                    'cufe' => $signEvent->ConsultarCUDEEVENT()
+                    'cude' => $signEvent->ConsultarCUDEEVENT(),
+                    'certificate_days_left' => $certificate_days_left,
                 ];
                 if(isset($respuestadian->html))
                     return [
@@ -735,7 +744,8 @@ class SendEventController extends Controller
                     'success' => true,
                     'message' => "{$typeDocument->name} #{$documentReference->getPrefixAttribute()}{$documentReference->getNumberAttribute()} generada con éxito",
                     'ResponseDian' => $respuestadian,
-                    'cude' => $signEvent->ConsultarCUDEEVENT()
+                    'cude' => $signEvent->ConsultarCUDEEVENT(),
+                    'certificate_days_left' => $certificate_days_left,
                 ];
                 if(isset($respuestadian->html))
                     return [

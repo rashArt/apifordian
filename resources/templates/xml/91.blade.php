@@ -47,7 +47,9 @@
         @include('xml._discrepancy_response')
     @endisset
     {{-- BillingReference --}}
-    @include('xml._billing_reference')
+    @isset($request['billing_reference'])
+        @include('xml._billing_reference')
+    @endisset
     {{-- AccountingSupplierParty --}}
     @include('xml._accounting', ['node' => 'AccountingSupplierParty', 'supplier' => true])
     {{-- AccountingCustomerParty --}}

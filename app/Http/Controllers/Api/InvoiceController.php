@@ -22,6 +22,7 @@ use App\Document;
 use Illuminate\Http\Request;
 use App\Traits\DocumentTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api;
 use App\Http\Requests\Api\InvoiceRequest;
 use ubl21dian\XAdES\SignInvoice;
 use ubl21dian\XAdES\SignAttachedDocument;
@@ -68,6 +69,14 @@ class InvoiceController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         if($company->type_plan->state == false)
             return [
@@ -431,7 +440,9 @@ class InvoiceController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
         else{
@@ -528,7 +539,9 @@ class InvoiceController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
     }
@@ -549,8 +562,15 @@ class InvoiceController extends Controller
         // User company
         $company = $user->company;
 
-        // Actualizar Tablas
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
+        // Actualizar Tablas
         $this->ActualizarTablas();
 
         //Document
@@ -778,7 +798,9 @@ class InvoiceController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
         else{
@@ -794,7 +816,9 @@ class InvoiceController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
     }
@@ -847,8 +871,10 @@ class InvoiceController extends Controller
         // User company
         $company = $user->company;
         $invoice = Document::where('identification_number', $company->identification_number)->where('type_document_id', $type)->where('state_document_id', 0)->where('number', $number)->latest()->first();
-        $invoice->state_document_id = 1;
-        $invoice->save();
+        if($invoice){
+            $invoice->state_document_id = 1;
+            $invoice->save();
+        }
         return [
             'success' => true
         ];

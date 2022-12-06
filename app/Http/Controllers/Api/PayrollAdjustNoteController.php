@@ -64,6 +64,14 @@ class PayrollAdjustNoteController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan2->state == false)
             return [
                 'success' => false,
@@ -323,6 +331,7 @@ class PayrollAdjustNoteController extends Controller
             'urlpayrollattached'=>"{$filename}.xml",
             'cune' => $signPayrollNote->ConsultarCUNE(),
 //            'QRStr' => $QRStr
+            'certificate_days_left' => $certificate_days_left,
         ];
     }
 
@@ -341,6 +350,14 @@ class PayrollAdjustNoteController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
@@ -477,6 +494,7 @@ class PayrollAdjustNoteController extends Controller
             'urlpayrollpdf'=>"NAS-{$resolution->next_consecutive}.pdf",
             'cune' => $signPayrollNote->ConsultarCUNE(),
 //            'QRStr' => $QRStr
+            'certificate_days_left' => $certificate_days_left,
         ];
     }
 }

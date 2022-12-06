@@ -58,6 +58,14 @@ class StateController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($request->is_payroll)
             $getStatusZip = new GetStatusZip($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_payroll);
         else
@@ -271,6 +279,7 @@ class StateController extends Controller
                 'rptazip'=>base64_encode(file_get_contents($GuardarEn."\\RptaZIP-{$trackId}.xml")),
                 'attacheddocument'=>base64_encode($at),
                 'cufecude'=>$cufecude,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
         else{
@@ -466,6 +475,7 @@ class StateController extends Controller
                 'reqzip'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqZIP-{$trackId}.xml"))),
                 'rptazip'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaZIP-{$trackId}.xml"))),
                 'attacheddocument'=>base64_encode($at),
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
     }
@@ -499,6 +509,14 @@ class StateController extends Controller
             }
 
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         if($request->is_payroll)
             $getStatus = new GetStatus($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_payroll);
@@ -700,6 +718,7 @@ class StateController extends Controller
                 'rptazip'=>base64_encode(file_get_contents($GuardarEn."\\RptaZIP-{$trackId}.xml")),
                 'attacheddocument'=>base64_encode($at),
                 'cufecude'=>$cufecude,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
         else{
@@ -876,6 +895,7 @@ class StateController extends Controller
                 'rptazip'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaZIP-{$trackId}.xml"))),
                 'attacheddocument'=>base64_encode($at),
                 'cufecude'=>$cufecude,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
     }

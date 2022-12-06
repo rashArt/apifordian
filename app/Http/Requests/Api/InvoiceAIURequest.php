@@ -129,7 +129,7 @@ class InvoiceAIURequest extends FormRequest
             'number' => 'required|integer|between:'.optional($this->resolution)->from.','.optional($this->resolution)->to,
 
             // Date time
-            'date' => 'nullable|date_format:Y-m-d',
+            'date' => 'nullable|date_format:Y-m-d|after_or_equal:'.optional($this->resolution)->date_from.'|before_or_equal:'.optional($this->resolution)->date_to,
             'time' => 'nullable|date_format:H:i:s',
 
             // Notes

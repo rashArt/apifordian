@@ -104,7 +104,7 @@ class CreditNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|exists:type_operations',
+            'type_operation_id' => 'nullable|numeric|in:7,8,12',
 
             // Resolution number for document sending
             'resolution_number' => Rule::requiredIf(function(){
@@ -131,10 +131,10 @@ class CreditNoteRequest extends FormRequest
             'discrepancyresponsedescription' => 'nullable|string',
 
             // Billing Reference
-            'billing_reference' => 'required|array',
-            'billing_reference.number' => 'required|string',
-            'billing_reference.uuid' => 'required|string|size:96',
-            'billing_reference.issue_date' => 'required|date_format:Y-m-d',
+            'billing_reference' => 'nullable|array',
+            'billing_reference.number' => 'required_with:billing_reference|string',
+            'billing_reference.uuid' => 'required_with:billing_reference|string|size:96',
+            'billing_reference.issue_date' => 'required_with:billing_reference|date_format:Y-m-d',
 
             // Id moneda negociacion
             'idcurrency' => 'nullable|integer|exists:type_currencies,id',

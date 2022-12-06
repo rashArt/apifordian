@@ -247,7 +247,7 @@
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
                             <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                             @if(isset($item['tax_totals']))
-                                <td class="text-right">{{number_format(($item['line_extension_amount'] + ($item['tax_totals'][0]['tax_amount'])), 2)}}</td>
+                                <td class="text-right">{{number_format(($item['line_extension_amount']), 2)}}</td>
                             @else
                                 <td class="text-right">{{number_format(($item['line_extension_amount']), 2)}}</td>
                             @endif

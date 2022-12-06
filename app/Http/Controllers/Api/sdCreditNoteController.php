@@ -67,6 +67,14 @@ class sdCreditNoteController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan4->state == false)
             return [
                 'success' => false,
@@ -396,7 +404,8 @@ class sdCreditNoteController extends Controller
                 'urlinvoicepdf'=>"NDSNS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cuds' => $signCreditNote->ConsultarCUDS(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
         else{
@@ -492,7 +501,8 @@ class sdCreditNoteController extends Controller
                 'urlinvoicepdf'=>"NDSNS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cuds' => $signCreditNote->ConsultarCUDS(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
     }
@@ -512,8 +522,15 @@ class sdCreditNoteController extends Controller
         // User company
         $company = $user->company;
 
-        // Actualizar Tablas
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
+        // Actualizar Tablas
         $this->ActualizarTablas();
 
         //Document
@@ -711,7 +728,8 @@ class sdCreditNoteController extends Controller
                 'urlinvoicepdf'=>"NDSNS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cuds' => $signCreditNote->ConsultarCUDS(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         else
             return [
@@ -726,7 +744,8 @@ class sdCreditNoteController extends Controller
                 'urlinvoicepdf'=>"NDSNS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cuds' => $signCreditNote->ConsultarCUDS(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
     }
 }

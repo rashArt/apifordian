@@ -100,16 +100,18 @@
     <br>
 
     <?php $billing_reference = json_decode(json_encode($request->billing_reference)) ?>
-    <table class="table" style="width: 100%;">
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <p><strong>Referencia: {{$billing_reference->number}} - Fecha: {{$billing_reference->issue_date}}<br/>CUFE: {{$billing_reference->uuid}}</strong></p>
-                </th>
-            </tr>
-        </thead>
-    </table>
-    <br>
+    @isset($billing_reference)
+        <table class="table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        <p><strong>Referencia: {{$billing_reference->number}} - Fecha: {{$billing_reference->issue_date}}<br/>CUFE: {{$billing_reference->uuid}}</strong></p>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <br>
+    @endif
 
     @isset($healthfields)
         <table class="table" style="width: 100%;">
@@ -173,7 +175,8 @@
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">UM</th>
                 <th class="text-center">Val. Unit</th>
-                <th class="text-center">IVA/IC</th>
+                <th class="text-center">IVA</th>
+                <th class="text-center">IC</th>
                 <th class="text-center">Dcto</th>
                 <th class="text-center">Val. Item</th>
             </tr>
@@ -211,15 +214,28 @@
                         @endif
                     @endif
 
-
                     @if(isset($item['tax_totals']))
                         @if(isset($item['tax_totals'][0]['tax_amount']))
-                            <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'] / $item['invoiced_quantity'], 2)}}</td>
+                            @if($item['tax_totals'][0]['tax_id'] == 1)
+                                <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'] / $item['invoiced_quantity'], 2)}}</td>
+                            @else
+                                <td></td>
+                            @endif
                         @else
                             <td class="text-right">{{number_format(0, 2)}}</td>
                         @endif
                     @else
                         <td class="text-right">E</td>
+                    @endif
+
+                    @if(isset($item['tax_totals']))
+                        @if(isset($item['tax_totals'][1]['tax_amount']))
+                            <td class="text-right">{{number_format($item['tax_totals'][1]['tax_amount'] / $item['invoiced_quantity'], 2)}}</td>
+                        @else
+                            <td class="text-right">{{number_format(0, 2)}}</td>
+                        @endif
+                    @else
+                        <td class="text-right">{{number_format(0, 2)}}</td>
                     @endif
 
                     @if(isset($item['allowance_charges']))

@@ -67,6 +67,14 @@ class CreditNoteController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan->state == false)
             return [
                 'success' => false,
@@ -245,7 +253,10 @@ class CreditNoteController extends Controller
         }
 
         // Billing reference
-        $billingReference = new BillingReference($request->billing_reference);
+        if(!$request->billing_reference)
+            $billingReference = NULL;
+        else
+            $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
         $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
@@ -407,7 +418,8 @@ class CreditNoteController extends Controller
                 'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
         else{
@@ -503,7 +515,8 @@ class CreditNoteController extends Controller
                 'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
     }
@@ -523,8 +536,15 @@ class CreditNoteController extends Controller
         // User company
         $company = $user->company;
 
-        // Actualizar Tablas
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
+        // Actualizar Tablas
         $this->ActualizarTablas();
 
         //Document
@@ -655,7 +675,10 @@ class CreditNoteController extends Controller
         }
 
         // Billing reference
-        $billingReference = new BillingReference($request->billing_reference);
+        if(!$request->billing_reference)
+            $billingReference = NULL;
+        else
+            $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
         $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
@@ -733,7 +756,8 @@ class CreditNoteController extends Controller
                 'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         else
             return [
@@ -748,7 +772,8 @@ class CreditNoteController extends Controller
                 'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
     }
 }

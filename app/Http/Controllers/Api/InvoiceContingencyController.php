@@ -66,6 +66,14 @@ class InvoiceContingencyController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan->state == false)
             return [
                 'success' => false,
@@ -422,7 +430,9 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
-                'cude' => $signInvoice->ConsultarCUDE()
+                'cude' => $signInvoice->ConsultarCUDE(),
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
         else{
@@ -517,7 +527,9 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
-                'cude' => $signInvoice->ConsultarCUDE()
+                'cude' => $signInvoice->ConsultarCUDE(),
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
     }
@@ -538,8 +550,15 @@ class InvoiceContingencyController extends Controller
         // User company
         $company = $user->company;
 
-        // Actualizar Tablas
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
+        // Actualizar Tablas
         $this->ActualizarTablas();
 
         //Document
@@ -764,7 +783,9 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
-                'cude' => $signInvoice->ConsultarCUDE()
+                'cude' => $signInvoice->ConsultarCUDE(),
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         else
             return [
@@ -778,7 +799,9 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
-                'cude' => $signInvoice->ConsultarCUDE()
+                'cude' => $signInvoice->ConsultarCUDE(),
+                'certificate_days_left' => $certificate_days_left,
+                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
         }
     }

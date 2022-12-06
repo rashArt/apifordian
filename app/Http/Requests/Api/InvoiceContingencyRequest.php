@@ -134,7 +134,7 @@ class InvoiceContingencyRequest extends FormRequest
             'AdditionalDocumentReferenceTypeDocument' => 'required|string|exists:type_documents,code',
 
             // Date time
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'nullable|date_format:Y-m-d|after_or_equal:'.optional($this->resolution)->date_from.'|before_or_equal:'.optional($this->resolution)->date_to,
             'time' => 'required|date_format:H:i:s',
 
             // Notes

@@ -65,6 +65,14 @@ class PayrollController extends Controller
         // User company
         $company = $user->company;
 
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
         if($company->type_plan2->state == false)
             return [
                 'success' => false,
@@ -317,7 +325,8 @@ class PayrollController extends Controller
             'urlpayrollpdf'=>"NIS-{$resolution->next_consecutive}.pdf",
             'urlpayrollattached'=>"{$filename}.xml",
             'cune' => $signPayroll->ConsultarCUNE(),
-            'QRStr' => $QRStr
+            'QRStr' => $QRStr,
+            'certificate_days_left' => $certificate_days_left,
         ];
     }
 
@@ -336,6 +345,14 @@ class PayrollController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
@@ -459,7 +476,8 @@ class PayrollController extends Controller
             'urlpayrollxml'=>"NIS-{$resolution->next_consecutive}.xml",
             'urlpayrollpdf'=>"NIS-{$resolution->next_consecutive}.pdf",
             'cune' => $signPayroll->ConsultarCUNE(),
-            'QRStr' => $QRStr
+            'QRStr' => $QRStr,
+            'certificate_days_left' => $certificate_days_left,
         ];
     }
 

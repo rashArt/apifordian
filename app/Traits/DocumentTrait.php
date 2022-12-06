@@ -33,6 +33,9 @@ use App\Mail\PasswordEmployeeMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Api\ConfigurationController;
+use DateTime;
+use Carbon\Carbon;
 
 /**
  * Document trait.
@@ -1352,6 +1355,38 @@ trait DocumentTrait
         $data = preg_replace("/[\r\n|\n|\r]+/", "", stream_get_contents($file));
         fclose($file);
         return $data;
+    }
+
+    function days_between_dates($date_from, $date_to){
+        $date_initial = new DateTime(Carbon::parse($date_from)->format('Y-m-d'));
+        $date_final = new DateTime(Carbon::parse($date_to)->format('Y-m-d'));
+        $interval = $date_initial->diff($date_final);
+        if($interval->invert)
+            return $interval->days * (-1);
+        else
+            return $interval->days;
+    }
+
+    function verify_certificate(){
+        $c = new ConfigurationController();
+        $certificate_end_date = new DateTime(Carbon::parse($c->CertificateEndDate())->format('Y-d-m'));
+        $actual_date = new DateTime(Carbon::now()->format('Y-m-d'));
+        $interval = $actual_date->diff($certificate_end_date);
+        $certificate_days_left = 0;
+        if($interval->days == 0 || $interval->invert == 1)
+            return [
+                'success' => false,
+                'message' => 'El certificado digital ya se encuentra vencido...',
+                'expiration_date' => $c->CertificateEndDate(),
+                'certificate_days_left' => 0,
+            ];
+        else
+            return [
+                'success' => true,
+                'message' => 'El certificado digital es valido...',
+                'expiration_date' => $c->CertificateEndDate(),
+                'certificate_days_left' => $interval->days,
+            ];
     }
 }
 

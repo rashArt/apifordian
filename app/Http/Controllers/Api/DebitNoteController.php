@@ -32,7 +32,6 @@ use App\AllowanceCharge;
 use DateTime;
 use Carbon\Carbon;
 
-
 class DebitNoteController extends Controller
 {
     use DocumentTrait;
@@ -67,6 +66,14 @@ class DebitNoteController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         if($company->type_plan->state == false)
             return [
@@ -246,7 +253,10 @@ class DebitNoteController extends Controller
         }
 
         // Billing reference
-        $billingReference = new BillingReference($request->billing_reference);
+        if(!$request->billing_reference)
+            $billingReference = NULL;
+        else
+            $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
         $debitNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'debitNoteLines', 'allowanceCharges', 'requestedMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
@@ -408,7 +418,8 @@ class DebitNoteController extends Controller
                 'urlinvoicepdf'=>"NDS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signDebitNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
         else{
@@ -504,7 +515,8 @@ class DebitNoteController extends Controller
                 'urlinvoicepdf'=>"NDS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signDebitNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         }
     }
@@ -523,6 +535,14 @@ class DebitNoteController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
 
         // Actualizar Tablas
         $this->ActualizarTablas();
@@ -655,7 +675,10 @@ class DebitNoteController extends Controller
         }
 
         // Billing reference
-        $billingReference = new BillingReference($request->billing_reference);
+        if(!$request->billing_reference)
+            $billingReference = NULL;
+        else
+            $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
         $debitNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'debitNoteLines', 'allowanceCharges', 'requestedMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
@@ -735,7 +758,8 @@ class DebitNoteController extends Controller
                 'urlinvoicepdf'=>"NDS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signDebitNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
         else
             return [
@@ -750,7 +774,8 @@ class DebitNoteController extends Controller
                 'urlinvoicepdf'=>"NDS-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signDebitNote->ConsultarCUDE(),
-                'QRStr' => $QRStr
+                'QRStr' => $QRStr,
+                'certificate_days_left' => $certificate_days_left,
             ];
     }
 }
