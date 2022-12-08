@@ -1369,7 +1369,7 @@ trait DocumentTrait
 
     function verify_certificate(){
         $c = new ConfigurationController();
-        $certificate_end_date = new DateTime(Carbon::parse($c->CertificateEndDate())->format('Y-d-m'));
+        $certificate_end_date = new DateTime(Carbon::parse(str_replace("/", "-", $c->CertificateEndDate()))->format('Y-m-d'));
         $actual_date = new DateTime(Carbon::now()->format('Y-m-d'));
         $interval = $actual_date->diff($certificate_end_date);
         $certificate_days_left = 0;
@@ -1377,14 +1377,14 @@ trait DocumentTrait
             return [
                 'success' => false,
                 'message' => 'El certificado digital ya se encuentra vencido...',
-                'expiration_date' => $c->CertificateEndDate(),
+                'expiration_date' => $certificate_end_date,
                 'certificate_days_left' => 0,
             ];
         else
             return [
                 'success' => true,
                 'message' => 'El certificado digital es valido...',
-                'expiration_date' => $c->CertificateEndDate(),
+                'expiration_date' => $certificate_end_date,
                 'certificate_days_left' => $interval->days,
             ];
     }
