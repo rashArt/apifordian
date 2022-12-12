@@ -13,6 +13,8 @@ use App\Traits\DocumentTrait;
 
 class NumberingRangeController extends Controller
 {
+    use DocumentTrait;
+
     /**
      * NumberingRange.
      *
