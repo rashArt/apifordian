@@ -24,9 +24,8 @@ class XmlDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            // Comportamiento de Envios de Correo.
-            'sendmail' => 'nullable|boolean',
-            'sendmailtome' => 'nullable|boolean'
+            // Consulta de nomina
+            'is_payroll' => 'nullable|boolean',
         ];
     }
 }

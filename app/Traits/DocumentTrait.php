@@ -59,6 +59,36 @@ trait DocumentTrait
         'payment_method_id' => 10,
     ];
 
+    /**
+     * Get query.
+     *
+     * @param string $query
+     * @param bool   $validate
+     * @param int    $item
+     *
+     * @return mixed
+     */
+    protected function getQuery($document, $query, $validate = true, $item = 0)
+    {
+        if (is_string($document)){
+            $xml = $document;
+            $document = new \DOMDocument;
+            $document->loadXML($xml);
+            $domXPath = new \DOMXPath($document);
+        }
+
+        $tag = $domXPath->query($query);
+
+        if (($validate) && (null == $tag->item(0))) {
+            throw new Exception('Class '.get_class($this).": The query {$query} does not exist.");
+        }
+        if (is_null($item)) {
+            return $tag;
+        }
+
+        return $tag->item($item);
+    }
+
     protected function getTag($document, $tagName, $item = 0, $attribute = NULL, $attribute_value = NULL)
     {
         if (is_string($document)){
@@ -1367,9 +1397,9 @@ trait DocumentTrait
             return $interval->days;
     }
 
-    function verify_certificate(){
+    function verify_certificate($user = FALSE){
         $c = new ConfigurationController();
-        $certificate_end_date = new DateTime(Carbon::parse(str_replace("/", "-", $c->CertificateEndDate()))->format('Y-m-d'));
+        $certificate_end_date = new DateTime(Carbon::parse(str_replace("/", "-", $c->CertificateEndDate($user)))->format('Y-m-d'));
         $actual_date = new DateTime(Carbon::now()->format('Y-m-d'));
         $interval = $actual_date->diff($certificate_end_date);
         $certificate_days_left = 0;

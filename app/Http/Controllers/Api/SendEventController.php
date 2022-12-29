@@ -231,7 +231,7 @@ class SendEventController extends Controller
 
         // Verify Certificate
         $certificate_days_left = 0;
-        $c = $this->verify_certificate();
+        $c = $this->verify_certificate($user);
         if(!$c['success'])
             return $c;
         else
@@ -339,7 +339,8 @@ class SendEventController extends Controller
                     $invoice_doc->state_document_id = 1;
                     $invoice_doc->type_document_id = $this->getTag($invoiceXMLStr, 'InvoiceTypeCode', 0)->nodeValue;
                     if(strpos($invoiceXMLStr, "</sts:Prefix>"))
-                        $invoice_doc->prefix = $this->getTag($invoiceXMLStr, 'Prefix', 0)->nodeValue;
+                        $invoice_doc->prefix = $this->getQuery($invoiceXMLStr, 'ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/sts:DianExtensions/sts:InvoiceControl/sts:AuthorizedInvoices/sts:Prefix', 0)->nodeValue;
+//                        $invoice_doc->prefix = $this->getTag($invoiceXMLStr, 'Prefix', 0)->nodeValue;
                     else
                         $invoice_doc->prefix = "";
                     $i = 0;
@@ -349,8 +350,10 @@ class SendEventController extends Controller
                             $invoice_doc->number =  $this->getTag($invoiceXMLStr, "ID", $i)->nodeValue;
                             $i++;
                         }while(strpos($invoice_doc->number, $invoice_doc->prefix) === false);
-                    else
-                        $invoice_doc->number =  $this->ValueXML($invoiceXMLStr, "/Invoice/cbc:ID/");
+                    else{
+                        $invoice_doc->number =  $this->getQuery($invoiceXMLStr, "cbc:ID")->nodeValue;
+//                        $invoice_doc->number =  $this->ValueXML($invoiceXMLStr, "/Invoice/cbc:ID/");
+                    }
 
                     $invoice_doc->xml = $request->base64_attacheddocument_name;
                     $invoice_doc->cufe = $this->getTag($invoiceXMLStr, 'UUID', 0)->nodeValue;
@@ -388,8 +391,10 @@ class SendEventController extends Controller
                 $invoice_doc->state_document_id = 1;
                 $invoice_doc->type_document_id = $this->getTag($invoiceXMLStr, 'InvoiceTypeCode', 0)->nodeValue;
                 $invoice_doc->customer = $this->ValueXML($invoiceXMLStr, "/Invoice/cac:AccountingCustomerParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID/");
-                if(strpos($invoiceXMLStr, "</sts:Prefix>"))
-                    $invoice_doc->prefix = $this->getTag($invoiceXMLStr, 'Prefix', 0)->nodeValue;
+                if(strpos($invoiceXMLStr, "</sts:Prefix>")){
+                    $invoice_doc->prefix = $this->getQuery($invoiceXMLStr, 'ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/sts:DianExtensions/sts:InvoiceControl/sts:AuthorizedInvoices/sts:Prefix', 0)->nodeValue;
+//                    $invoice_doc->prefix = $this->getTag($invoiceXMLStr, 'Prefix', 0)->nodeValue;
+                }
                 else
                     $invoice_doc->prefix = "";
                 $i = 0;
@@ -399,9 +404,10 @@ class SendEventController extends Controller
                         $invoice_doc->number =  $this->getTag($invoiceXMLStr, "ID", $i)->nodeValue;
                         $i++;
                     }while(strpos($invoice_doc->number, $invoice_doc->prefix) === false);
-                else
-                    $invoice_doc->number =  $this->ValueXML($invoiceXMLStr, "/Invoice/cbc:ID/");
-
+                else{
+                    $invoice_doc->number =  $this->getQuery($invoiceXMLStr, "cbc:ID")->nodeValue;
+//                    $invoice_doc->number =  $this->ValueXML($invoiceXMLStr, "/Invoice/cbc:ID/");
+                }
                 $invoice_doc->xml = $request->base64_attacheddocument_name;
                 $invoice_doc->cufe = $this->getTag($invoiceXMLStr, 'UUID', 0)->nodeValue;
                 $invoice_doc->date_issue = $this->getTag($invoiceXMLStr, 'IssueDate', 0)->nodeValue.' '.str_replace('-05:00', '', $this->getTag($invoiceXMLStr, 'IssueTime', 0)->nodeValue);

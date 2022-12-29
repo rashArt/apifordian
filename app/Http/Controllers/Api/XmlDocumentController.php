@@ -9,6 +9,8 @@ use App\Traits\DocumentTrait;
 
 class XmlDocumentController extends Controller
 {
+    use DocumentTrait;
+
     /**
      * Document.
      *

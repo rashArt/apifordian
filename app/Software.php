@@ -12,7 +12,7 @@ class Software extends Model
      * @var array
      */
     protected $fillable = [
-        'identifier', 'pin', 'url', 'identifier_payroll', 'pin_payroll', 'url_payroll'
+        'identifier', 'pin', 'url', 'identifier_payroll', 'pin_payroll', 'url_payroll', 'identifier_sd', 'pin_sd', 'url_sd'
     ];
 
     /**

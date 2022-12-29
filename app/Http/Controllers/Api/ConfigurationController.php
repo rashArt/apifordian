@@ -25,6 +25,7 @@ use App\Certificate;
 use App\Administrator;
 use App\TypePlan;
 use App\Company;
+use App\Software;
 use App\Document;
 use App\ReceivedDocument;
 use App\Log;
@@ -130,6 +131,7 @@ class ConfigurationController extends Controller
                     'tax_id' => $request->tax_id ?? 1,
                     'type_environment_id' => $request->type_environment_id ?? 2,
                     'payroll_type_environment_id' => $request->payroll_type_environment_id ?? 2,
+                    'sd_type_environment_id' => $request->sd_type_environment_id ?? 2,
                     'type_operation_id' => $request->type_operation_id ?? 10,
                     'type_document_identification_id' => $request->type_document_identification_id,
                     'country_id' => $request->country_id ?? 46,
@@ -280,70 +282,43 @@ class ConfigurationController extends Controller
 
         try {
 //            auth()->user()->company->software()->delete();
+            $s = auth()->user()->company->software;
             if(is_null(auth()->user()->company->software))
                 $software = auth()->user()->company->software()->create(
                     [
-                        'identifier' => $request->id,
-                        'pin' => $request->pin,
+                        'identifier' => $request->id ?? '',
+                        'pin' => $request->pin ?? '',
                         'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => '',
-                        'identifier_payroll' => '',
-                        'pin_payroll' => '',
+                        'url_payroll' => $request->url_payroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => $request->identifier_payroll ?? '',
+                        'pin_payroll' => $request->pin_payroll ?? '',
+                        'url_sd' => $request->url_sd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_sd' => $request->identifier_payroll ?? '',
+                        'pin_sd' => $request->pin_sd ?? '',
                     ]
                 );
             else
                 $software = auth()->user()->company->software()->update(
                     [
-                        'identifier' => $request->id,
-                        'pin' => $request->pin,
+                        'identifier' => $request->id ?? $s->id,
+                        'pin' => $request->pin ?? $s->pin,
                         'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => '',
-                        'identifier_payroll' => '',
-                        'pin_payroll' => '',
+                        'url_payroll' => $request->url_payroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => $request->identifier_payroll ?? $s->identifier_payroll,
+                        'pin_payroll' => $request->pin_payroll ?? $s->pin_payroll,
+                        'url_sd' => $request->url_sd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_sd' => $request->identifier_sd ?? $s->identifier_sd,
+                        'pin_sd' => $request->pin_sd ?? $s->pin_sd,
                     ]
                 );
 
             DB::commit();
 
+            $s = Software::where('company_id', auth()->user()->company->id)->firstOrFail();
             return [
                 'success' => true,
                 'message' => 'Software creado/actualizado con éxito',
-                'software' => $software,
-            ];
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return response([
-                'message' => 'Internal Server Error',
-                'payload' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Store payroll software.
-     *
-     * @param \App\Http\Requests\Api\ConfigurationSoftwarePayrollRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function storeSoftwarePayroll(ConfigurationSoftwarePayrollRequest $request)
-    {
-        DB::beginTransaction();
-
-        try {
-            $software = auth()->user()->company->software()->update([
-                'identifier_payroll' => $request->idpayroll,
-                'pin_payroll' => $request->pinpayroll,
-                'url_payroll' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-            ]);
-
-            DB::commit();
-
-            return [
-                'success' => true,
-                'message' => 'Software de nomina creado/actualizado con éxito',
-                'software' => auth()->user()->company->software,
+                'software' => $s,
             ];
         } catch (Exception $e) {
             DB::rollBack();
@@ -361,9 +336,12 @@ class ConfigurationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function CertificateEndDate()
+    public function CertificateEndDate($user = FALSE)
     {
-        $company = auth()->user()->company;
+        if($user === FALSE)
+            $company = auth()->user()->company;
+        else
+            $company = $user->company;
         $pfxContent = file_get_contents(storage_path("app/certificates/".$company->certificate->name));
         try {
             if (!openssl_pkcs12_read($pfxContent, $x509certdata, $company->certificate->password)) {

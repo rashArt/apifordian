@@ -604,6 +604,7 @@ class SupportDocumentController extends Controller
 
         // Seller company
         $seller->company = new Company($sellerAll->toArray());
+        $seller->postal_zone_code = $sellerAll['postal_zone_code'];
 
         // Delivery
         if($request->delivery){

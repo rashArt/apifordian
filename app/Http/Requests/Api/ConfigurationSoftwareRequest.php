@@ -24,9 +24,15 @@ class ConfigurationSoftwareRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|string',
-            'pin' => 'required|numeric|digits:5',
+            'id' => 'nullable|string',
+            'pin' => 'nullable|required_with:id|numeric|digits:5',
             'url' => 'nullable|string|url',
+            'idpayroll' => 'nullable|string',
+            'pinpayroll' => 'nullable|required_with:idpayroll|numeric|digits:5',
+            'urlpayroll' => 'nullable|string|url',
+            'idsd' => 'nullable|string',
+            'pinsd' => 'nullable|required_with:idsd|numeric|digits:5',
+            'urlsd' => 'nullable|string|url',
         ];
     }
 }
