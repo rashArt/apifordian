@@ -303,7 +303,7 @@ class PayrollAdjustNoteController extends Controller
                         if(count($payroll) > 0){
                             try{
                                 Mail::to($worker->email)->send(new PayrollMail($payroll, $worker, $company, FALSE, $filename, $request));
-                                if($request->sendmailtome)
+                                if(isset($request->sendmailtome) && $request->sendmailtome == true)
                                     Mail::to($user->email)->send(new PayrollMail($payroll, $worker, $company, FALSE, $filename, $request));
                             } catch (\Exception $m) {
                                 \Log::debug($m->getMessage());
