@@ -289,26 +289,26 @@ class ConfigurationController extends Controller
                         'identifier' => $request->id ?? '',
                         'pin' => $request->pin ?? '',
                         'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => $request->url_payroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_payroll' => $request->identifier_payroll ?? '',
-                        'pin_payroll' => $request->pin_payroll ?? '',
-                        'url_sd' => $request->url_sd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_sd' => $request->identifier_payroll ?? '',
-                        'pin_sd' => $request->pin_sd ?? '',
+                        'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => $request->idpayroll ?? '',
+                        'pin_payroll' => $request->pinpayroll ?? '',
+                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_sd' => $request->idsd ?? '',
+                        'pin_sd' => $request->pinsd ?? '',
                     ]
                 );
             else
                 $software = auth()->user()->company->software()->update(
                     [
-                        'identifier' => $request->id ?? $s->id,
+                        'identifier' => $request->id ?? $s->identifier,
                         'pin' => $request->pin ?? $s->pin,
                         'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => $request->url_payroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_payroll' => $request->identifier_payroll ?? $s->identifier_payroll,
-                        'pin_payroll' => $request->pin_payroll ?? $s->pin_payroll,
-                        'url_sd' => $request->url_sd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_sd' => $request->identifier_sd ?? $s->identifier_sd,
-                        'pin_sd' => $request->pin_sd ?? $s->pin_sd,
+                        'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => $request->idpayroll ?? $s->identifier_payroll,
+                        'pin_payroll' => $request->pinpayroll ?? $s->pin_payroll,
+                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_sd' => $request->idsd ?? $s->identifier_sd,
+                        'pin_sd' => $request->pinsd ?? $s->pin_sd,
                     ]
                 );
 

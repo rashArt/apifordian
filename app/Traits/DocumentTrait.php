@@ -1337,10 +1337,15 @@ trait DocumentTrait
 
             if(!is_null($company->absolut_start_plan_date)){
                 if($document_name == "ABSOLUT"){
-                    $qty_docs = (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '11')->orWhere('type_document_id', '13')->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                    $qty_docs = (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 11)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 13)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
                                 (ReceivedDocument::where('customer', $company->identification_number)->where('state_document_id', 1)->where('created_at', '>=', $company->absolut_start_plan_date)->count() + Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('aceptacion', 1)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
                                 (DocumentPayroll::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
-                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '>=', '1')->where('type_document_id', '<=', '5')->where('created_at', '>=', $company->absolut_start_plan_date)->count());
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 1)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 2)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 3)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 4)->where('created_at', '>=', $company->absolut_start_plan_date)->count()) +
+                                (Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', 5)->where('created_at', '>=', $company->absolut_start_plan_date)->count());
                     return $qty_docs;
                 }
             }
