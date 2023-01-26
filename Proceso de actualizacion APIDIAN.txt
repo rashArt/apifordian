@@ -1,11 +1,11 @@
 PROCEDIMIENTO DE ACTUALIZACION APIDIAN
 
-1... DESDE APIDIAN2021 HACIA APIDIAN2O22
+1... DESDE APIDIAN2021 o APIDIAN2022 HACIA APIDIAN2O23
 
-Dentro del directorio del apidian2021:
+Dentro del directorio del apidian2021 o apidian2022:
 
 	a. git remote remove origin
-	b. git remote add origin https://gitlab.com/facturalatam/co-apidian2022.git
+	b. git remote add origin https://gitlab.com/facturalatam/co-apidian2023.git
 	c. nano .git/config
 		Debe quedar dicho archivo de la siguiente manera, si falta algo, agregarlo manualmente
 		
@@ -17,7 +17,7 @@ Dentro del directorio del apidian2021:
 				symlinks = false
 				ignorecase = true
 			[remote "origin"]
-				url = https://gitlab.com/facturalatam/co-apidian2022.git
+				url = https://gitlab.com/facturalatam/co-apidian2023.git
 				fetch = +refs/heads/*:refs/remotes/origin/*
 			[branch "master"]
 				remote = origin
@@ -31,13 +31,14 @@ Dentro del directorio del apidian2021:
 	h. composer self-update
 	i. rm composer.lock
 	j. composer install
-	k. chmod -R 777 storage
-	l. chmod -R 777 bootstrap/cache
-	m. chmod -R 777 vendor/mpdf/mpdf
-	n. php artisan config:cache && php artisan config:clear && php artisan cache:clear
+	k. unzip storage.zip
+	l. chmod -R 777 storage
+	m. chmod -R 777 bootstrap/cache
+	n. chmod -R 777 vendor/mpdf/mpdf
+	o. php artisan config:cache && php artisan config:clear && php artisan cache:clear
 	
 	
-2... ACTUALIZAR APIDIAN2022
+2... ACTUALIZAR APIDIAN2023
 
 Dentro del directorio del apidian2022:
 
@@ -49,7 +50,8 @@ Dentro del directorio del apidian2022:
 	f. composer self-update
 	g. rm composer.lock
 	h. composer install
-	i. chmod -R 777 storage
-	j. chmod -R 777 bootstrap/cache
-	k. chmod -R 777 vendor/mpdf/mpdf
-	l. php artisan config:cache && php artisan config:clear && php artisan cache:clear
+	i. unzip storage.zip
+	j. chmod -R 777 storage
+	k. chmod -R 777 bootstrap/cache
+	l. chmod -R 777 vendor/mpdf/mpdf
+	m. php artisan config:cache && php artisan config:clear && php artisan cache:clear
