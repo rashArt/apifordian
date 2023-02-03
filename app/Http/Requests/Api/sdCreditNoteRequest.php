@@ -104,7 +104,7 @@ class sdCreditNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|exists:type_operations',
+            'type_operation_id' => 'nullable|in:23,24',
 
             // Resolution number for document sending
             'resolution_number' => Rule::requiredIf(function(){
