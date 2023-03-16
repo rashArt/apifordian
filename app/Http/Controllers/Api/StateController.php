@@ -187,12 +187,13 @@ class StateController extends Controller
                         $customer = new user($u);
                         $customer->company = new Company($u);
                         $attacheddocument = $this->createXML(compact('user', 'company', 'customer', 'resolution', 'typeDocument', 'cufecude', 'signedxml', 'appresponsexml', 'fechavalidacion', 'horavalidacion', 'document_number'));
+
                         // Signature XML
                         $signAttachedDocument = new SignAttachedDocument($company->certificate->path, $company->certificate->password);
                         $signAttachedDocument->GuardarEn = $GuardarEn."\\{$filename}.xml";
 
                         $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
 //                        $file = fopen($GuardarEn."\\Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml", "w");
                         $file = fopen($GuardarEn."\\{$filename}".".xml", "w");
                         fwrite($file, $at);
@@ -390,7 +391,7 @@ class StateController extends Controller
                         $signAttachedDocument->GuardarEn = storage_path("app/public/{$company->identification_number}/{$filename}.xml");
 
                         $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                         $file = fopen(storage_path("app/public/{$company->identification_number}/{$filename}".".xml"), "w");
                         fwrite($file, $at);
                         fclose($file);
@@ -631,7 +632,7 @@ class StateController extends Controller
                         $signAttachedDocument->GuardarEn = $GuardarEn."\\{$filename}.xml";
 
                         $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                         $file = fopen($GuardarEn."\\{$filename}".".xml", "w");
 //                        $file = fopen($GuardarEn."\\Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml", "w");
                         fwrite($file, $at);
@@ -803,12 +804,13 @@ class StateController extends Controller
                         $customer = new user($u);
                         $customer->company = new Company($u);
                         $attacheddocument = $this->createXML(compact('user', 'company', 'customer', 'resolution', 'typeDocument', 'cufecude', 'signedxml', 'appresponsexml', 'fechavalidacion', 'horavalidacion', 'document_number'));
+//                        return $attacheddocument->saveXML();
                         // Signature XML
                         $signAttachedDocument = new SignAttachedDocument($company->certificate->path, $company->certificate->password);
                         $signAttachedDocument->GuardarEn = storage_path("app/public/{$company->identification_number}/{$filename}.xml");
 
                         $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                        $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                         $file = fopen(storage_path("app/public/{$company->identification_number}/{$filename}".".xml"), "w");
 //                        $file = fopen(storage_path("app/public/{$company->identification_number}/Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml"), "w");
                         fwrite($file, $at);

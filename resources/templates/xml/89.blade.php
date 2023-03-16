@@ -12,7 +12,7 @@
     @include('xml._ubl_extensions_payroll')
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>Documentos adjuntos</cbc:CustomizationID>
-    <cbc:ProfileID>DIAN 2.1</cbc:ProfileID>
+    <cbc:ProfileID>Factura Electrónica de Venta</cbc:ProfileID>
     <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     <cbc:ID>{{$cufecude}}</cbc:ID>
     <cbc:IssueDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $date ?? Carbon\Carbon::now()->format('Y-m-d'))}}</cbc:IssueDate>
@@ -37,7 +37,6 @@
         <cac:ExternalReference>
           <cbc:MimeCode>text/xml</cbc:MimeCode>
           <cbc:EncodingCode>UTF-8</cbc:EncodingCode>
-          <cbc:Description><![CDATA[{{$signedxml}}]]></cbc:Description>
         </cac:ExternalReference>
     </cac:Attachment>
     <cac:ParentDocumentLineReference>
@@ -53,7 +52,6 @@
         <cac:ExternalReference>
           <cbc:MimeCode>text/xml</cbc:MimeCode>
           <cbc:EncodingCode>UTF-8</cbc:EncodingCode>
-          <cbc:Description><![CDATA[{{$appresponsexml}}]]></cbc:Description>
         </cac:ExternalReference>
       </cac:Attachment>
       <cac:ResultOfVerification>

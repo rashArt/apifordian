@@ -385,7 +385,7 @@ class InvoiceController extends Controller
                     $signAttachedDocument->GuardarEn = $GuardarEn."\\{$filename}.xml";
 
                     $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                     $file = fopen($GuardarEn."\\{$filename}".".xml", "w");
 //                    $file = fopen($GuardarEn."\\Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml", "w");
                     fwrite($file, $at);
@@ -484,7 +484,7 @@ class InvoiceController extends Controller
                     $signAttachedDocument->GuardarEn = storage_path("app/public/{$company->identification_number}/{$filename}.xml");
 
                     $at = $signAttachedDocument->sign($attacheddocument)->xml;
-                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                     $file = fopen(storage_path("app/public/{$company->identification_number}/{$filename}".".xml"), "w");
 //                    $file = fopen(storage_path("app/public/{$company->identification_number}/Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml"), "w");
                     fwrite($file, $at);

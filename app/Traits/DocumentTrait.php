@@ -251,6 +251,23 @@ trait DocumentTrait
             $DOMDocumentXML->preserveWhiteSpace = false;
             $DOMDocumentXML->formatOutput = true;
             $DOMDocumentXML->loadXML(view("xml.{$data['typeDocument']['code']}", $data)->render());
+            if(isset($data['signedxml']) and ($data['typeDocument']['code'] === '89')){
+                $rootNode = $DOMDocumentXML->documentElement;
+                $nodeCDATAInvoice = $rootNode->getElementsByTagName("ExternalReference")->item(0);
+                $elementCDATA = $DOMDocumentXML->createElement('cbc:Description');
+                $CDATA = $DOMDocumentXML->createCDATASection($data['signedxml']);
+                $elementCDATA->appendChild($CDATA);
+                $nodeCDATAInvoice->appendChild($elementCDATA);
+            }
+
+            if(isset($data['appresponsexml']) and ($data['typeDocument']['code'] === '89')){
+                $rootNode = $DOMDocumentXML->documentElement;
+                $nodeCDATAAppResponse = $rootNode->getElementsByTagName("ExternalReference")->item(1);
+                $elementCDATA = $DOMDocumentXML->createElement('cbc:Description');
+                $CDATA = $DOMDocumentXML->createCDATASection($data['appresponsexml']);
+                $elementCDATA->appendChild($CDATA);
+                $nodeCDATAAppResponse->appendChild($elementCDATA);
+            }
 
             return $DOMDocumentXML;
         } catch (InvalidArgumentException $e) {

@@ -154,7 +154,7 @@ class AddCostumersDocumentsXML extends Controller
                     $signedxml = $xml;
                     $attacheddocument = $this->createXML(compact('user', 'company', 'customer', 'resolution', 'typeDocument', 'cufecude', 'signedxml', 'appresponsexml', 'fechavalidacion', 'horavalidacion'));
                     $at = $attacheddocument->saveXML();
-                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+//                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                     $file = fopen(storage_path("app/public/{$company->identification_number}/Attachment-".$this->valueXML($xml, $td."/cbc:ID/").".xml"), "w");
                     fwrite($file, $at);
                     fclose($file);
