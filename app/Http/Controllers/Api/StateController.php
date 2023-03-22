@@ -180,8 +180,8 @@ class StateController extends Controller
                                   'address' => $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cac:RegistrationAddress/cac:AddressLine/cbc:Line/"),
                                   'type_liability_id' => TypeLiability::where('code', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:TaxLevelCode/"))->firstOrFail()->id,
                                   'type_regime_id' => "2",
-                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 2, "schemeName").'%')->firstOrFail()->id,
-                                  'dv' => $this->getTag($signedxml, "CompanyID", 2, "schemeID"),
+                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 1, "schemeName").'%')->firstOrFail()->id,
+                                  'dv' => $this->getTag($signedxml, "CompanyID", 1, "schemeID"),
                                  ];
 
                         $customer = new user($u);
@@ -201,7 +201,7 @@ class StateController extends Controller
                         if($this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.' && $this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente')
                             $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingCustomerParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
                         else
-                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
+                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID/"));
                         $invoice = Document::where('identification_number', '=', $company->identification_number)
                                            ->where('customer', '=', $customer->identification_number)
                                            ->where('prefix', '=', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))
@@ -379,8 +379,8 @@ class StateController extends Controller
                                   'address' => $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cac:RegistrationAddress/cac:AddressLine/cbc:Line/"),
                                   'type_liability_id' => TypeLiability::where('code', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:TaxLevelCode/"))->firstOrFail()->id,
                                   'type_regime_id' => "2",
-                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 2, "schemeName").'%')->firstOrFail()->id,
-                                  'dv' => $this->getTag($signedxml, "CompanyID", 2, "schemeID"),
+                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 1, "schemeName").'%')->firstOrFail()->id,
+                                  'dv' => $this->getTag($signedxml, "CompanyID", 1, "schemeID"),
                                  ];
 
                         $customer = new user($u);
@@ -398,7 +398,7 @@ class StateController extends Controller
                         if($this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.' && $this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente')
                             $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingCustomerParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
                         else
-                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
+                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID/"));
                         $invoice = Document::where('identification_number', '=', $company->identification_number)
                                            ->where('customer', '=', $customer->identification_number)
                                            ->where('prefix', '=', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))
@@ -620,8 +620,8 @@ class StateController extends Controller
                                   'address' => $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cac:RegistrationAddress/cac:AddressLine/cbc:Line/"),
                                   'type_liability_id' => TypeLiability::where('code', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:TaxLevelCode/"))->firstOrFail()->id,
                                   'type_regime_id' => "2",
-                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 2, "schemeName").'%')->firstOrFail()->id,
-                                  'dv' => $this->getTag($signedxml, "CompanyID", 2, "schemeID"),
+                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 1, "schemeName").'%')->firstOrFail()->id,
+                                  'dv' => $this->getTag($signedxml, "CompanyID", 1, "schemeID"),
                                  ];
 
                         $customer = new user($u);
@@ -640,7 +640,7 @@ class StateController extends Controller
                         if($this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.' && $this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente')
                             $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingCustomerParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
                         else
-                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
+                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID/"));
                         $invoice = Document::where('identification_number', '=', $company->identification_number)
                                            ->where('customer', '=', $customer->identification_number)
                                            ->where('prefix', '=', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))
@@ -797,8 +797,8 @@ class StateController extends Controller
                                   'address' => $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cac:RegistrationAddress/cac:AddressLine/cbc:Line/"),
                                   'type_liability_id' => TypeLiability::where('code', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:TaxLevelCode/"))->firstOrFail()->id,
                                   'type_regime_id' => "2",
-                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 2, "schemeName").'%')->firstOrFail()->id,
-                                  'dv' => $this->getTag($signedxml, "CompanyID", 2, "schemeID"),
+                                  'type_document_identification_id' => TypeDocumentIdentification::where('code', 'Like', '%'.$this->getTag($signedxml, "CompanyID", 1, "schemeName").'%')->firstOrFail()->id,
+                                  'dv' => $this->getTag($signedxml, "CompanyID", 1, "schemeID"),
                                  ];
 
                         $customer = new user($u);
@@ -818,7 +818,7 @@ class StateController extends Controller
                         if($this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.' && $this->valueXML($signedxml, $td."/cbc:ProfileID/") != 'DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente')
                             $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingCustomerParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
                         else
-                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:CompanyID/"));
+                            $customer = Customer::findOrFail($this->valueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID/"));
                         $invoice = Document::where('identification_number', '=', $company->identification_number)
                                            ->where('customer', '=', $customer->identification_number)
                                            ->where('prefix', '=', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))
