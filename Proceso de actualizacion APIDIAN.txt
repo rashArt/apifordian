@@ -36,11 +36,13 @@ Dentro del directorio del apidian2021 o apidian2022:
 	m. chmod -R 777 bootstrap/cache
 	n. chmod -R 777 vendor/mpdf/mpdf
 	o. php artisan config:cache && php artisan config:clear && php artisan cache:clear
+	p. chmod 700 urn_on.sh
+	q. ./urn_on.sh
 	
 	
 2... ACTUALIZAR APIDIAN2023
 
-Dentro del directorio del apidian2022:
+Dentro del directorio del apidian2023:
 
 	a. git pull 
 	b. git pull origin master 
@@ -55,3 +57,5 @@ Dentro del directorio del apidian2022:
 	k. chmod -R 777 bootstrap/cache
 	l. chmod -R 777 vendor/mpdf/mpdf
 	m. php artisan config:cache && php artisan config:clear && php artisan cache:clear
+	p. chmod 700 urn_on.sh
+	q. ./urn_on.sh
