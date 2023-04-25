@@ -15,20 +15,20 @@ use App\Traits\DocumentTrait;
 class SendGraphicRepresentation extends Mailable
 {
     use Queueable, SerializesModels, DocumentTrait;
-    
+
     /**
      * User
      * @var \App\User
      */
     public $company;
-    
+
     /**
      * Document
      * @var \App\Document
      */
     public $document;
 
-    
+
     /**
      * Create a new message instance.
      *
@@ -37,9 +37,9 @@ class SendGraphicRepresentation extends Mailable
     public function __construct(User $company, Document $document) {
         $this->company = $company;
         $this->document = $document;
-     
+
     }
-    
+
     /**
      * Build the message.
      *
@@ -48,7 +48,7 @@ class SendGraphicRepresentation extends Mailable
     public function build() {
         $path_file = storage_path("app/public/{$this->document->identification_number}/{$this->document->pdf}");
         $path_file_xml = storage_path("app/public/{$this->document->identification_number}/{$this->document->xml}");
-        return $this->from(config('mail.username'), env('APP_NAME'))
+        return $this->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'))
                     ->markdown('emails.send.graphicRepresentation')
                     ->subject("{$this->company->name} - {$this->document->type_document->name} {$this->document->number}")
                     ->attach($path_file_xml, [

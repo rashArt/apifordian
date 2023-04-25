@@ -32,9 +32,11 @@ class PasswordSellerMail extends Mailable
     {
         if(env('MAIL_USERNAME'))
             return $this->view('mails.mailpasswordseller')->subject('Credenciales de Ingreso a la plataforma '.env("APP_NAME"))
-                                                            ->from(env('MAIL_USERNAME'), env('APP_NAME'));
+                                                            ->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'));
+//                                                            ->from(env('MAIL_USERNAME'), env('APP_NAME'));
         else
             return $this->view('mails.mailpasswordseller')->subject('Credenciales de Ingreso a la plataforma '.env("APP_NAME"))
-                                                            ->from(config('mail.username'), env('APP_NAME'));
+                                                            ->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'));
+//                                                            ->from(config('mail.username'), env('APP_NAME'));
     }
 }

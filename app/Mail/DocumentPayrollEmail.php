@@ -15,20 +15,20 @@ use App\Traits\DocumentTrait;
 class DocumentPayrollEmail extends Mailable
 {
     use Queueable, SerializesModels, DocumentTrait;
-    
+
     /**
      * User
      * @var \App\User
      */
     public $company;
-    
+
     /**
      * DocumentPayroll
      * @var \App\DocumentPayroll
      */
     public $document;
 
-    
+
     /**
      * Create a new message instance.
      *
@@ -37,9 +37,9 @@ class DocumentPayrollEmail extends Mailable
     public function __construct(User $company, DocumentPayroll $document) {
         $this->company = $company;
         $this->document = $document;
-     
+
     }
-    
+
     /**
      * Build the message.
      *
@@ -50,7 +50,7 @@ class DocumentPayrollEmail extends Mailable
         $path_file = storage_path("app/public/{$this->document->identification_number}/{$this->document->pdf}");
         $path_file_xml = storage_path("app/public/{$this->document->identification_number}/{$this->document->xml}");
 
-        return $this->from(config('mail.username'), env('APP_NAME'))
+        return $this->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'))
                     ->markdown('emails.send.graphicRepresentationPayroll')
                     ->subject("{$this->company->name} - {$this->document->type_document->name} {$this->document->consecutive}")
                     ->attach($path_file_xml, [
