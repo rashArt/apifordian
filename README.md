@@ -27,12 +27,8 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 ## 4.- Manuales de instalación en VPS LINUX
 
-* Instalacion bajo un solo entorno [Hetzner/Contabo/Linux:](https://docs.google.com/document/d/1hz3W9dn7HJJD9NSfo6zc4jjidQoPtSJZmoljUbqIy94/edit "Clic")
-* Instalacion bajo entorno [Windows:](https://drive.google.com/file/d/1gaGLi8xcm8wHlqT-qzAYD00_AZJRmpcW/view?usp=sharing "Clic")
-<!-- * Instalacion bajo entorno [Linux:](https://drive.google.com/file/d/1xxca_QkLtS1xlh5Rd9QFcDEJKmoIrfgI/view?usp=sharing "Clic") -->
-* Instalacion bajo entorno [Google VPS:](https://drive.google.com/file/d/1KcVyhhyFhnr-fzIX9gCUX9OT1CqfAyMB/view?usp=sharing "Clic")
-
 * Actualización 2023 [Aqui](https://www.youtube.com/watch?v=rEgrHADjsCY)
+
 
 ## 5.- Cómo pasar a producción 
 
