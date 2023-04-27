@@ -22,9 +22,7 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 * Factura electrónica Colombia DIAN validación previa - PHP (4/4) Envío Factura [Aquí](https://youtu.be/28l74DvL8_o)
 * Video que demuestra funcionalidad de firma, envio y consulta de estado de documentos XML [Aqui](https://drive.google.com/open?id=15-saHPT-NsWZEWrNMciteSU9bBGh_Msf)
 
-* Actualización 2023 [Aqui]
-
-https://www.youtube.com/watch?v=9Ds2DR3QLGY
+* Actualización 2023 [Aqui](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
 
 
 ## 4.- Manuales de instalación en VPS LINUX
@@ -34,18 +32,16 @@ https://www.youtube.com/watch?v=9Ds2DR3QLGY
 <!-- * Instalacion bajo entorno [Linux:](https://drive.google.com/file/d/1xxca_QkLtS1xlh5Rd9QFcDEJKmoIrfgI/view?usp=sharing "Clic") -->
 * Instalacion bajo entorno [Google VPS:](https://drive.google.com/file/d/1KcVyhhyFhnr-fzIX9gCUX9OT1CqfAyMB/view?usp=sharing "Clic")
 
-* Actualización 2023 [Aqui]
-
-https://www.youtube.com/watch?v=rEgrHADjsCY
-
+* Actualización 2023 [Aqui](https://www.youtube.com/watch?v=rEgrHADjsCY)
 
 ## 5.- Cómo pasar a producción 
 
 * [Guía](https://www.youtube.com/watch?v=gBtd4XqwWtg)
 
+
 ## 6. - Proceso de actualizacion
 
-* Actualizacion desde APIDIAN2021 y Actualizacion APIDIAN2022 [Guía](https://gitlab.com/facturalatam/co-apidian2022/-/blob/master/Proceso%20de%20actualizacion%20APIDIAN.txt)
+* Actualizacion desde APIDIAN2022 y la api APIDIAN2023 [Aquí](https://www.youtube.com/watch?v=6lwLKQCYvNY)
 
 
 ## Extra, integración con el facturador PRO I   
