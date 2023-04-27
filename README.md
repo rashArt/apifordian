@@ -4,12 +4,10 @@
 
 Estamos enfocados en crear herramientas y soluciones para desarrolladores de software, empresas medianas y pequeñas, tenemos un sueño, queremos democratizar la facturación electrónica.
 
-   0.- Nuevas Caracteristicas y Proximas Funcionalidades APIDIAN2022 - 
-[Aquí](https://gitlab.com/facturalatam/co-apidian2022/-/blob/master/Nuevas%20Funcionalidades%20API%202022.pdf)
 
 ## 1.- Proceso de habilitación DIAN Validación Previa UBL 2.1
 
-Obtener parámetros para software directo - [Aquí](https://youtu.be/0ThLJBzWyUA)
+Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watch?v=csTmbd1Ere8)
 
 
 ## 2.- Ejemplos para la API / Collection POSTMAN
@@ -24,6 +22,10 @@ Obtener parámetros para software directo - [Aquí](https://youtu.be/0ThLJBzWyUA
 * Factura electrónica Colombia DIAN validación previa - PHP (4/4) Envío Factura [Aquí](https://youtu.be/28l74DvL8_o)
 * Video que demuestra funcionalidad de firma, envio y consulta de estado de documentos XML [Aqui](https://drive.google.com/open?id=15-saHPT-NsWZEWrNMciteSU9bBGh_Msf)
 
+* Actualización 2023 [Aqui]
+
+https://www.youtube.com/watch?v=9Ds2DR3QLGY
+
 
 ## 4.- Manuales de instalación en VPS LINUX
 
@@ -31,6 +33,10 @@ Obtener parámetros para software directo - [Aquí](https://youtu.be/0ThLJBzWyUA
 * Instalacion bajo entorno [Windows:](https://drive.google.com/file/d/1gaGLi8xcm8wHlqT-qzAYD00_AZJRmpcW/view?usp=sharing "Clic")
 <!-- * Instalacion bajo entorno [Linux:](https://drive.google.com/file/d/1xxca_QkLtS1xlh5Rd9QFcDEJKmoIrfgI/view?usp=sharing "Clic") -->
 * Instalacion bajo entorno [Google VPS:](https://drive.google.com/file/d/1KcVyhhyFhnr-fzIX9gCUX9OT1CqfAyMB/view?usp=sharing "Clic")
+
+* Actualización 2023 [Aqui]
+
+https://www.youtube.com/watch?v=rEgrHADjsCY
 
 
 ## 5.- Cómo pasar a producción 
