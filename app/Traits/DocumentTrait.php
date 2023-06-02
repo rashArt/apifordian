@@ -78,9 +78,9 @@ trait DocumentTrait
         }
 
         $tag = $domXPath->query($query);
-
         if (($validate) && (null == $tag->item(0))) {
-            throw new Exception('Class '.get_class($this).": The query {$query} does not exist.");
+            return null;
+//            throw new Exception('Class '.get_class($this).": The query {$query} does not exist.");
         }
         if (is_null($item)) {
             return $tag;

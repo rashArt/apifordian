@@ -25,7 +25,6 @@ class RadianEventController extends Controller
 
         try
         {
-
             $att = new \DOMDocument('1.0', 'utf-8');
             $att->preserveWhiteSpace = false;
             $att->formatOutput = true;

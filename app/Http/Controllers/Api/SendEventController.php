@@ -364,6 +364,7 @@ class SendEventController extends Controller
                     $invoice_doc->date_issue = $this->getTag($invoiceXMLStr, 'IssueDate', 0)->nodeValue.' '.str_replace('-05:00', '', $this->getTag($invoiceXMLStr, 'IssueTime', 0)->nodeValue);
                     $invoice_doc->sale = $this->getTag($invoiceXMLStr, 'TaxInclusiveAmount', 0)->nodeValue;
                     if(isset($this->getTag($invoiceXMLStr, 'AllowanceTotalAmount', 0)->nodeValue))
+//                        $invoice_doc->total_discount = $this->getQuery($invoiceXMLStr, "cac:LegalMonetaryTotal/cbc:AllowanceTotalAmount")->nodeValue;
                         $invoice_doc->total_discount =  $this->getTag($invoiceXMLStr, 'AllowanceTotalAmount', 0)->nodeValue;
                     else
                         $invoice_doc->total_discount = 0;

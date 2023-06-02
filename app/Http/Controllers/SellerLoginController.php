@@ -148,12 +148,14 @@ class SellerLoginController extends Controller
                     $invoice_doc->date_issue = $this->getTag($invoiceXMLStr, 'IssueDate', 0)->nodeValue.' '.str_replace('-05:00', '', $this->getTag($invoiceXMLStr, 'IssueTime', 0)->nodeValue);
                     $invoice_doc->sale = $this->getTag($invoiceXMLStr, 'TaxInclusiveAmount', 0)->nodeValue;
                     if(isset($this->getTag($invoiceXMLStr, 'AllowanceTotalAmount', 0)->nodeValue))
-                        $invoice_doc->total_discount =  $this->getTag($invoiceXMLStr, 'AllowanceTotalAmount', 0)->nodeValue;
+                        $invoice_doc->total_discount = $this->getQuery($invoiceXMLStr, "cac:LegalMonetaryTotal/cbc:AllowanceTotalAmount")->nodeValue;
+//                        $invoice_doc->total_discount =  $this->getTag($invoiceXMLStr, 'AllowanceTotalAmount', 0)->nodeValue;
                     else
                         $invoice_doc->total_discount = 0;
                     $invoice_doc->subtotal = $this->getTag($invoiceXMLStr, 'LineExtensionAmount', 0)->nodeValue;
                     $invoice_doc->total_tax = $invoice_doc->sale - $invoice_doc->subtotal;
-                    $invoice_doc->total = $this->getTag($invoiceXMLStr, 'PayableAmount', 0)->nodeValue;
+                    $invoice_doc->total = $this->getQuery($invoiceXMLStr, "cac:LegalMonetaryTotal/cbc:PayableAmount")->nodeValue;
+//                    $invoice_doc->total = $this->getTag($invoiceXMLStr, 'PayableAmount', 0)->nodeValue;
                     $invoice_doc->ambient_id = $this->getTag($invoiceXMLStr, 'ProfileExecutionID', 0)->nodeValue;
                     $invoice_doc->pdf = str_replace('.xml', '.pdf', basename($_FILES['formFileInput']['name']));
                     $invoice_doc->acu_recibo = 0;

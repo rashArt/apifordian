@@ -83,7 +83,11 @@ class SendEmailController extends Controller
             if($document[0]->type_document_id == 4)
                 $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaNC-".$document[0]->prefix.$document[0]->number.".xml"));
             else
-                $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaND-".$document[0]->prefix.$document[0]->number.".xml"));
+                if ($document[0]->type_document_id == 11)
+                    $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaDS-".$document[0]->prefix.$document[0]->number.".xml"));
+                else
+                   $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaND-".$document[0]->prefix.$document[0]->number.".xml"));
+
         $filename = str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $this->getTag($rptafe, 'XmlFileName')->nodeValue)));
         try{
             if ($GuardarEn){
@@ -166,7 +170,10 @@ class SendEmailController extends Controller
             if($document[0]->type_document_id == 4)
                 $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaNC-".$document[0]->prefix.$document[0]->number.".xml"));
             else
-                $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaND-".$document[0]->prefix.$document[0]->number.".xml"));
+                if ($document[0]->type_document_id == 11)
+                    $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaDS-".$document[0]->prefix.$document[0]->number.".xml"));
+                else
+                    $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaND-".$document[0]->prefix.$document[0]->number.".xml"));
 
         if(isset($this->getTag($rptafe, 'ZipKey')->nodeValue))
             $rptafe = file_get_contents(storage_path("app/public/{$company->identification_number}/"."RptaZIP-".$this->getTag($rptafe, 'ZipKey')->nodeValue.".xml"));
