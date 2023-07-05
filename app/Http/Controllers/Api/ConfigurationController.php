@@ -43,7 +43,7 @@ class ConfigurationController extends Controller
     }
 
     public function table_health_type_users(){
-        $health_type_users = HealthTypeDocumentIdentification::all();
+        $health_type_users = HealthTypeUser::all();
         return compact('health_type_users');
     }
 
