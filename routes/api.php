@@ -55,6 +55,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('process-seller-document-reception', 'Api\RadianEventController@processSellerDocumentReception');
 
+    Route::prefix('/table')->group(function(){
+        Route::get('/health_type_document_identifications', 'Api\ConfigurationController@table_health_type_document_identifications');
+    });
+
     // UBL 2.1
     Route::prefix('/ubl2.1')->group(function () {
         // Xml Document

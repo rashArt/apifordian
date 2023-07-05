@@ -21,6 +21,7 @@ use App\Http\Requests\Api\ConfigurationLogoRequest;
 use App\Http\Requests\Api\ConfigurationInitialDocumentRequest;
 use App\Http\Requests\Api\CustomerRequest;
 use Carbon\Carbon;
+use App\HealthTypeDocumentIdentification;
 use App\Certificate;
 use App\Administrator;
 use App\TypePlan;
@@ -34,6 +35,11 @@ use App\Traits\DocumentTrait;
 class ConfigurationController extends Controller
 {
     use DocumentTrait;
+
+    public function table_health_type_document_identifications(){
+        $health_type_document_identifications = HealthTypeDocumentIdentification::all();
+        return compact('health_type_document_identifications');
+    }
 
     public function emailconfig()
     {
@@ -1089,5 +1095,4 @@ class ConfigurationController extends Controller
             ], 500);
         }
     }
-}
-;
+};
