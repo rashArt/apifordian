@@ -58,6 +58,8 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('/table')->group(function(){
         Route::get('/health_type_document_identifications', 'Api\ConfigurationController@table_health_type_document_identifications');
         Route::get('/health_type_users', 'Api\ConfigurationController@table_health_type_users');
+        Route::get('/health_contracting_payment_methods', 'Api\ConfigurationController@table_health_contracting_payment_methods');
+        Route::get('/health_coverages', 'Api\ConfigurationController@health_coverages');
     });
 
     // UBL 2.1

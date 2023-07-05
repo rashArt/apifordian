@@ -23,6 +23,8 @@ use App\Http\Requests\Api\CustomerRequest;
 use Carbon\Carbon;
 use App\HealthTypeDocumentIdentification;
 use App\HealthTypeUser;
+use App\HealthCoverage;
+use App\HealthContractingPaymentMethod;
 use App\Certificate;
 use App\Administrator;
 use App\TypePlan;
@@ -45,6 +47,16 @@ class ConfigurationController extends Controller
     public function table_health_type_users(){
         $health_type_users = HealthTypeUser::all();
         return compact('health_type_users');
+    }
+
+    public function table_health_contracting_payment_methods(){
+        $health_contracting_payment_methods = HealthContractingPaymentMethod::all();
+        return compact('health_contracting_payment_methods');
+    }
+
+    public function table_health_coverages(){
+        $health_coverages = HealthCoverage::all();
+        return compact('health_coverages');
     }
 
     public function emailconfig()
