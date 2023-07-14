@@ -17,13 +17,13 @@ class ResumeController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
 
     public function index()
-    {   
-       
+    {
+
     }
 
     public function information($nit, $desde = NULL, $hasta = NULL)
@@ -31,10 +31,10 @@ class ResumeController extends Controller
         if($desde && !$hasta)
           $hasta = $desde;
         else
-          if(!$desde && $hasta)  
+          if(!$desde && $hasta)
             $desde = $hasta;
           else
-            if(!$desde && !$hasta)  
+            if(!$desde && !$hasta)
             {
                 $desde = '1900-01-01';
                 $hasta = '2100-01-01';
@@ -52,34 +52,37 @@ class ResumeController extends Controller
 
         $invoice = (object)[
             'name' => 'Factura de Venta Nacional',
-            'count' => Document::where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count()
+            'count' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count(),
+            'documents' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get()
         ];
 
         $credit_note = (object)[
             'name' => 'Nota Credito',
-            'count' => Document::where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count()
+            'count' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count(),
+            'documents' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get()
         ];
 
         $debit_note = (object)[
             'name' => 'Nota Debito',
-            'count' => Document::where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count()
+            'count' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count(),
+            'documents' => Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get()
         ];
 
         return [
             'success' => true,
             'message' => 'NIT Encontrado',
-            'data'=> array( $invoice, $credit_note, $debit_note ),
+            'data'=> array($invoice, $credit_note, $debit_note),
             'companie' => $company->user->name
         ];
     }
-   
 
 
 
 
- 
 
-    
+
+
+
 
 
 }
