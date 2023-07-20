@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+    nginx_api:
+        image: rash07/nginx
+        working_dir: /var/www/html
+        environment:
+            VIRTUAL_HOST: 
+        volumes:
+            - ./:/var/www/html
+            - /proxy/fpm/api_dir:/etc/nginx/sites-available
+    php_api:
+        image: rash07/php-api
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+    mariadb_api:
+        image: mariadb
+        environment:
+            - MYSQL_USER=
+            - MYSQL_PASSWORD=
+            - MYSQL_DATABASE=
+            - MYSQL_ROOT_PASSWORD=
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysqldata_api:/var/lib/mysql
+
+networks:
+    default:
+        external:
+            name: proxynet
+
+volumes:
+    mysqldata_api:
+        driver: "local"
