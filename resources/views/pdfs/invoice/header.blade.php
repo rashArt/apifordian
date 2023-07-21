@@ -1,7 +1,7 @@
 
 <table width="100%">
     <tr>
-        <td style="width: 25%;" class="text-center vertical-align-top">
+        <td style="width: 23%;" class="text-center vertical-align-top">
             <div id="reference">
                 <p style="font-weight: 700;"><strong>FACTURA ELECTRONICA DE VENTA No</strong></p>
                 <br>
@@ -29,10 +29,10 @@
                     Hora Validación DIAN: {{$time}}</p>
             </div>
         </td>
-        <td style="width: 50%; padding: 0 1rem;" class="text-center vertical-align-top">
+        <td style="width: 57%; padding: 0 1rem;" class="text-center vertical-align-top">
             <div id="empresa-header">
                 <strong>{{$user->name}}</strong><br>
-                @if(isset($request->establishment_name))
+                @if(isset($request->establishment_name) && $request->establishment_name != 'Oficina Principal')
                     <strong>{{$request->establishment_name}}</strong><br>
                 @endif
             </div>
@@ -97,7 +97,7 @@
                @endif
             </div>
         </td>
-        <td style="width: 25%; text-align: right;" class="vertical-align-top">
+        <td style="width: 20%; text-align: right;" class="vertical-align-top">
             <img  style="width: 136px; height: auto;" src="{{$imgLogo}}" alt="logo">
         </td>
     </tr>
