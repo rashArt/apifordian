@@ -32,5 +32,5 @@ networks:
             name: proxynet
 
 volumes:
-    mysqldata_api:
+    mysqldata_api_volume:
         driver: "local"
