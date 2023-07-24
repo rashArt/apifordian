@@ -8,7 +8,7 @@ services:
             VIRTUAL_HOST: 
         volumes:
             - ./:/var/www/html
-            - /proxy/fpm/api_dir:/etc/nginx/sites-available
+            - /proxy/fpms/api_dir:/etc/nginx/sites-available
     php_api:
         image: rash07/php-api
         working_dir: /var/www/html
