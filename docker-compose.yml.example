@@ -15,12 +15,13 @@ services:
         volumes:
             - ./:/var/www/html
     mariadb_api:
-        image: mariadb:5.7
+        image: mariadb:10.5.6
         environment:
             - MYSQL_USER=
             - MYSQL_PASSWORD=
             - MYSQL_DATABASE=
-            - MYSQL_ROOT_PASSWORD=
+            - MYSQL_ROOT_PASSWORD=            
+            - MYSQL_PORT_HOST=
         ports:
             - "3306:3306"
         volumes:
