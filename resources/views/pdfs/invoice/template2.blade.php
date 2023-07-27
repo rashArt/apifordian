@@ -481,6 +481,15 @@
                 @endif
             @endif
         </div>
+        @if(isset($firma_facturacion) and !is_null($firma_facturacion))
+            <table style="font-size: 10px">
+                <tr>
+                    <td class="vertical-align-top" style="width: 50%; text-align: right">
+                        <img style="width: 250px;" src="{{$firma_facturacion}}">
+                    </td>
+                </tr>
+            </table>
+        @endif
     </div>
 </body>
 </html>

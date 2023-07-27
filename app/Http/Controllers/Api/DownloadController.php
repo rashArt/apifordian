@@ -154,8 +154,9 @@ class DownloadController extends Controller
     public function publicDownload($identification, $file, $type_response = false)
     {
 
-        if(!config('system_configuration.allow_public_download')){
-            $u = new \App\Utils;
+//        if(!config('system_configuration.allow_public_download')){
+          if(!env('ALLOW_PUBLIC_DONWLOAD', false)){
+                $u = new \App\Utils;
 
             if(strpos($file, 'Attachment-') === false and strpos($file, 'ZipAttachm-') === false){
 
