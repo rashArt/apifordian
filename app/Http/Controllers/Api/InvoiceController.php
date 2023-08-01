@@ -39,6 +39,145 @@ class InvoiceController extends Controller
 {
     use DocumentTrait;
 
+    public function preeliminarview(InvoiceRequest $request)
+    {
+        // User
+        $user = auth()->user();
+
+        // User company
+        $company = $user->company;
+
+        // Actualizar Tablas
+        $this->ActualizarTablas();
+
+        // Type document
+        $typeDocument = TypeDocument::findOrFail($request->type_document_id);
+
+        // Customer
+        $customerAll = collect($request->customer);
+        if(isset($customerAll['municipality_id_fact']))
+            $customerAll['municipality_id'] = Municipality::where('codefacturador', $customerAll['municipality_id_fact'])->first();
+        $customer = new User($customerAll->toArray());
+
+        // Customer company
+        $customer->company = new Company($customerAll->toArray());
+
+        // Delivery
+        if($request->delivery){
+            $deliveryAll = collect($request->delivery);
+            $delivery = new User($deliveryAll->toArray());
+
+            // Delivery company
+            $delivery->company = new Company($deliveryAll->toArray());
+
+            // Delivery party
+            $deliverypartyAll = collect($request->deliveryparty);
+            $deliveryparty = new User($deliverypartyAll->toArray());
+
+            // Delivery party company
+            $deliveryparty->company = new Company($deliverypartyAll->toArray());
+        }
+        else{
+            $delivery = NULL;
+            $deliveryparty = NULL;
+        }
+
+        // Type operation id
+        if(!$request->type_operation_id)
+          $request->type_operation_id = 10;
+        $typeoperation = TypeOperation::findOrFail($request->type_operation_id);
+
+        // Currency id
+        if(isset($request->idcurrency) and (!is_null($request->idcurrency))){
+            $idcurrency = TypeCurrency::findOrFail($request->idcurrency);
+            $calculationrate = $request->calculationrate;
+            $calculationratedate = $request->calculationratedate;
+        }
+        else{
+            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+            $calculationrate = 1;
+            $calculationratedate = Carbon::now()->format('Y-m-d');
+        }
+
+        // Resolution
+
+        $request->resolution->number = $request->number;
+        $resolution = $request->resolution;
+
+        // Date time
+        $date = $request->date;
+        $time = $request->time;
+
+        // Notes
+        $notes = $request->notes;
+
+        // Order Reference
+        if($request->order_reference)
+            $orderreference = new OrderReference($request->order_reference);
+        else
+            $orderreference = NULL;
+
+        // Health Fields
+        if($request->health_fields)
+            $healthfields = new HealthField($request->health_fields);
+        else
+            $healthfields = NULL;
+
+        // Payment form default
+        $paymentFormAll = (object) array_merge($this->paymentFormDefault, $request->payment_form ?? []);
+        $paymentForm = PaymentForm::findOrFail($paymentFormAll->payment_form_id);
+        $paymentForm->payment_method_code = PaymentMethod::findOrFail($paymentFormAll->payment_method_id)->code;
+        $paymentForm->nameMethod = PaymentMethod::findOrFail($paymentFormAll->payment_method_id)->name;
+        $paymentForm->payment_due_date = $paymentFormAll->payment_due_date ?? null;
+        $paymentForm->duration_measure = $paymentFormAll->duration_measure ?? null;
+
+        // Allowance charges
+        $allowanceCharges = collect();
+        foreach ($request->allowance_charges ?? [] as $allowanceCharge) {
+            $allowanceCharges->push(new AllowanceCharge($allowanceCharge));
+        }
+
+        // Tax totals
+        $taxTotals = collect();
+        foreach ($request->tax_totals ?? [] as $taxTotal) {
+            $taxTotals->push(new TaxTotal($taxTotal));
+        }
+
+        // Retenciones globales
+        $withHoldingTaxTotal = collect();
+//        $withHoldingTaxTotalCount = 0;
+//        $holdingTaxTotal = $request->holding_tax_total;
+        foreach($request->with_holding_tax_total ?? [] as $item) {
+//            $withHoldingTaxTotalCount++;
+//            $holdingTaxTotal = $request->holding_tax_total;
+            $withHoldingTaxTotal->push(new TaxTotal($item));
+        }
+
+        // Prepaid Payment
+        if($request->prepaid_payment)
+            $prepaidpayment = new PrepaidPayment($request->prepaid_payment);
+        else
+            $prepaidpayment = NULL;
+
+        // Legal monetary totals
+        $legalMonetaryTotals = new LegalMonetaryTotal($request->legal_monetary_totals);
+
+        // Invoice lines
+
+        $invoiceLines = collect();
+        foreach ($request->invoice_lines as $invoiceLine) {
+            $invoiceLines->push(new InvoiceLine($invoiceLine));
+        }
+
+        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, "", "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
+
+        return [
+            'message' => "Vista preeliminar #{$resolution->next_consecutive} generada con éxito",
+            'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+            'base64invoicepdf'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf"))),
+        ];
+    }
+
     /**
      * Store.
      *

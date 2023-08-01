@@ -114,6 +114,7 @@ Route::middleware('auth:api')->group(function () {
 
         // Invoice
         Route::prefix('/invoice')->group(function () {
+            Route::post('/preeliminar-view', 'Api\InvoiceController@preeliminarview');
             Route::post('/{testSetId}', 'Api\InvoiceController@testSetStore');
             Route::post('/', 'Api\InvoiceController@store');
             Route::get('/current_number/{type}/{prefix?}/{ignore_state_document_id?}', 'Api\InvoiceController@currentNumber');
