@@ -172,6 +172,7 @@ class InvoiceController extends Controller
         $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, "", "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
 
         return [
+            'success' => true,
             'message' => "Vista preeliminar #{$resolution->next_consecutive} generada con éxito",
             'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
             'base64invoicepdf'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf"))),
