@@ -10,6 +10,7 @@ use \App\Employee;
 use \App\Company;
 use Validator;
 use App\Traits\DocumentTrait;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
