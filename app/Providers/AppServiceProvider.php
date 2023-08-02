@@ -34,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+        if (config('system_configuration.force_https')) URL::forceScheme('https');
+
         Validator::extend('passwordcustomer_verify', function($attribute, $value, $parameters, $validator) {
             $customer = Customer::where('identification_number', '=', $parameters[0])->get();
             if(count($customer) > 0)
