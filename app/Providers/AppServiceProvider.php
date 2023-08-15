@@ -10,6 +10,7 @@ use \App\Employee;
 use \App\Company;
 use Validator;
 use App\Traits\DocumentTrait;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        if (config('system_configuration.force_https')) URL::forceScheme('https');
 
         Validator::extend('passwordcustomer_verify', function($attribute, $value, $parameters, $validator) {
             $customer = Customer::where('identification_number', '=', $parameters[0])->get();
