@@ -41,7 +41,10 @@ class SellerLoginController extends Controller
     {
         $company = Company::where('identification_number', '=', $company_idnumber)->get();
         if (count($company) > 0)
-            return view('sellerlogin', compact('company_idnumber'));
+            if($company[0]->allow_seller_login)
+                return view('sellerlogin', compact('company_idnumber'));
+            else
+                return view('customerloginmensaje', ['titulo' => 'Error en el ingreso para empresas', 'mensaje' => 'Esta empresa no tiene habilitada esta opcion']);
         else
             return view('customerloginmensaje', ['titulo' => 'Error en el ingreso para empresas', 'mensaje' => 'Los datos de emisor no se encuentran registrados.']);
     }
