@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use ubl21dian\Templates\SOAP\GetStatus;
 use ubl21dian\Templates\SOAP\GetStatusZip;
+use ubl21dian\Templates\SOAP\GetStatusEvents;
 use App\Traits\DocumentTrait;
 use App\TypeDocument;
 use App\Mail\InvoiceMail;
@@ -900,5 +901,95 @@ class StateController extends Controller
                 'certificate_days_left' => $certificate_days_left,
             ];
         }
+    }
+
+    /**
+     * Events Document.
+     *
+     * @param string $trackId
+     *
+     * @return array
+     */
+    public function events_document($trackId)
+    {
+        // User
+        $user = auth()->user();
+
+        $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
+        $getStatus = new GetStatusEvents($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url);
+
+        $getStatus->trackId = $trackId;
+        if (!is_dir(storage_path("app/public/{$company->identification_number}"))) {
+            mkdir(storage_path("app/public/{$company->identification_number}"));
+        }
+
+        $respuestadian = '';
+        $typeDocument = TypeDocument::findOrFail(7);
+        $resolution = NULL;
+        $customer = NULL;
+        $cufecude = '';
+//        $xml = new \DOMDocument;
+        $ar = new \DOMDocument;
+        try{
+            $respuestadian = $getStatus->signToSend(storage_path("app/public/{$company->identification_number}/ReqEVENTS-".$trackId.".xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaEVENTS-".$trackId.".xml"));
+            if(isset($respuestadian->html))
+                return [
+                    'success' => false,
+                    'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde..."
+                ];
+
+            $cufecude = $respuestadian->Envelope->Body->GetStatusEventResponse->GetStatusEventResult->XmlDocumentKey;
+            if($respuestadian->Envelope->Body->GetStatusEventResponse->GetStatusEventResult->IsValid == 'true'){
+                $appresponsexml = base64_decode($respuestadian->Envelope->Body->GetStatusEventResponse->GetStatusEventResult->XmlBase64Bytes);
+                $i = 0;
+                $events = [];
+                while($this->getQuery($appresponsexml, 'cac:DocumentResponse', true, $i) != null){
+                    $event_number = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:Response/cbc:ReferenceID', true, $i)->nodeValue;
+                    $event_code = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:Response/cbc:ResponseCode', true, $i)->nodeValue;
+                    $event_description = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:Response/cbc:Description', true, $i)->nodeValue;
+                    $event_date = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:Response/cbc:EffectiveDate', true, $i)->nodeValue;
+                    $event_time = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:Response/cbc:EffectiveTime', true, $i)->nodeValue;
+                    $event_cude = $this->getQuery($appresponsexml, 'cac:DocumentResponse/cac:DocumentReference/cbc:UUID', true, $i)->nodeValue;
+
+                    array_push($events, [
+                        'event_number' => $event_number,
+                        'dian_code' => $event_code,
+                        'description' => $event_description,
+                        'date' => $event_date,
+                        'time' => $event_time,
+                        'cude' => $event_cude
+                    ]);
+                    $i++;
+                }
+//                $ar->loadXML($appresponsexml);
+            }
+            else
+                return [
+                    'success' => false,
+                    'message' => 'Consulta de eventos generada con exito ',
+                    'ResponseDian' => $respuestadian,
+                    'cufecude'=>$cufecude,
+                    'certificate_days_left' => $certificate_days_left,
+                ];
+            } catch (\Exception $e) {
+                return $this->is_error($e->getMessage());
+        }
+        return [
+            'success' => true,
+            'message' => 'Consulta de eventos generada con exito ',
+            'events' => $events,
+            'ResponseDian' => $respuestadian,
+            'cufecude'=>$cufecude,
+            'certificate_days_left' => $certificate_days_left,
+        ];
     }
 }

@@ -187,6 +187,7 @@ Route::middleware('auth:api')->group(function () {
         Route::prefix('/status')->group(function () {
             Route::post('/zip/{trackId}/{GuardarEn?}', 'Api\StateController@zip');
             Route::post('/document/{trackId}/{GuardarEn?}', 'Api\StateController@document');
+            Route::post('/events-document/{trackId}', 'Api\StateController@events_document');
         });
 
         // Numbering Ranges
