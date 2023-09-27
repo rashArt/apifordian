@@ -65,7 +65,8 @@ class ConfigurationController extends Controller
             $resolutions = Resolution::where('company_id', Company::where('identification_number', $identification_number)->firstOrFail()->id)->get();
             return compact('resolutions');
         } catch (Exception $e) {
-            return [];
+            $resolutions = [];
+            return compact('resolutions');
         }
     }
 
