@@ -25,6 +25,7 @@ use App\HealthTypeDocumentIdentification;
 use App\HealthTypeUser;
 use App\HealthCoverage;
 use App\HealthContractingPaymentMethod;
+use App\Resolution;
 use App\Certificate;
 use App\Administrator;
 use App\TypePlan;
@@ -57,6 +58,15 @@ class ConfigurationController extends Controller
     public function table_health_coverages(){
         $health_coverages = HealthCoverage::all();
         return compact('health_coverages');
+    }
+
+    public function table_resolutions($identification_number){
+        try{
+            $resolutions = Resolution::where('company_id', Company::where('identification_number', $identification_number)->firstOrFail()->id)->get();
+            return compact('resolutions');
+        } catch (Exception $e) {
+            return [];
+        }
     }
 
     public function emailconfig()
