@@ -77,4 +77,52 @@ class ResumeController extends Controller
             'company' => $company->user->name
         ];
     }
+
+    public function information_by_page($nit, $page)
+    {
+        if($page <= 0)
+            $page = 1;
+
+        $company = Company::where('identification_number', $nit)->first();
+
+        if(!$company)
+        {
+            return [
+                'success' => false,
+                'message' => 'No se encontraron datos del NIT',
+            ];
+        }
+
+        $perPage = 100;
+
+        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
+
+        $invoice = (object)[
+            'name' => 'Factura de Venta Nacional',
+            'count' => count($i),
+            'documents' => $i
+        ];
+
+        $credit_note = (object)[
+            'name' => 'Nota Credito',
+            'count' => count($c),
+            'documents' => $c
+        ];
+
+        $debit_note = (object)[
+            'name' => 'Nota Debito',
+            'count' => count($d),
+            'documents' => $d
+        ];
+
+        return [
+            'success' => true,
+            'message' => 'NIT Encontrado',
+            'data'=> array($invoice, $credit_note, $debit_note),
+            'company' => $company->user->name
+        ];
+    }
+
 }
