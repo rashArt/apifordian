@@ -287,7 +287,7 @@ Route::prefix('/information')->group(function () {
     Route::get('/{nit}', 'ResumeController@information');
     Route::get('/{nit}/{desde}', 'ResumeController@information');
     Route::get('/{nit}/{desde}/{hasta}', 'ResumeController@information');
-    Route::get('/{nit}/page/{page}', 'ResumeController@information_by_page');
+    Route::get('/{nit}/page/{page}/page', 'ResumeController@information_by_page');
 });
 
 // Send email change customer password
