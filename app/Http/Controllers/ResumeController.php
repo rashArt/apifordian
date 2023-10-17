@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Document;
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class ResumeController extends Controller
 {
@@ -95,9 +93,9 @@ class ResumeController extends Controller
 
         $perPage = 100;
 
-        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
-        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
-        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->skip(($page - 1) * $perPage)->take($perPage)->get();
 
         $invoice = (object)[
             'name' => 'Factura de Venta Nacional',
