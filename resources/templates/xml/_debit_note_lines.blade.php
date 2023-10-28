@@ -27,6 +27,23 @@
             <cac:StandardItemIdentification>
                 <cbc:ID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->type_item_identification->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->type_item_identification->code)}}" schemeAgencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->type_item_identification->code_agency)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->code)}}</cbc:ID>
             </cac:StandardItemIdentification>
+            @if($request->isTransport)
+                @if($debitNoteLine->is_RNDC)
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>01</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->RNDC_consignment_number)}}</cbc:Value>
+                    </cac:AdditionalItemProperty>
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>02</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->internal_consignment_number)}}</cbc:Value>
+                    </cac:AdditionalItemProperty>
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>03</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->value_consignment)}}</cbc:Value>
+                        <cbc:ValueQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->unit_measure_consignment->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $debitNoteLine->quantity_consignment)}}</cbc:ValueQuantity>
+                    </cac:AdditionalItemProperty>
+                @endif
+            @endif
         </cac:Item>
         <cac:Price>
             @if(isset($idcurrency))

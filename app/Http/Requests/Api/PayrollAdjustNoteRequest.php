@@ -162,6 +162,8 @@ class PayrollAdjustNoteRequest extends FormRequest
             'smtp_parameters.username' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.password' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.encryption' => 'nullable|required_with:smtp_parameters|string',
+            'smtp_parameters.from_address' => 'nullable|required_with:smtp_parameters|string',
+            'smtp_parameters.from_name' => 'nullable|required_with:smtp_parameters|string',
 
             // Payment
             'payment' => 'nullable|required_if:type_note,1|array',

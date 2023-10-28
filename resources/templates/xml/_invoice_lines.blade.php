@@ -3,7 +3,15 @@
         @if($request->isMandate)
             <cbc:ID schemeID="1">{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
         @else
-            <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+            @if($request->isTransport)
+                @if($invoiceLine->is_RNDC)
+                    <cbc:ID schemeID="1">{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+                @else
+                    <cbc:ID schemeID="0">{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+                @endif
+            @else
+                <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+            @endif
         @endif
         @if (preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->description) == 'Administración')
             <cbc:Note>{{"Contrato de servicios AIU por concepto de: ".preg_replace("/[\r\n|\n|\r]+/", "", $noteAIU)}}</cbc:Note>
@@ -63,6 +71,23 @@
                        </cac:AgentParty>
                     </cac:PowerOfAttorney>
                 </cac:InformationContentProviderParty>
+            @endif
+            @if($request->isTransport)
+                @if($invoiceLine->is_RNDC)
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>01</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->RNDC_consignment_number)}}</cbc:Value>
+                    </cac:AdditionalItemProperty>
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>02</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->internal_consignment_number)}}</cbc:Value>
+                    </cac:AdditionalItemProperty>
+                    <cac:AdditionalItemProperty>
+                        <cbc:Name>03</cbc:Name>
+                        <cbc:Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->value_consignment)}}</cbc:Value>
+                        <cbc:ValueQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->unit_measure_consignment->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->quantity_consignment)}}</cbc:ValueQuantity>
+                    </cac:AdditionalItemProperty>
+                @endif
             @endif
         </cac:Item>
         <cac:Price>

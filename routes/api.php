@@ -146,6 +146,12 @@ Route::middleware('auth:api')->group(function () {
             Route::post('/', 'Api\InvoiceMandateController@store');
         });
 
+        // Transport Invoice
+        Route::prefix('/invoice-transport')->group(function () {
+            Route::post('/{testSetId}', 'Api\InvoiceTransportController@testSetStore');
+            Route::post('/', 'Api\InvoiceTransportController@store');
+        });
+
         // Credit Notes
         Route::prefix('/credit-note')->group(function () {
             Route::post('/{testSetId}', 'Api\CreditNoteController@testSetStore');

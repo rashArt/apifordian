@@ -6,7 +6,7 @@ use App\Rules\ResolutionSetting;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SupportDocumentRequest extends FormRequest
+class InvoiceTransportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -65,6 +65,20 @@ class SupportDocumentRequest extends FormRequest
             'html_buttons' => 'nullable|string',
             'html_footer' => 'nullable|string',
 
+            // Invoice template name
+            'invoice_template' => 'nullable|string',
+
+            // Dynamic field
+            'dynamic_field' => 'nullable|array',
+            'dynamic_field.name' => 'nullable|required_with:dynamic_field|string',
+            'dynamic_field.value' => 'nullable|required_with:dynamic_field|string',
+            'dynamic_field.add_to_total' => 'nullable|required_with:dynamic_field|boolean',
+
+            // Other fields for templates
+            'sales_assistant' => 'nullable|string',
+            'web_site' => 'nullable|string',
+            'template_token' => 'nullable|required_with:invoice_template|string',
+
             // Prefijo del Nombre del AttachedDocument
             'atacheddocument_name_prefix' => 'nullable|string',
 
@@ -83,19 +97,13 @@ class SupportDocumentRequest extends FormRequest
             'sendmailtome' => 'nullable|boolean',
             'send_customer_credentials' => 'nullable|boolean',
 
-            // HTML string body email
-            'html_header' => 'nullable|string',
-            'html_body' => 'nullable|string',
-            'html_buttons' => 'nullable|string',
-            'html_footer' => 'nullable|string',
-
             // Nombre Archivo
             'GuardarEn' => 'nullable|string',
 
             // Document
             'type_document_id' => [
                 'required',
-                'in:11',
+                'in:1',
                 'exists:type_documents,id',
                 new ResolutionSetting(),
             ],
@@ -127,33 +135,39 @@ class SupportDocumentRequest extends FormRequest
             // Notes
             'notes' => 'nullable|string',
 
+            //Elaborado y Revisado
+            'elaborated' => 'nullable|string',
+            'reviewed' => 'nullable|string',
+
             // Tipo operacion
-            'type_operation_id' => 'nullable|in:23,24',
+            'type_operation_id' => 'nullable|numeric|exists:type_operations',
 
             // Id moneda negociacion
             'idcurrency' => 'nullable|integer|exists:type_currencies,id',
             'calculationrate' => 'nullable|required_with:idcurrency|numeric',
             'calculationratedate' => 'nullable|required_with:idcurrency|date_format:Y-m-d',
 
-            // Seller
-            'seller' => 'required|array',
-            'seller.identification_number' => 'required|alpha_num|between:1,15',
-            'seller.dv' => 'nullable|numeric|digits:1|dian_dv:'.$this->seller["identification_number"],
-            'seller.type_document_identification_id' => 'nullable|exists:type_document_identifications,id',
-            'seller.type_organization_id' => 'nullable|exists:type_organizations,id',
-            'seller.language_id' => 'nullable|exists:languages,id',
-            'seller.country_id' => 'nullable|exists:countries,id',
-            'seller.municipality_id' => 'nullable|exists:municipalities,id',
-            'seller.municipality_id_fact' => 'nullable|exists:municipalities,codefacturador',
-            'seller.type_regime_id' => 'nullable|exists:type_regimes,id',
-            'seller.tax_id' => 'nullable|exists:taxes,id',
-            'seller.type_liability_id' => 'nullable|exists:type_liabilities,id',
-            'seller.name' => 'required|string',
-            'seller.phone' => 'required|string|max:20',
-            'seller.address' => 'required|string',
-            'seller.email' => 'required|string|email',
-            'seller.merchant_registration' => 'required|string',
-            'seller.postal_zone_code' => 'required|numeric',
+            // Customer
+            'customer' => 'required|array',
+            'customer.identification_number' => 'required|alpha_num|between:1,15',
+            'customer.dv' => 'nullable|numeric|digits:1|dian_dv:'.$this->customer["identification_number"],
+            'customer.type_document_identification_id' => 'nullable|exists:type_document_identifications,id',
+            'customer.type_organization_id' => 'nullable|exists:type_organizations,id',
+            'customer.language_id' => 'nullable|exists:languages,id',
+            'customer.country_id' => 'nullable|exists:countries,id',
+            'customer.municipality_id' => 'nullable|exists:municipalities,id',
+            'customer.municipality_id_fact' => 'nullable|exists:municipalities,codefacturador',
+            'customer.type_regime_id' => 'nullable|exists:type_regimes,id',
+            'customer.tax_id' => 'nullable|exists:taxes,id',
+            'customer.type_liability_id' => 'nullable|exists:type_liabilities,id',
+            'customer.name' => 'required|string',
+            'customer.phone' => 'nullable|string|max:20',
+//            'customer.phone' => 'required_unless:customer.identification_number,222222222222|string|max:20',
+            'customer.address' => 'nullable|string',
+//            'customer.address' => 'required_unless:customer.identification_number,222222222222|string',
+            'customer.email' => 'required_unless:customer.identification_number,222222222222|string|email',
+//            'customer.merchant_registration' => 'required|string',
+            'customer.merchant_registration' => 'nullable|string',
 
             // SMTP Server Parameters
             'smtp_parameters' => 'nullable|array',
@@ -164,6 +178,11 @@ class SupportDocumentRequest extends FormRequest
             'smtp_parameters.encryption' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.from_address' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.from_name' => 'nullable|required_with:smtp_parameters|string',
+
+            // Order Reference
+            'order_reference' => 'nullable|array',
+            'order_reference.id_order' => 'nullable|string',
+            'order_reference.issue_date_order' => 'nullable|date_format:Y-m-d',
 
             // Delivery
             'delivery' => 'nullable|array',
@@ -234,6 +253,9 @@ class SupportDocumentRequest extends FormRequest
             'prepaid_payment.paiddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.instructionid' => 'nullable|string',
 
+            // Previous Balance
+            'previous_balance' => 'nullable|numeric',
+
             // Legal monetary totals
             'legal_monetary_totals' => 'required|array',
             'legal_monetary_totals.line_extension_amount' => 'required|numeric',
@@ -246,6 +268,12 @@ class SupportDocumentRequest extends FormRequest
 
             // Invoice lines
             'invoice_lines' => 'required|array',
+            'invoice_lines.*.is_RNDC' => 'required|boolean',
+            'invoice_lines.*.RNDC_consignment_number' => 'required_if:invoice_lines.*.is_RNDC,true|numeric',
+            'invoice_lines.*.internal_consignment_number' => 'required_if:invoice_lines.*.is_RNDC,true|string',
+            'invoice_lines.*.value_consignment' => 'required_if:invoice_lines.*.is_RNDC,true|integer',
+            'invoice_lines.*.unit_measure_consignment_id' => 'required_if:invoice_lines.*.is_RNDC,true|exists:unit_measures,id',
+            'invoice_lines.*.quantity_consignment' => 'required_if:invoice_lines.*.is_RNDC,true|numeric',
             'invoice_lines.*.unit_measure_id' => 'required|exists:unit_measures,id',
             'invoice_lines.*.invoiced_quantity' => 'required|numeric',
             'invoice_lines.*.line_extension_amount' => 'required|numeric',
@@ -271,8 +299,6 @@ class SupportDocumentRequest extends FormRequest
             'invoice_lines.*.type_item_identification_id' => 'required|exists:type_item_identifications,id',
             'invoice_lines.*.price_amount' => 'required|numeric',
             'invoice_lines.*.base_quantity' => 'required|numeric',
-            'invoice_lines.*.type_generation_transmition_id' => 'required|exists:type_generation_transmitions,id',
-            'invoice_lines.*.start_date' => 'required|date_format:Y-m-d',
         ];
     }
 }

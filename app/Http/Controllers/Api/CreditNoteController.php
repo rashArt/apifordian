@@ -250,6 +250,8 @@ class CreditNoteController extends Controller
         $creditNoteLines = collect();
         foreach ($request->credit_note_lines as $creditNoteLine) {
             $creditNoteLines->push(new CreditNoteLine($creditNoteLine));
+            if(isset($creditNoteLine['is_RNDC']) && $creditNoteLine['is_RNDC'] == TRUE)
+                $request->isTransport = TRUE;
         }
 
         // Billing reference
@@ -259,6 +261,8 @@ class CreditNoteController extends Controller
             $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
+        if(isset($request->is_RNDC) && $request->is_RNDC == TRUE)
+            $request->isTransport = TRUE;
         $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
 
         // Register Customer
@@ -672,6 +676,8 @@ class CreditNoteController extends Controller
         $creditNoteLines = collect();
         foreach ($request->credit_note_lines as $creditNoteLine) {
             $creditNoteLines->push(new CreditNoteLine($creditNoteLine));
+            if(isset($creditNoteLine['is_RNDC']) && $creditNoteLine['is_RNDC'] == TRUE)
+                $request->isTransport = TRUE;
         }
 
         // Billing reference
@@ -681,6 +687,8 @@ class CreditNoteController extends Controller
             $billingReference = new BillingReference($request->billing_reference);
 
         // Create XML
+        if(isset($request->is_RNDC) && $request->is_RNDC == TRUE)
+            $request->isTransport = TRUE;
         $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
 
         // Register Customer

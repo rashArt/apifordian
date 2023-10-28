@@ -169,6 +169,8 @@ class DebitNoteRequest extends FormRequest
             'smtp_parameters.username' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.password' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.encryption' => 'nullable|required_with:smtp_parameters|string',
+            'smtp_parameters.from_address' => 'nullable|required_with:smtp_parameters|string',
+            'smtp_parameters.from_name' => 'nullable|required_with:smtp_parameters|string',
 
             // Order Reference
             'order_reference' => 'nullable|array',
@@ -246,6 +248,12 @@ class DebitNoteRequest extends FormRequest
 
             // Debit note lines
             'debit_note_lines' => 'required|array',
+            'debit_note_lines.*.is_RNDC' => 'nullable|boolean',
+            'debit_note_lines.*.RNDC_consignment_number' => 'nullable|required_if:debit_note_lines.*.is_RNDC,true|numeric',
+            'debit_note_lines.*.internal_consignment_number' => 'nullable|required_if:debit_note_lines.*.is_RNDC,true|string',
+            'debit_note_lines.*.value_consignment' => 'nullable|required_if:debit_note_lines.*.is_RNDC,true|integer',
+            'debit_note_lines.*.unit_measure_consignment_id' => 'nullable|required_if:debit_note_lines.*.is_RNDC,true|exists:unit_measures,id',
+            'debit_note_lines.*.quantity_consignment' => 'nullable|required_if:debit_note_lines.*.is_RNDC,true|numeric',
             'debit_note_lines.*.unit_measure_id' => 'required|exists:unit_measures,id',
             'debit_note_lines.*.invoiced_quantity' => 'required|numeric',
             'debit_note_lines.*.line_extension_amount' => 'required|numeric',

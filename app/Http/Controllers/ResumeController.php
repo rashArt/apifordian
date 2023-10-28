@@ -93,9 +93,9 @@ class ResumeController extends Controller
 
         $perPage = 100;
 
-        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->skip(($page - 1) * $perPage)->take($perPage)->get();
-        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->skip(($page - 1) * $perPage)->take($perPage)->get();
-        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
+        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
+        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
 
         $invoice = (object)[
             'name' => 'Factura de Venta Nacional',
