@@ -43,7 +43,11 @@
                         @endif
                         <cac:TaxScheme>
                             <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax->code)}}</cbc:ID>
-                            <cbc:Name>{{preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax->name)}}</cbc:Name>
+                            @if($taxTotal->tax_id == 15)
+                                <cbc:Name>{{preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax_name)}}</cbc:Name>
+                            @else
+                                <cbc:Name>{{preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax->name)}}</cbc:Name>
+                            @endif
                         </cac:TaxScheme>
                     </cac:TaxCategory>
                 </cac:TaxSubtotal>

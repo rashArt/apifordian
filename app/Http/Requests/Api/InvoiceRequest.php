@@ -254,6 +254,7 @@ class InvoiceRequest extends FormRequest
             // Tax totals
             'tax_totals' => 'nullable|array',
             'tax_totals.*.tax_id' => 'nullable|required_with:allowance_charges|exists:taxes,id',
+            'tax_totals.*.tax_name' => 'nullable|required_if:tax_totals.*.tax_id,15|string',
             'tax_totals.*.percent' => 'nullable|required_unless:tax_totals.*.tax_id,10|numeric',
             'tax_totals.*.tax_amount' => 'nullable|required_with:allowance_charges|numeric',
             'tax_totals.*.taxable_amount' => 'nullable|required_with:allowance_charges|numeric',
@@ -307,6 +308,7 @@ class InvoiceRequest extends FormRequest
             'invoice_lines.*.allowance_charges.*.multiplier_factor_numeric' => 'nullable|required_if:invoice_lines.*.allowance_charges.*.charge_indicator,true|numeric',
             'invoice_lines.*.tax_totals' => 'nullable|array',
             'invoice_lines.*.tax_totals.*.tax_id' => 'nullable|required_with:invoice_lines.*.tax_totals|exists:taxes,id',
+            'invoice_lines.*.tax_totals.*.tax_name' => 'nullable|required_if:invoice_lines.*.tax_totals.*.tax_id,15|string',
             'invoice_lines.*.tax_totals.*.tax_amount' => 'nullable|required_with:invoice_lines.*.tax_totals|numeric',
             'invoice_lines.*.tax_totals.*.taxable_amount' => 'nullable|required_with:invoice_lines.*.tax_totals|numeric',
             'invoice_lines.*.tax_totals.*.percent' => 'nullable|required_unless:invoice_lines.*.tax_totals.*.tax_id,10|numeric',

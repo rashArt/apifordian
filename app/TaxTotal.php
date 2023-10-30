@@ -21,7 +21,7 @@ class TaxTotal extends Model
      * @var array
      */
     protected $fillable = [
-        'tax_id', 'unit_measure_id', 'percent', 'tax_amount', 'taxable_amount', 'base_unit_measure', 'per_unit_amount',
+        'tax_id', 'tax_name', 'unit_measure_id', 'percent', 'tax_amount', 'taxable_amount', 'base_unit_measure', 'per_unit_amount',
     ];
 
     /**
