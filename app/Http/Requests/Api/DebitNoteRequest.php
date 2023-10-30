@@ -230,6 +230,7 @@ class DebitNoteRequest extends FormRequest
             // Tax totals
             'tax_totals' => 'nullable|array',
             'tax_totals.*.tax_id' => 'nullable|required_with:allowance_charges|exists:taxes,id',
+            'tax_totals.*.tax_name' => 'nullable|required_if:tax_totals.*.tax_id,15|string',
             'tax_totals.*.percent' => 'nullable|required_unless:tax_totals.*.tax_id,10|numeric',
             'tax_totals.*.tax_amount' => 'nullable|required_with:allowance_charges|numeric',
             'tax_totals.*.taxable_amount' => 'nullable|required_with:allowance_charges|numeric',
@@ -267,6 +268,7 @@ class DebitNoteRequest extends FormRequest
             'debit_note_lines.*.allowance_charges.*.multiplier_factor_numeric' => 'nullable|required_if:debit_note_lines.*.allowance_charges.*.charge_indicator,true|numeric',
             'debit_note_lines.*.tax_totals' => 'nullable|array',
             'debit_note_lines.*.tax_totals.*.tax_id' => 'nullable|required_with:debit_note_lines.*.tax_totals|exists:taxes,id',
+            'debit_note_lines.*.tax_totals.*.tax_name' => 'nullable|required_if:debit_note_lines.*.tax_totals.*.tax_id,15|string',
             'debit_note_lines.*.tax_totals.*.tax_amount' => 'nullable|required_with:debit_note_lines.*.tax_totals|numeric',
             'debit_note_lines.*.tax_totals.*.taxable_amount' => 'nullable|required_with:debit_note_lines.*.tax_totals|numeric',
             'debit_note_lines.*.tax_totals.*.percent' => 'nullable|required_unless:debit_note_lines.*.tax_totals.*.tax_id,10|numeric',
