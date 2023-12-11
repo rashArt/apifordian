@@ -31,6 +31,7 @@ use App\Mail\InvoiceMail;
 use Carbon\Carbon;
 use DateTime;
 use Storage;
+use DB;
 
 class InvoiceExportController extends Controller
 {
