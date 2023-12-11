@@ -104,7 +104,26 @@
                     @if(isset($request['number_account']))
                     <tr>
                         <td>Número de cuenta:</td>
-                        <td>{{ $request['number_account'] }}</td>
+                        <td>{{$request['number_account'] }}</td>
+                    </tr>
+                    @endif
+                    @if(isset($request['deliveryterms']))
+                    <tr>
+                        <td>Terminos de Entrega:</td>
+                        <td>{{$request['deliveryterms']['loss_risk_responsibility_code']}} - {{ $request['deliveryterms']['loss_risk'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>T.R.M:</td>
+                        <td>{{number_format($request['calculationrate'], 2)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha T.R.M:</td>
+                        <td>{{$request['calculationratedate']}}</td>
+                    </tr>
+                    <tr>
+                        @inject('currency', 'App\TypeCurrency')
+                        <td>Tipo Moneda:</td>
+                        <td>{{$currency->findOrFail($request['idcurrency'])['name']}}</td>
                     </tr>
                     @endif
                 </table>

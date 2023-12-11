@@ -972,35 +972,35 @@ class InvoiceController extends Controller
         $company = $user->company;
         $resolution = $company->resolutions->where('type_document_id', $type)->first();
 
-        // if(json_decode($prefix))
-        // {
-        //     $resolution = $company->resolutions->where('type_document_id', $type)->where('prefix', $prefix)->first();
-        // }
-
         if(is_null($prefix) || $prefix == "null"){
             //do nothing
         }else{
             $resolution = $company->resolutions->where('type_document_id', $type)->where('prefix', $prefix)->first();
         }
 
-
-        // $invoice = Document::where('identification_number', $company->identification_number)->where('type_document_id', $type)->where('state_document_id', 1)->where('prefix', $resolution->prefix)->get()->sortByDesc('number')->first();
-
-        $query_invoice = Document::where('identification_number', $company->identification_number)
-                                    ->where('type_document_id', $type)
-                                    ->where('prefix', $resolution->prefix);
-
-        if(!json_decode($ignore_state_document_id)){
-            $query_invoice->where('state_document_id', 1);
+        try{
+            if(!json_decode($ignore_state_document_id))
+                    $maxValue = DB::table('documents')->where('identification_number', $company->identification_number)
+                                                      ->where('type_document_id', $type)
+                                                      ->where('prefix', $resolution->prefix)
+                                                      ->where('state_document_id', 1)->max(DB::raw('CAST(number AS UNSIGNED)'));
+            else
+                    $maxValue = DB::table('documents')->where('identification_number', $company->identification_number)
+                                                      ->where('type_document_id', $type)
+                                                      ->where('prefix', $resolution->prefix)
+                                                      ->max(DB::raw('CAST(number AS UNSIGNED)'));
+            return [
+                'number' => ($maxValue) ? ((int)$maxValue + 1) : (int)$resolution->from,
+                'success' => true,
+                'prefix' => $resolution->prefix
+            ];
+        } catch(\Exception $e) {
+            return [
+                'message' => "No se pudo realizar la operacion..",
+                'success' => false,
+                'Excepction' => $e->getMessage()
+            ];
         }
-
-        $invoice = $query_invoice->get()->sortByDesc('number')->first();
-
-        return [
-            'number' => ($invoice) ? ((int)$invoice->number + 1) : (int)$resolution->from,
-            'success' => true,
-            'prefix' => $resolution->prefix
-        ];
     }
 
     public function changestateDocument($type, $number)
