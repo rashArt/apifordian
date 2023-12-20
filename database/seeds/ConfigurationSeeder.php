@@ -134,6 +134,9 @@ class ConfigurationSeeder extends Seeder
         'type_generation_transmitions' => [
             'columns' => 'id, name, code, @created_at, @updated_at',
         ],
+        'incoterms' => [
+            'columns' => 'id, name, code, @created_at, @updated_at',
+        ],
     ];
 
     /**
