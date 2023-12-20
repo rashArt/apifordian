@@ -19,7 +19,7 @@ class ReceivedDocument extends Model
      *
      * @var array
      */
-    protected $fillable = ['identification_number', 'dv', 'name_seller', 'state_document_id', 'type_document_id', 'prefix', 'number', 'xml', 'cufe', 'date_issue', 'sale', 'total_discount', 'total_tax', 'subtotal', 'total', 'ambient_id', 'pdf', 'acu_recibo', 'cude_acu_recibo', 'payload_acu_recibo', 'rec_bienes', 'cude_rec_bienes', 'payload_rec_bienes', 'aceptacion', 'cude_aceptacion', 'payload_aceptacion', 'rechazo', 'cude_rechazo', 'payload_rechazo'];
+    protected $fillable = ['identification_number', 'dv', 'name_seller', 'state_document_id', 'type_document_id', 'prefix', 'number', 'xml', 'cufe', 'date_issue', 'sale', 'total_discount', 'total_tax', 'subtotal', 'total', 'ambient_id', 'pdf', 'acu_recibo', 'cude_acu_recibo', 'payload_acu_recibo', 'rec_bienes', 'cude_rec_bienes', 'payload_rec_bienes', 'aceptacion', 'cude_aceptacion', 'payload_aceptacion', 'rechazo', 'cude_rechazo', 'payload_rechazo', 'request_api', 'customer_name'];
 
     /**
      * The attributes that should be mutated to dates.

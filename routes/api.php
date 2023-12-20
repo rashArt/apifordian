@@ -224,6 +224,11 @@ Route::middleware('auth:api')->group(function () {
             Route::post('/{prefix}/{number}', 'Api\SendEventController@queryeventsprefixnumber');
         });
 
+        // Send event
+        Route::prefix('/send-event-data')->group(function () {
+            Route::post('/', 'Api\SendEventController@sendeventdata');
+        });
+
         // Query events UUID
         Route::prefix('/query-events-uuid')->group(function () {
             Route::post('/{uuid}', 'Api\SendEventController@queryeventsuuid');
