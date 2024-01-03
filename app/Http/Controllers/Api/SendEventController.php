@@ -1002,7 +1002,7 @@ class SendEventController extends Controller
                 'message' => $r['ResponseDian'],
             ];
 
-        if(!strpos($invoiceXMLStr, "<Invoice") || !strpos($invoiceXMLStr, "</Invoice>"))
+        if(strpos($invoiceXMLStr, "<Invoice") === 0 &&  strpos($invoiceXMLStr, "</Invoice>") === 0)
             return [
                 'success' => false,
                 'message' => "El CUFE ingresado no corresponde al XML de un documento Invoice ....",
