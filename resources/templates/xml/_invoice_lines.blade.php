@@ -14,7 +14,9 @@
             @endif
         @endif
         @if (preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->description) == 'Administración')
-            <cbc:Note>{{"Contrato de servicios AIU por concepto de: ".preg_replace("/[\r\n|\n|\r]+/", "", $noteAIU)}}</cbc:Note>
+            @isset($noteAIU)
+                <cbc:Note>{{"Contrato de servicios AIU por concepto de: ".preg_replace("/[\r\n|\n|\r]+/", "", $noteAIU)}}</cbc:Note>
+            @endisset
         @endif
         @if(isset($invoiceLine->notes))
             <cbc:Note>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->notes)}}</cbc:Note>

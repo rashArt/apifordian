@@ -233,7 +233,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php $ItemNro = 0; ?>
+            <?php $ItemNro = 0; $TotalDescuentosEnLineas = 0; ?>
             @foreach($request['debit_note_lines'] as $item)
                 <?php $ItemNro = $ItemNro + 1; ?>
                 <tr>
@@ -398,9 +398,13 @@
                                 <td class="text-right">{{number_format($TotalRetenciones, 2)}}</td>
                             </tr>
                             <tr>
-                                <td>Descuentos:</td>
-                                @if(isset($request->requested_monetary_totals['allowance_total_amount']))
-                                    <td class="text-right">{{number_format($request->requested_monetary_totals['allowance_total_amount'], 2)}}</td>
+                                <td>Descuentos En Lineas:</td>
+                                <td class="text-right">{{number_format($TotalDescuentosEnLineas, 2)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Descuentos Globales:</td>
+                                @if(isset($request->legal_monetary_totals['allowance_total_amount']))
+                                    <td class="text-right">{{number_format($request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
                                 @else
                                     <td class="text-right">{{number_format(0, 2)}}</td>
                                 @endif
@@ -409,12 +413,13 @@
                                 <td>Total Nota:</td>
                                 @if(isset($request->tarifaica))
                                     @if(isset($request->requested_monetary_totals['allowance_total_amount']))
-                                        <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), 2)}}</td>
+                                        <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'] + 0, 2), 2)}}</td>
+{{--                                        <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), 2)}}</td>   --}}
                                     @else
                                         <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'] + 0, 2), 2)}}</td>
                                     @endif
                                 @else
-                                    <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'], 2), 2)}}</td>
+                                    <td class="text-right">{{number_format(round($request->requested_monetary_totals['payable_amount'] + 0, 2), 2)}}</td>
                                 @endif
                             </tr>
                         </tbody>
@@ -435,13 +440,15 @@
                     <br>
                     @if(isset($request->tarifaica))
                         @if(isset($request->requested_monetary_totals['allowance_total_amount']))
-                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), $request->idcurrency)}} M/CTE*********.</span></p>
+                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + 0, 2), $request->idcurrency)}} M/CTE*********.</span></p>
+{{--                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), $request->idcurrency)}} M/CTE*********.</span></p> --}}
                         @else
                             <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + 0, 2), $request->idcurrency)}} M/CTE*********.</span></p>
                         @endif
                     @else
                         @if(isset($request->requested_monetary_totals['allowance_total_amount']))
-                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), $request->idcurrency)}} M/CTE*********.</span></p>
+                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + 0, 2), $request->idcurrency)}} M/CTE*********.</span></p>
+{{--                            <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + $request->requested_monetary_totals['allowance_total_amount'], 2), $request->idcurrency)}} M/CTE*********.</span></p> --}}
                         @else
                             <p style="font-size: 12px; font-weight: bold;">SON: <span style="font-weight: normal;">{{$Varios->convertir(round($request->requested_monetary_totals['payable_amount'] + 0, 2), $request->idcurrency)}} M/CTE*********.</span></p>
                         @endif
