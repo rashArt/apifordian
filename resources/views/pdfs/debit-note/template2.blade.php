@@ -290,6 +290,7 @@
                     @endif
 
                     @if(isset($item['allowance_charges']))
+                        <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount'] ?>
                         <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
                         @if(isset($item['tax_totals']))
                             <td class="text-right">{{number_format(($item['line_extension_amount'] + $item['tax_totals'][0]['tax_amount']), 2)}}</td>
