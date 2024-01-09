@@ -20,6 +20,7 @@ use App\Traits\DocumentTrait;
 use App\Http\Controllers\Controller;
 use App\Municipality;
 use App\OrderReference;
+use App\InvoicePeriod;
 use App\InvoiceLine as CreditNoteLine;
 use App\Http\Requests\Api\CreditNoteRequest;
 use ubl21dian\XAdES\SignCreditNote;
@@ -204,6 +205,12 @@ class CreditNoteController extends Controller
         else
             $orderreference = NULL;
 
+        // Invoice Period
+        if($request->invoice_period)
+            $invoice_period = new InvoicePeriod($request->invoice_period);
+        else
+            $invoice_period = NULL;
+
         // Health Fields
         if($request->health_fields)
             $healthfields = new HealthField($request->health_fields);
@@ -263,7 +270,7 @@ class CreditNoteController extends Controller
         // Create XML
         if(isset($request->is_RNDC) && $request->is_RNDC == TRUE)
             $request->isTransport = TRUE;
-        $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
+        $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields', 'invoice_period'));
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))

@@ -128,7 +128,7 @@ class CreditNoteRequest extends FormRequest
 
             // Discrepancy Response
             'discrepancyresponsecode' => 'nullable|integer|between:1,6',
-            'discrepancyresponsedescription' => 'nullable|string',
+            //'discrepancyresponsedescription' => 'nullable|string',
 
             // Billing Reference
             'billing_reference' => 'nullable|array',
@@ -172,6 +172,11 @@ class CreditNoteRequest extends FormRequest
             'smtp_parameters.encryption' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.from_address' => 'nullable|required_with:smtp_parameters|string',
             'smtp_parameters.from_name' => 'nullable|required_with:smtp_parameters|string',
+
+            // Invoice Period
+            'invoice_period' => 'nullable|required_if:type_operation_id,=,8|array',
+            'invoice_period.start_date' => 'nullable|required_with:invoice_period,|date_format:Y-m-d',
+            'invoice_period.end_date' => 'nullable|required_with:invoice_period,|date_format:Y-m-d',
 
             // Order Reference
             'order_reference' => 'nullable|array',
