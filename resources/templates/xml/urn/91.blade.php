@@ -38,6 +38,10 @@
     @isset($healthfields)
         @include('xml._invoice_period', ['node' => 'InvoicePeriod'])
     @endisset
+    {{-- InvoicePeriod --}}
+    @isset($invoice_period)
+        @include('xml._invoice_period', ['node' => 'InvoicePeriod'])
+    @endisset
     {{-- OrderReference --}}
     @isset($orderreference)
         @include('xml._order_reference', ['node' => 'OrderReference'])
