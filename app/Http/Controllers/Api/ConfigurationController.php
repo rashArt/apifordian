@@ -327,9 +327,12 @@ class ConfigurationController extends Controller
                         'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
                         'identifier_payroll' => $request->idpayroll ?? '',
                         'pin_payroll' => $request->pinpayroll ?? '',
-                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_sd' => $request->idsd ?? '',
-                        'pin_sd' => $request->pinsd ?? '',
+//                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+//                        'identifier_sd' => $request->idsd ?? '',
+//                        'pin_sd' => $request->pinsd ?? '',
+                        'url_eqdocs' => $request->urleqdocs ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_eqdocs' => $request->ideqdocs ?? '',
+                        'pin_eqdocs' => $request->pineqdocs ?? '',
                     ]
                 );
             else
@@ -341,9 +344,12 @@ class ConfigurationController extends Controller
                         'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
                         'identifier_payroll' => $request->idpayroll ?? $s->identifier_payroll,
                         'pin_payroll' => $request->pinpayroll ?? $s->pin_payroll,
-                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_sd' => $request->idsd ?? $s->identifier_sd,
-                        'pin_sd' => $request->pinsd ?? $s->pin_sd,
+//                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+//                        'identifier_sd' => $request->idsd ?? $s->identifier_sd,
+//                        'pin_sd' => $request->pinsd ?? $s->pin_sd,
+                        'url_eqdocs' => $request->urleqdocs ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_eqdocs' => $request->ideqdocs ?? '',
+                        'pin_eqdocs' => $request->pineqdocs ?? '',
                     ]
                 );
 
