@@ -114,6 +114,12 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/certificates-listing', 'Api\ConfigurationController@certificates_listing');
         Route::get('/certificates-listing/{company_identification_number}', 'Api\ConfigurationController@certificates_listing');
 
+        // Equivalent Documents
+        Route::prefix('/eqdoc')->group(function () {
+            Route::post('/{testSetId}', 'Api\EqDocController@testSetStore');
+            Route::post('/', 'Api\EqDocController@store');
+        });
+
         // Invoice
         Route::prefix('/invoice')->group(function () {
             Route::post('/preeliminar-view', 'Api\InvoiceController@preeliminarview');
