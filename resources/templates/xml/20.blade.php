@@ -20,6 +20,7 @@
     <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
     <cbc:IssueDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $date ?? Carbon\Carbon::now()->format('Y-m-d'))}}</cbc:IssueDate>
     <cbc:IssueTime>{{preg_replace("/[\r\n|\n|\r]+/", "", $time ?? Carbon\Carbon::now()->format('H:i:s'))}}-05:00</cbc:IssueTime>
+    <cbc:DueDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['due_date'] ?? Carbon\Carbon::now()->format('Y-m-d'))}}</cbc:DueDate>
     <cbc:InvoiceTypeCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->code)}}</cbc:InvoiceTypeCode>
     @isset($notes)
         <cbc:Note>{{preg_replace("/[\r\n|\n|\r]+/", "", $notes)}}</cbc:Note>

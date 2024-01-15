@@ -65,13 +65,13 @@ class EqDocRequest extends FormRequest
             'software_manufacturer.business_name' => 'required|string',
             'software_manufacturer.software_name' => 'required|string',
 
-            // Informacion del fabricante del software
+            // Informacion beneficios del comprador
             'buyer_benefits' => 'required|array',
             'buyer_benefits.code' => 'required|string',
             'buyer_benefits.name' => 'required|string',
             'buyer_benefits.points' => 'required|string',
 
-            // Informacion del fabricante del software
+            // Informacion de la caja
             'cash_information' => 'required|array',
             'cash_information.plate_number' => 'required|string',
             'cash_information.location' => 'required|string',
@@ -152,6 +152,10 @@ class EqDocRequest extends FormRequest
             // Date time
             'date' => 'nullable|date_format:Y-m-d|after_or_equal:'.optional($this->resolution)->date_from.'|before_or_equal:'.optional($this->resolution)->date_to,
             'time' => 'nullable|date_format:H:i:s',
+            'due_date' => 'nullable|date_format:Y-m-d|after_or_equal:date',
+
+            // Postal zone code
+            'postal_zone_code' => 'required|numeric',
 
             // Notes
             'notes' => 'nullable|string',

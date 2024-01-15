@@ -17,6 +17,9 @@
                         @if(isset($user->postal_zone_code))
                             <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->postal_zone_code)}}</cbc:PostalZone>
                         @endif
+                        @if($typeDocument->id == 15)
+                            <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['postal_zone_code'])}}</cbc:PostalZone>
+                        @endif
                         <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->name)}}</cbc:CountrySubentity>
                         <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->code)}}</cbc:CountrySubentityCode>
                     @else
@@ -82,7 +85,11 @@
         </cac:PartyTaxScheme>
         <cac:PartyLegalEntity>
             <cbc:RegistrationName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->name)}}</cbc:RegistrationName>
-            <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->type_document_identification->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:CompanyID>
+            @if($typeDocument->id == '15')
+                <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="31">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:CompanyID>
+            @else
+                <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->type_document_identification->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:CompanyID>
+            @endif
             <cac:CorporateRegistrationScheme>
                 @if(isset($supplier) || ($typeDocument->id == '11' || $typeDocument->id == '13'))
                     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $resolution->prefix)}}</cbc:ID>

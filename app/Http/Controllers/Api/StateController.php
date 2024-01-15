@@ -67,10 +67,20 @@ class StateController extends Controller
         else
             $certificate_days_left = $c['certificate_days_left'];
 
+        if($request->is_payroll && $request->is_eqdoc)
+            return [
+                'success' => false,
+                'message' => "Debe especificar un solo documento a validar NOMINA o DOCUMENTO EQUIVALENTE, si no especifica ninguno, por defecto se validara FACTURA ELECTRONICA."
+            ];
+
         if($request->is_payroll)
             $getStatusZip = new GetStatusZip($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_payroll);
         else
-            $getStatusZip = new GetStatusZip($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url);
+            if($request->is_eqdoc)
+                $getStatusZip = new GetStatusZip($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_eqdocs);
+            else
+                $getStatusZip = new GetStatusZip($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url);
+
         $getStatusZip->trackId = $trackId;
         $GuardarEn = str_replace("_", "\\", $GuardarEn);
 
@@ -520,10 +530,20 @@ class StateController extends Controller
         else
             $certificate_days_left = $c['certificate_days_left'];
 
+        if($request->is_payroll && $request->is_eqdoc)
+            return [
+                'success' => false,
+                'message' => "Debe especificar un solo documento a validar NOMINA o DOCUMENTO EQUIVALENTE, si no especifica ninguno, por defecto se validara FACTURA ELECTRONICA."
+            ];
+
         if($request->is_payroll)
             $getStatus = new GetStatus($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_payroll);
         else
-            $getStatus = new GetStatus($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url);
+            if($request->is_eqdoc)
+                $getStatus = new GetStatus($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url_eqdocs);
+            else
+                $getStatus = new GetStatus($user->company->certificate->path, $user->company->certificate->password, $user->company->software->url);
+
         $getStatus->trackId = $trackId;
         $GuardarEn = str_replace("_", "\\", $GuardarEn);
 

@@ -292,9 +292,9 @@ class EqDocController extends Controller
 
         // Signature XML
         $signInvoice = new SignInvoice($company->certificate->path, $company->certificate->password);
-        $signInvoice->softwareID = $company->software->identifier;
-        $signInvoice->pin = $company->software->pin;
-        $signInvoice->technicalKey = $resolution->technical_key;
+        $signInvoice->softwareID = $company->software->identifier_eqdocs;
+        $signInvoice->pin = $company->software->pin_eqdocs;
+//        $signInvoice->technicalKey = $resolution->technical_key;
 
         if ($request->GuardarEn){
             if (!is_dir($request->GuardarEn)) {
@@ -313,7 +313,7 @@ class EqDocController extends Controller
             $signInvoice->GuardarEn = storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml");
 
         $sendBillSync = new SendBillSync($company->certificate->path, $company->certificate->password);
-        $sendBillSync->To = $company->software->url;
+        $sendBillSync->To = $company->software->url_eqdocs;
         $sendBillSync->fileName = "{$resolution->next_consecutive}.xml";
         if ($request->GuardarEn)
             $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), $request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}");
@@ -742,9 +742,9 @@ class EqDocController extends Controller
 
         // Signature XML
         $signInvoice = new SignInvoice($company->certificate->path, $company->certificate->password);
-        $signInvoice->softwareID = $company->software->identifier;
-        $signInvoice->pin = $company->software->pin;
-        $signInvoice->technicalKey = $resolution->technical_key;
+        $signInvoice->softwareID = $company->software->identifier_eqdocs;
+        $signInvoice->pin = $company->software->pin_eqdocs;
+//        $signInvoice->technicalKey = $resolution->technical_key;
 
         if ($request->GuardarEn){
             if (!is_dir($request->GuardarEn)) {
@@ -759,7 +759,7 @@ class EqDocController extends Controller
             $signInvoice->GuardarEn = storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml");
         }
         $sendTestSetAsync = new SendTestSetAsync($company->certificate->path, $company->certificate->password);
-        $sendTestSetAsync->To = $company->software->url;
+        $sendTestSetAsync->To = $company->software->url_eqdocs;
         $sendTestSetAsync->fileName = "{$resolution->next_consecutive}.xml";
         if ($request->GuardarEn)
           $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), $request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}");

@@ -27,6 +27,9 @@ class StatusRequest extends FormRequest
             // Consulta de nomina
             'is_payroll' => 'nullable|boolean',
 
+            // Consulta de nomina
+            'is_eqdoc' => 'nullable|boolean',
+
             // Prefijo del Nombre del AttachedDocument
             'atacheddocument_name_prefix' => 'nullable|string',
 

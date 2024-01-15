@@ -3,7 +3,7 @@
         <ext:ExtensionContent>
             <sts:DianExtensions>
                 @isset($resolution)
-                    @if (preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '1' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '2' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '3' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '11')
+                    @if (preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '1' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '2' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '3' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '11' || preg_replace("/[\r\n|\n|\r]+/", "", $resolution->type_document_id) === '15')
                         @includeWhen($resolution->resolution, 'xml._invoice_control')
                     @endif
                 @endisset
@@ -12,7 +12,7 @@
                 </sts:InvoiceSource>
                 <sts:SoftwareProvider>
                     <sts:ProviderID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" @if (preg_replace("/[\r\n|\n|\r]+/", "", $company->type_document_identification_id) === '6' || preg_replace("/[\r\n|\n|\r]+/", "", $company->type_document_identification_id) === '3') schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->dv)}}" @endif @if (preg_replace("/[\r\n|\n|\r]+/", "", $company->type_document_identification_id) === '6' || preg_replace("/[\r\n|\n|\r]+/", "", $company->type_document_identification_id) === '3') schemeName="31" @else schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_document_identification->code)}}" @endif >{{preg_replace("/[\r\n|\n|\r]+/", "", $company->identification_number)}}</sts:ProviderID>
-                    <sts:SoftwareID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">{{preg_replace("/[\r\n|\n|\r]+/", "", $company->software->identifier)}}</sts:SoftwareID>
+                    <sts:SoftwareID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">{{preg_replace("/[\r\n|\n|\r]+/", "", $company->software->identifier_eqdocs)}}</sts:SoftwareID>
                 </sts:SoftwareProvider>
                 <sts:SoftwareSecurityCode schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)"/>
                 <sts:AuthorizationProvider>
@@ -72,7 +72,7 @@
             </PuntoVenta>
         </ext:ExtensionContent>
     </ext:UBLExtension>
-|   <ext:UBLExtension>
+    <ext:UBLExtension>
         <ext:ExtensionContent/>
     </ext:UBLExtension>
 </ext:UBLExtensions>
