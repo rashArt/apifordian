@@ -7,5 +7,8 @@
             <cbc:UUID schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $billingReference->scheme_name)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $billingReference->uuid)}}</cbc:UUID>
         @endif
         <cbc:IssueDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $billingReference->issue_date)}}</cbc:IssueDate>
+        @if($typeDocument->id == '26')
+            <cbc:DocumentTypeCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $billingReference->document_type_code)}}</cbc:DocumentTypeCode>
+        @endif
     </cac:InvoiceDocumentReference>
 </cac:BillingReference>

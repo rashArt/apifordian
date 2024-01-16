@@ -12,7 +12,7 @@ class BillingReference extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'uuid', 'issue_date',
+        'number', 'uuid', 'issue_date', 'document_type_code',
     ];
 
     /**
@@ -102,5 +102,15 @@ class BillingReference extends Model
     public function getIssueDateAttribute()
     {
         return $this->attributes['issue_date'] ?? [];
+    }
+
+    public function setDocumentTypeCodeAttribute($data)
+    {
+        return $this->attributes['document_type_code'] = $data;
+    }
+
+    public function getDocumentTypeCodeAttribute($data)
+    {
+        return $this->attributes['document_type_code'] ?? 20;
     }
 }

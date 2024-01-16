@@ -149,6 +149,16 @@ class CreditNoteController extends Controller
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
+        if($request->is_eqdoc){
+            $is_eqdoc = true;
+            $pf = strtoupper($typeDocument->prefix);
+            $pfs = strtoupper($typeDocument->prefix)."S";
+        }
+        else{
+            $is_eqdoc = false;
+            $pf = "NC";
+            $pfs = "NCS";
+        }
 
         // Customer
         $customerAll = collect($request->customer);
@@ -264,8 +274,11 @@ class CreditNoteController extends Controller
         // Billing reference
         if(!$request->billing_reference)
             $billingReference = NULL;
-        else
+        else{
             $billingReference = new BillingReference($request->billing_reference);
+            $billingReference->setSchemeNameAttribute("CUDE-SHA384");
+            $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+        }
 
         // Create XML
         if(isset($request->is_RNDC) && $request->is_RNDC == TRUE)
@@ -280,8 +293,14 @@ class CreditNoteController extends Controller
 
         // Signature XML
         $signCreditNote = new SignCreditNote($company->certificate->path, $company->certificate->password);
-        $signCreditNote->softwareID = $company->software->identifier;
-        $signCreditNote->pin = $company->software->pin;
+        if($is_eqdoc){
+            $signCreditNote->softwareID = $company->software->identifier_eqdocs;
+            $signCreditNote->pin = $company->software->pin_eqdocs;
+        }
+        else{
+            $signCreditNote->softwareID = $company->software->identifier;
+            $signCreditNote->pin = $company->software->pin;
+        }
 
         if ($request->GuardarEn){
             if (!is_dir($request->GuardarEn)) {
@@ -295,24 +314,28 @@ class CreditNoteController extends Controller
         }
 
         if ($request->GuardarEn)
-            $signCreditNote->GuardarEn = $request->GuardarEn."\\NC-{$resolution->next_consecutive}.xml";
+            $signCreditNote->GuardarEn = $request->GuardarEn."\\{$pf}-{$resolution->next_consecutive}.xml";
         else
-            $signCreditNote->GuardarEn = storage_path("app/public/{$company->identification_number}/NC-{$resolution->next_consecutive}.xml");
+            $signCreditNote->GuardarEn = storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml");
 
         $sendBillSync = new SendBillSync($company->certificate->path, $company->certificate->password);
-        $sendBillSync->To = $company->software->url;
+        if($is_eqdoc)
+            $sendBillSync->To = $company->software->url_eqdocs;
+        else
+            $sendBillSync->To = $company->software->url;
+
         $sendBillSync->fileName = "{$resolution->next_consecutive}.xml";
         if ($request->GuardarEn)
-            $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), $request->GuardarEn."\\NCS-{$resolution->next_consecutive}");
+            $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), $request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}");
         else
-            $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}"));
+            $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}"));
 
         $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signCreditNote->ConsultarCUDE(), "NC", $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;
         $invoice_doc->customer = $customer->company->identification_number;
-        $invoice_doc->xml = "NCS-{$resolution->next_consecutive}.xml";
-        $invoice_doc->pdf = "NCS-{$resolution->next_consecutive}.pdf";
+        $invoice_doc->xml = "{$pfs}-{$resolution->next_consecutive}.xml";
+        $invoice_doc->pdf = "{$pfs}-{$resolution->next_consecutive}.pdf";
         $invoice_doc->client_id = $customer->company->identification_number;
         $invoice_doc->client =  $request->customer ;
         if(property_exists($request, 'id_currency'))
@@ -338,7 +361,7 @@ class CreditNoteController extends Controller
         $ar = new \DOMDocument;
         if ($request->GuardarEn){
             try{
-                $respuestadian = $sendBillSync->signToSend($request->GuardarEn."\\ReqNC-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\RptaNC-{$resolution->next_consecutive}.xml");
+                $respuestadian = $sendBillSync->signToSend($request->GuardarEn."\\Req{$pf}-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\Rpta{$pf}-{$resolution->next_consecutive}.xml");
                 if(isset($respuestadian->html))
                     return [
                         'success' => false,
@@ -419,14 +442,14 @@ class CreditNoteController extends Controller
                 'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
                 'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
                 'ResponseDian' => $respuestadian,
-                'invoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NCS-{$resolution->next_consecutive}.xml")),
-                'zipinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NCS-{$resolution->next_consecutive}.zip")),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NC-{$resolution->next_consecutive}.xml")),
-                'reqfe'=>base64_encode(file_get_contents($request->GuardarEn."\\ReqNC-{$resolution->next_consecutive}.xml")),
-                'rptafe'=>base64_encode(file_get_contents($request->GuardarEn."\\RptaNC-{$resolution->next_consecutive}.xml")),
+                'invoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}.xml")),
+                'zipinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}.zip")),
+                'unsignedinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pf}-{$resolution->next_consecutive}.xml")),
+                'reqfe'=>base64_encode(file_get_contents($request->GuardarEn."\\Req{$pf}-{$resolution->next_consecutive}.xml")),
+                'rptafe'=>base64_encode(file_get_contents($request->GuardarEn."\\Rpta{$pf}-{$resolution->next_consecutive}.xml")),
                 'attacheddocument'=>base64_encode($at),
-                'urlinvoicexml'=>"NCS-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
+                'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
+                'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
                 'QRStr' => $QRStr,
@@ -435,7 +458,7 @@ class CreditNoteController extends Controller
         }
         else{
             try{
-                $respuestadian = $sendBillSync->signToSend(storage_path("app/public/{$company->identification_number}/ReqNC-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaNC-{$resolution->next_consecutive}.xml"));
+                $respuestadian = $sendBillSync->signToSend(storage_path("app/public/{$company->identification_number}/Req{$pf}-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/Rpta{$pf}-{$resolution->next_consecutive}.xml"));
                 if(isset($respuestadian->html))
                     return [
                         'success' => false,
@@ -516,14 +539,14 @@ class CreditNoteController extends Controller
                 'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
                 'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
                 'ResponseDian' => $respuestadian,
-                'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}.xml"))),
-                'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}.zip"))),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NC-{$resolution->next_consecutive}.xml"))),
-                'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqNC-{$resolution->next_consecutive}.xml"))),
-                'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaNC-{$resolution->next_consecutive}.xml"))),
+                'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}.xml"))),
+                'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}.zip"))),
+                'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml"))),
+                'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/Req{$pf}-{$resolution->next_consecutive}.xml"))),
+                'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/Rpta{$pf}-{$resolution->next_consecutive}.xml"))),
                 'attacheddocument'=>base64_encode($at),
-                'urlinvoicexml'=>"NCS-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
+                'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
+                'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
                 'QRStr' => $QRStr,
@@ -581,6 +604,16 @@ class CreditNoteController extends Controller
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
+        if($request->is_eqdoc){
+            $is_eqdoc = true;
+            $pf = strtoupper($typeDocument->prefix);
+            $pfs = strtoupper($typeDocument->prefix)."S";
+        }
+        else{
+            $is_eqdoc = false;
+            $pf = "NC";
+            $pfs = "NCS";
+        }
 
         // Customer
         $customerAll = collect($request->customer);
@@ -690,13 +723,17 @@ class CreditNoteController extends Controller
         // Billing reference
         if(!$request->billing_reference)
             $billingReference = NULL;
-        else
+        else{
             $billingReference = new BillingReference($request->billing_reference);
+            $billingReference->setSchemeNameAttribute("CUDE-SHA384");
+            $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+        }
 
         // Create XML
         if(isset($request->is_RNDC) && $request->is_RNDC == TRUE)
             $request->isTransport = TRUE;
         $crediNote = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'creditNoteLines', 'allowanceCharges', 'legalMonetaryTotals', 'billingReference', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'discrepancycode', 'discrepancydescription', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
+//        return $crediNote->saveXML();
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))
@@ -706,8 +743,14 @@ class CreditNoteController extends Controller
 
         // Signature XML
         $signCreditNote = new SignCreditNote($company->certificate->path, $company->certificate->password);
-        $signCreditNote->softwareID = $company->software->identifier;
-        $signCreditNote->pin = $company->software->pin;
+        if($is_eqdoc){
+            $signCreditNote->softwareID = $company->software->identifier_eqdocs;
+            $signCreditNote->pin = $company->software->pin_eqdocs;
+        }
+        else{
+            $signCreditNote->softwareID = $company->software->identifier;
+            $signCreditNote->pin = $company->software->pin;
+        }
 
         if ($request->GuardarEn){
             if (!is_dir($request->GuardarEn)) {
@@ -721,25 +764,29 @@ class CreditNoteController extends Controller
         }
 
         if ($request->GuardarEn)
-            $signCreditNote->GuardarEn = $request->GuardarEn."\\NC-{$resolution->next_consecutive}.xml";
+            $signCreditNote->GuardarEn = $request->GuardarEn."\\{$pf}-{$resolution->next_consecutive}.xml";
         else
-            $signCreditNote->GuardarEn = storage_path("app/public/{$company->identification_number}/NC-{$resolution->next_consecutive}.xml");
+            $signCreditNote->GuardarEn = storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml");
 
         $sendTestSetAsync = new SendTestSetAsync($company->certificate->path, $company->certificate->password);
-        $sendTestSetAsync->To = $company->software->url;
+        if($is_eqdoc)
+            $sendTestSetAsync->To = $company->software->url_eqdocs;
+        else
+            $sendTestSetAsync->To = $company->software->url;
+
         $sendTestSetAsync->fileName = "{$resolution->next_consecutive}.xml";
         if ($request->GuardarEn)
-            $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), $request->GuardarEn."\\NCS-{$resolution->next_consecutive}");
+            $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), $request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}");
         else
-            $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}"));
+            $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signCreditNote->sign($crediNote), storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}"));
         $sendTestSetAsync->testSetId = $testSetId;
 
         $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signCreditNote->ConsultarCUDE(), "NC", $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;
         $invoice_doc->customer = $customer->company->identification_number;
-        $invoice_doc->xml = "NCS-{$resolution->next_consecutive}.xml";
-        $invoice_doc->pdf = "NCS-{$resolution->next_consecutive}.pdf";
+        $invoice_doc->xml = "{$pfs}-{$resolution->next_consecutive}.xml";
+        $invoice_doc->pdf = "{$pfs}-{$resolution->next_consecutive}.pdf";
         $invoice_doc->client_id = $customer->company->identification_number;
         $invoice_doc->client =  $request->customer ;
         if(property_exists($request, 'id_currency'))
@@ -761,14 +808,14 @@ class CreditNoteController extends Controller
         if ($request->GuardarEn)
             return [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
-                'ResponseDian' => $sendTestSetAsync->signToSend($request->GuardarEn."\\ReqNC-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\RptaNC-{$resolution->next_consecutive}.xml"),
-                'invoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NCS-{$resolution->next_consecutive}.xml")),
-                'zipinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NCS-{$resolution->next_consecutive}.zip")),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\NC-{$resolution->next_consecutive}.xml")),
-                'reqfe'=>base64_encode(file_get_contents($request->GuardarEn."\\ReqNC-{$resolution->next_consecutive}.xml")),
-                'rptafe'=>base64_encode(file_get_contents($request->GuardarEn."\\RptaNC-{$resolution->next_consecutive}.xml")),
-                'urlinvoicexml'=>"NCS-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
+                'ResponseDian' => $sendTestSetAsync->signToSend($request->GuardarEn."\\Req{$pf}-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\Rpta{$pf}-{$resolution->next_consecutive}.xml"),
+                'invoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}.xml")),
+                'zipinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pfs}-{$resolution->next_consecutive}.zip")),
+                'unsignedinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\{$pf}-{$resolution->next_consecutive}.xml")),
+                'reqfe'=>base64_encode(file_get_contents($request->GuardarEn."\\Req{$pf}-{$resolution->next_consecutive}.xml")),
+                'rptafe'=>base64_encode(file_get_contents($request->GuardarEn."\\Rpta{$pf}-{$resolution->next_consecutive}.xml")),
+                'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
+                'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
                 'QRStr' => $QRStr,
@@ -777,14 +824,14 @@ class CreditNoteController extends Controller
         else
             return [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
-                'ResponseDian' => $sendTestSetAsync->signToSend(storage_path("app/public/{$company->identification_number}/ReqNC-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaNC-{$resolution->next_consecutive}.xml")),
-                'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}.xml"))),
-                'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NCS-{$resolution->next_consecutive}.zip"))),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/NC-{$resolution->next_consecutive}.xml"))),
-                'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqNC-{$resolution->next_consecutive}.xml"))),
-                'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaNC-{$resolution->next_consecutive}.xml"))),
-                'urlinvoicexml'=>"NCS-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"NCS-{$resolution->next_consecutive}.pdf",
+                'ResponseDian' => $sendTestSetAsync->signToSend(storage_path("app/public/{$company->identification_number}/Req{$pf}-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/Rpta{$pf}-{$resolution->next_consecutive}.xml")),
+                'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}.xml"))),
+                'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}.zip"))),
+                'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/{$pf}-{$resolution->next_consecutive}.xml"))),
+                'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/Req{$pf}-{$resolution->next_consecutive}.xml"))),
+                'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/Rpta{$pf}-{$resolution->next_consecutive}.xml"))),
+                'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
+                'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signCreditNote->ConsultarCUDE(),
                 'QRStr' => $QRStr,
