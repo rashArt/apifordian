@@ -21,7 +21,7 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'identification_number', 'dv', 'language_id', 'tax_id', 'type_environment_id', 'payroll_type_environment_id', 'sd_type_environment_id', 'type_operation_id', 'type_document_identification_id', 'country_id', 'type_currency_id', 'type_organization_id', 'type_regime_id', 'type_liability_id', 'municipality_id', 'merchant_registration', 'address', 'phone', 'password', 'newpassword', 'type_plan_id', 'type_plan2_id', 'type_plan3_id', 'type_plan4_id', 'start_plan_date', 'start_plan_date2', 'start_plan_date3', 'start_plan_date4', 'absolut_start_plan_date', 'municipality_name', 'state_name', 'state', 'absolut_plan_documents', 'allow_seller_login',
+        'user_id', 'identification_number', 'dv', 'language_id', 'tax_id', 'type_environment_id', 'payroll_type_environment_id', 'eqdocs_type_environment_id', 'type_operation_id', 'type_document_identification_id', 'country_id', 'type_currency_id', 'type_organization_id', 'type_regime_id', 'type_liability_id', 'municipality_id', 'merchant_registration', 'address', 'phone', 'password', 'newpassword', 'type_plan_id', 'type_plan2_id', 'type_plan3_id', 'type_plan4_id', 'start_plan_date', 'start_plan_date2', 'start_plan_date3', 'start_plan_date4', 'absolut_start_plan_date', 'municipality_name', 'state_name', 'state', 'absolut_plan_documents', 'allow_seller_login',
     ];
 
     /**

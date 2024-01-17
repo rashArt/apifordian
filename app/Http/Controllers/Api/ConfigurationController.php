@@ -166,7 +166,7 @@ class ConfigurationController extends Controller
                     'tax_id' => $request->tax_id ?? 1,
                     'type_environment_id' => $request->type_environment_id ?? 2,
                     'payroll_type_environment_id' => $request->payroll_type_environment_id ?? 2,
-                    'sd_type_environment_id' => $request->sd_type_environment_id ?? 2,
+                    'eqdocs_type_environment_id' => $request->eqdocs_type_environment_id ?? 2,
                     'type_operation_id' => $request->type_operation_id ?? 10,
                     'type_document_identification_id' => $request->type_document_identification_id,
                     'country_id' => $request->country_id ?? 46,
@@ -722,9 +722,12 @@ class ConfigurationController extends Controller
             $request->type_environment_id = auth()->user()->company->type_environment_id;
         if(!$request->payroll_type_environment_id)
             $request->payroll_type_environment_id = auth()->user()->company->payroll_type_environment_id;
+        if(!$request->eqdocs_type_environment_id)
+            $request->eqdocs_type_environment_id = auth()->user()->company->eqdocs_type_environment_id;
         auth()->user()->company->update([
             'type_environment_id' => $request->type_environment_id,
             'payroll_type_environment_id' => $request->payroll_type_environment_id,
+            'eqdocs_type_environment_id' => $request->eqdocs_type_environment_id,
         ]);
 
         if ($request->type_environment_id)
@@ -745,6 +748,16 @@ class ConfigurationController extends Controller
             else
                auth()->user()->company->software->update([
                   'url_payroll' => 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+              ]);
+
+        if ($request->eqdocs_type_environment_id)
+            if ($request->eqdocs_type_environment_id == 1)
+              auth()->user()->company->software->update([
+                  'url_eqdocs' => 'https://vpfe.dian.gov.co/WcfDianCustomerServices.svc',
+                ]);
+            else
+               auth()->user()->company->software->update([
+                  'url_eqdocs' => 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
               ]);
 
         return [

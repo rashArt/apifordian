@@ -340,7 +340,7 @@ class EqDocController extends Controller
         $invoice_doc->subtotal = $legalMonetaryTotals->line_extension_amount;
         $invoice_doc->total = $legalMonetaryTotals->payable_amount;
         $invoice_doc->version_ubl_id = 2;
-        $invoice_doc->ambient_id = $company->type_environment_id;
+        $invoice_doc->ambient_id = $company->eqdocs_type_environment_id;
         $invoice_doc->identification_number = $company->identification_number;
         $invoice_doc->save();
 
@@ -787,7 +787,7 @@ class EqDocController extends Controller
         $invoice_doc->subtotal = $legalMonetaryTotals->line_extension_amount;
         $invoice_doc->total = $legalMonetaryTotals->payable_amount;
         $invoice_doc->version_ubl_id = 2;
-        $invoice_doc->ambient_id = $company->type_environment_id;
+        $invoice_doc->ambient_id = $company->eqdocs_type_environment_id;
         $invoice_doc->identification_number = $company->identification_number;
         $invoice_doc->save();
 

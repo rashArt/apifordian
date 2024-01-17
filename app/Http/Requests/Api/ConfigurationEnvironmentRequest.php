@@ -26,6 +26,7 @@ class ConfigurationEnvironmentRequest extends FormRequest
         return [
             'type_environment_id' => 'nullable|exists:type_environments,id',
             'payroll_type_environment_id' => 'nullable|exists:type_environments,id',
+            'eqdocs_type_environment_id' => 'nullable|exists:type_environments,id',
         ];
     }
 }

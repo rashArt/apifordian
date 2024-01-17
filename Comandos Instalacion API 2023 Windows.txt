@@ -9,7 +9,8 @@ https://code.visualstudio.com/docs/?dv=win
 
 COMANDOS DE INSTALACION
 
-git clone https://gitlab.com/facturalatam/co-apidian2023.git apidian
+git config --global http.sslverify false
+git clone https://gitlab.buho.la/facturalatam/co-apidian2024.git apidian
 cd apidian
 cp .env.example .env
 rm composer.lock

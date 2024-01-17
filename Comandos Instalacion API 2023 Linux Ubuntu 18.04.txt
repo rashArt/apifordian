@@ -1,4 +1,4 @@
-- VPS Ubuntu 18.04 (No sirve host como hostinger.com)
+- VPS Ubuntu 20.04 (No sirve host como hostinger.com)
 	hetzner.com
 	contabo.com
 	amazon aws
@@ -21,11 +21,14 @@ CAMBIAR PUERTO APACHE
 nano /etc/apache2/ports.conf
 service apache2 restart
 
-INSTALACION MYSQL UBUNTU 18.04
-apt-get install mysql-server-5.7 mysql-client-5.7
+INSTALACION MARIADB UBUNTU 20.04
+apt update
+apt install mariadb-server
+mysql_secure_installation
 
-CAMBIAR PUERTO MYSQL
-nano /etc/mysql/mysql.conf.d/mysqld.cnf
+CAMBIAR PUERTO MARIADB
+nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
 service mysql restart
 
 CREACION DE USUARIOS MYSQL
@@ -48,7 +51,8 @@ mv composer.phar /usr/local/bin/composer
 
 INSTALAR APIDDIAN
 cd /var/www/html/
-git clone https://gitlab.com/facturalatam/co-apidian2023.git apidian
+git config --global http.sslverify false
+git clone https://gitlab.buho.la/facturalatam/co-apidian2024.git apidian
 cd apidian
 cp .env.example .env
 rm composer.lock

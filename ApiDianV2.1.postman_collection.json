@@ -86,7 +86,7 @@
 							"response": []
 						},
 						{
-							"name": "Paso 4 - Config-Resolution Documentos Equivalentes",
+							"name": "Paso 2 - Config-Resolution Documentos Equivalentes",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -130,6 +130,102 @@
 									]
 								},
 								"description": "CONFIGURAR RESOLUCION DE FACTURAS\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/config/resolution\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- Este endpoint no tiene parametros en la URL.\n\n- Los datos necesarios para llenar los campos JSON cuyo nombre finalice con \"_id\" se encuentran en las tablas parametricas de la base de datos de la API, ejemplo:\n\ntype_liability_id, se debe especificar el id del registro correspondiente de la tabla type_liabilities de la base de datos de la API.\n\n- El campo technical_key, corresponde a la clave tecnica de la resolucion, este dato en habilitacion siempre es el mismo: fc8eac422eba16e22ffd8c6f94b3f40a6e38162c, pero en produccion esta llave tecnica se debe consultar con el endpoint getnumberingrange de la seccion 08 - Paso a Produccion.\n\n- Los demas datos, como date_from, date_to resolution, prefix, etc., son datos que se incluyen en el documento 1876 que entrega la DIAN cuando se solicita una resolucion de facturacion electronica."
+							},
+							"response": []
+						},
+						{
+							"name": "Paso 3 - Config-Resolution NC POS",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "7692a20fec92af0aa5729d796b019d27c83c9955407994630a0cdd7702ca2329",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"type_document_id\": 26,\r\n\t\"from\": 1,\r\n\t\"to\": 99999999,\r\n\t\"prefix\": \"NCP\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://apidian2024.oo/api/ubl2.1/config/resolution",
+									"protocol": "http",
+									"host": [
+										"apidian2024",
+										"oo"
+									],
+									"path": [
+										"api",
+										"ubl2.1",
+										"config",
+										"resolution"
+									]
+								},
+								"description": "CONFIGURAR RESOLUCION DE NOTAS CREDITO\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/config/resolution\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- Este endpoint no tiene parametros en la URL.\n\n- Los datos necesarios para llenar los campos JSON cuyo nombre finalice con \"_id\" se encuentran en las tablas parametricas de la base de datos de la API, ejemplo:\n\ntype_liability_id, se debe especificar el id del registro correspondiente de la tabla type_liabilities de la base de datos de la API.\n\n- Este endpoint es muy similar al de configurar resolucion de facturas, tanto asi que se utiliza la misma URL, se diferencia en que la resolucion de notas credito no requiere una resolucion autorizada por la DIAN, por lo tanto los datos from, to y prefix, son escogidos por nosotros mismos."
+							},
+							"response": []
+						},
+						{
+							"name": "Paso 4 - Config-Resolution ND POS",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "7692a20fec92af0aa5729d796b019d27c83c9955407994630a0cdd7702ca2329",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"type_document_id\": 25,\r\n\t\"from\": 1,\r\n\t\"to\": 99999999,\r\n\t\"prefix\": \"NDP\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://apidian2024.oo/api/ubl2.1/config/resolution",
+									"protocol": "http",
+									"host": [
+										"apidian2024",
+										"oo"
+									],
+									"path": [
+										"api",
+										"ubl2.1",
+										"config",
+										"resolution"
+									]
+								},
+								"description": "CONFIGURAR RESOLUCION DE NOTAS CREDITO\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/config/resolution\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- Este endpoint no tiene parametros en la URL.\n\n- Los datos necesarios para llenar los campos JSON cuyo nombre finalice con \"_id\" se encuentran en las tablas parametricas de la base de datos de la API, ejemplo:\n\ntype_liability_id, se debe especificar el id del registro correspondiente de la tabla type_liabilities de la base de datos de la API.\n\n- Este endpoint es muy similar al de configurar resolucion de facturas, tanto asi que se utiliza la misma URL, se diferencia en que la resolucion de notas credito no requiere una resolucion autorizada por la DIAN, por lo tanto los datos from, to y prefix, son escogidos por nosotros mismos."
 							},
 							"response": []
 						}
@@ -1828,10 +1924,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"number\": 1,\r\n\t\"type_document_id\": 15,\r\n\t\"date\": \"2024-01-11\",\r\n\t\"time\": \"04:08:12\",\r\n\t\"resolution_number\": \"18760000001\",\r\n\t\"prefix\": \"EPOS\",\r\n    \"notes\": \"ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA\",\r\n\t\"sendmail\": true,\r\n    \"sendmailtome\": true,\r\n    \"foot_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL PIE DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"software_manufacturer\":{\r\n        \"name\": \"ALEXANDER OBANDO LONDONO\",\r\n        \"business_name\": \"TORRE SOFTWARE\",\r\n        \"software_name\": \"BABEL\"\r\n    },\r\n    \"buyer_benefits\":{\r\n        \"code\": \"89008003\",\r\n        \"name\": \"INVERSIONES DAVAL SAS\",\r\n        \"points\": \"100\"\r\n    },\r\n    \"cash_information\":{\r\n        \"plate_number\": \"DF-000-12345\",\r\n        \"location\": \"HOTEL OVERLOOK RECEPCION\",\r\n        \"cashier\": \"JACK TORRANCE\",\r\n        \"cash_type\": \"CAJA PRINCIPAL\",\r\n        \"sales_code\": \"EPOS1\",\r\n        \"subtotal\": \"1000000.00\"\r\n    },\r\n\t\"customer\": {\r\n\t\t\"identification_number\": 89008003,\r\n\t\t\"dv\": 2,\r\n\t\t\"name\": \"INVERSIONES DAVAL SAS\",\r\n\t\t\"phone\": \"3103891693\",\r\n\t\t\"address\": \"CLL 4 NRO 33-90\",\r\n\t\t\"email\": \"alexanderobandolondono@gmail.com\",\r\n\t\t\"merchant_registration\": \"0000000-00\",\r\n\t\t\"type_document_identification_id\": 6,\r\n\t\t\"type_organization_id\": 1,\r\n        \"type_liability_id\": 7,\r\n\t\t\"municipality_id\": 822,\r\n\t\t\"type_regime_id\": 1\r\n\t},\r\n\t\"payment_form\": {\r\n\t\t\"payment_form_id\": 2,\r\n\t\t\"payment_method_id\": 30,\r\n\t\t\"payment_due_date\": \"2024-01-11\",\r\n\t\t\"duration_measure\": \"0\"\r\n\t},\t\r\n\t\"legal_monetary_totals\": {\r\n\t\t\"line_extension_amount\": \"840336.134\",\r\n\t\t\"tax_exclusive_amount\": \"840336.134\",\r\n\t\t\"tax_inclusive_amount\": \"1000000.00\",\r\n\t\t\"payable_amount\": \"1000000.00\"\r\n\t},\r\n\t\"tax_totals\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"tax_id\": 1,\r\n\t\t\t\"tax_amount\": \"159663.865\",\r\n\t\t\t\"percent\": \"19.00\",\r\n\t\t\t\"taxable_amount\": \"840336.134\"\r\n\t\t}\r\n\t],\r\n\t\"invoice_lines\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"840336.134\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"159663.865\",\r\n\t\t\t\t\t\"taxable_amount\": \"840336.134\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"COMISION POR SERVICIOS\",\r\n            \"notes\": \"ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.\",\r\n\t\t\t\"code\": \"COMISION\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"1000000.00\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n\t]\r\n}\r\n\r\n"
+									"raw": "{\r\n\t\"number\": 3,\r\n\t\"type_document_id\": 15,\r\n\t\"date\": \"2024-01-15\",\r\n\t\"time\": \"04:08:12\",\r\n    \"postal_zone_code\": \"630003\",\r\n\t\"resolution_number\": \"18760000001\",\r\n\t\"prefix\": \"EPOS\",\r\n    \"notes\": \"ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA\",\r\n\t\"sendmail\": true,\r\n    \"sendmailtome\": true,\r\n    \"foot_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL PIE DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"software_manufacturer\":{\r\n        \"name\": \"ALEXANDER OBANDO LONDONO\",\r\n        \"business_name\": \"TORRE SOFTWARE\",\r\n        \"software_name\": \"BABEL\"\r\n    },\r\n    \"buyer_benefits\":{\r\n        \"code\": \"89008003\",\r\n        \"name\": \"INVERSIONES DAVAL SAS\",\r\n        \"points\": \"100\"\r\n    },\r\n    \"cash_information\":{\r\n        \"plate_number\": \"DF-000-12345\",\r\n        \"location\": \"HOTEL OVERLOOK RECEPCION\",\r\n        \"cashier\": \"JACK TORRANCE\",\r\n        \"cash_type\": \"CAJA PRINCIPAL\",\r\n        \"sales_code\": \"EPOS1\",\r\n        \"subtotal\": \"1000000.00\"\r\n    },\r\n\t\"customer\": {\r\n\t\t\"identification_number\": 89008003,\r\n\t\t\"dv\": 2,\r\n\t\t\"name\": \"INVERSIONES DAVAL SAS\",\r\n\t\t\"phone\": \"3103891693\",\r\n\t\t\"address\": \"CLL 4 NRO 33-90\",\r\n\t\t\"email\": \"alexanderobandolondono@gmail.com\",\r\n\t\t\"merchant_registration\": \"0000000-00\",\r\n\t\t\"type_document_identification_id\": 6,\r\n\t\t\"type_organization_id\": 1,\r\n        \"type_liability_id\": 7,\r\n\t\t\"municipality_id\": 822,\r\n\t\t\"type_regime_id\": 1\r\n\t},\r\n\t\"payment_form\": {\r\n\t\t\"payment_form_id\": 1,\r\n\t\t\"payment_method_id\": 30,\r\n\t\t\"payment_due_date\": \"2024-01-15\",\r\n\t\t\"duration_measure\": \"0\"\r\n\t},\t\r\n\t\"legal_monetary_totals\": {\r\n\t\t\"line_extension_amount\": \"840336.134\",\r\n\t\t\"tax_exclusive_amount\": \"840336.134\",\r\n\t\t\"tax_inclusive_amount\": \"1000000.00\",\r\n\t\t\"payable_amount\": \"1000000.00\"\r\n\t},\r\n\t\"tax_totals\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"tax_id\": 1,\r\n\t\t\t\"tax_amount\": \"159663.865\",\r\n\t\t\t\"percent\": \"19.00\",\r\n\t\t\t\"taxable_amount\": \"840336.134\"\r\n\t\t}\r\n\t],\r\n\t\"invoice_lines\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"840336.134\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"159663.865\",\r\n\t\t\t\t\t\"taxable_amount\": \"840336.134\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"COMISION POR SERVICIOS\",\r\n            \"notes\": \"ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.\",\r\n\t\t\t\"code\": \"COMISION\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"1000000.00\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n\t]\r\n}\r\n\r\n"
 								},
 								"url": {
-									"raw": "http://apidian2024.oo/api/ubl2.1/eqdoc/8c5fe1c6-9ec8-4c7f-9419-65d134912e7a",
+									"raw": "http://apidian2024.oo/api/ubl2.1/eqdoc/936f14fb-3041-47c9-b194-e9bf81190d10",
 									"protocol": "http",
 									"host": [
 										"apidian2024",
@@ -1841,7 +1937,55 @@
 										"api",
 										"ubl2.1",
 										"eqdoc",
-										"8c5fe1c6-9ec8-4c7f-9419-65d134912e7a"
+										"936f14fb-3041-47c9-b194-e9bf81190d10"
+									]
+								},
+								"description": "PRIMER ENVIO DE FACTURA\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/invoice\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- En URL el ultimo parametro corresponde al id del set de pruebas que la dian entrego al momento de registrar el modo de operacion software propio.\n\n.../ubl2.1/invoice/iddelsetdepruebasdeladian\n\n- Este endpoint se puede utilizar de dos modos:\n\n1.  Asincrono:\n.../ubl2.1/invoice/iddelsetdepruebasdeladian\n\n2.  Sincrono:\n.../ubl2.1/invoice\n\n- El modo sincrono no afecta al set de pruebas, pero la respuesta de la DIAN incluye posibles errores de validacion y estado de la factura, valida o no valida.\n\n- El modo asincrono, afecta el set de pruebas y en la respuesta no se incluye el resultado de la factura, solo se entrega un ZIP_KEY el cual debe ser consultado mediante el endpoint: \n\n.../ubl2.1/status/zip\n\nde la seccion 03 - Consultas de estado para asi poder establecer si la factura fue valida o no y los errores de validacion."
+							},
+							"response": []
+						},
+						{
+							"name": "NC Una Linea, Sin Descuentos, Una Tarifa de IVA",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "7692a20fec92af0aa5729d796b019d27c83c9955407994630a0cdd7702ca2329",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"is_eqdoc\": true,\r\n\t\"billing_reference\": {\r\n\t\t\"number\": \"EPOS3\",\r\n\t\t\"uuid\": \"8d4a55f9396913e1e12a881f802c839eedb8ec1c6791ef86249ea657dfccf977c2570406352dec8279d5818ab85538b7\",\r\n\t\t\"issue_date\": \"2024-01-13\",\r\n        \"type_document_id\": 15\r\n\t},\r\n\t\"discrepancyresponsecode\": 2,\r\n    \"notes\": \"PRUEBA DE NOTA CREDITO A DOCUMENTO EQUIVALENTE POS\",\r\n    \"prefix\": \"NCP\",\r\n\t\"number\": 1,\r\n\t\"type_document_id\": 26,\r\n\t\"date\": \"2024-01-15\",\r\n\t\"time\": \"06:00:13\",\r\n    \"establishment_name\": \"TORRE SOFTWARE\",\r\n    \"establishment_address\": \"BRR LIMONAR MZ 6 CS 3 ET 1 PISO 2\",\r\n    \"establishment_phone\": \"3226563672\",\r\n    \"establishment_municipality\": 600,\r\n    \"sendmail\": true,\r\n    \"sendmailtome\": true,\r\n    \"head_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL ENCABEZADO DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"foot_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL ENCABEZADO DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n\t\"customer\": {\r\n\t\t\"identification_number\": 900166483,\r\n\t\t\"dv\": 1,\r\n\t\t\"name\": \"INVERSIONES DAVAL SAS\",\r\n\t\t\"phone\": \"3103891693\",\r\n\t\t\"address\": \"CLL 4 NRO 33-90\",\r\n\t\t\"email\": \"alexanderobandolondono@gmail.com\",\r\n\t\t\"merchant_registration\": \"0000000-00\",\r\n\t\t\"type_document_identification_id\": 6,\r\n\t\t\"type_organization_id\": 1,\r\n\t\t\"municipality_id\": 822,\r\n\t\t\"type_regime_id\": 1\r\n\t},\r\n\t\"tax_totals\": [\r\n\t\t{\r\n\t\t\t\"tax_id\": 1,\r\n\t\t\t\"tax_amount\": \"15966.386\",\r\n\t\t\t\"percent\": \"19\",\r\n\t\t\t\"taxable_amount\": \"84033.614\"\r\n\t\t}\r\n\t],\r\n\t\"legal_monetary_totals\": {\r\n\t\t\"line_extension_amount\": \"84033.614\",\r\n\t\t\"tax_exclusive_amount\": \"84033.614\",\r\n\t\t\"tax_inclusive_amount\": \"100000.00\",\r\n\t\t\"payable_amount\": \"100000.00\"\r\n\t},\r\n\t\"credit_note_lines\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"84033.614\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"15966.386\",\r\n\t\t\t\t\t\"taxable_amount\": \"84033.614\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"COMISION POR SERVICIOS\",\r\n            \"notes\": \"ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.\",\r\n\t\t\t\"code\": \"COMISION\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"100000.00\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n\t]\r\n}\r\n\r\n"
+								},
+								"url": {
+									"raw": "http://apidian2024.oo/api/ubl2.1/credit-note/936f14fb-3041-47c9-b194-e9bf81190d10",
+									"protocol": "http",
+									"host": [
+										"apidian2024",
+										"oo"
+									],
+									"path": [
+										"api",
+										"ubl2.1",
+										"credit-note",
+										"936f14fb-3041-47c9-b194-e9bf81190d10"
 									]
 								},
 								"description": "PRIMER ENVIO DE FACTURA\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/invoice\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- En URL el ultimo parametro corresponde al id del set de pruebas que la dian entrego al momento de registrar el modo de operacion software propio.\n\n.../ubl2.1/invoice/iddelsetdepruebasdeladian\n\n- Este endpoint se puede utilizar de dos modos:\n\n1.  Asincrono:\n.../ubl2.1/invoice/iddelsetdepruebasdeladian\n\n2.  Sincrono:\n.../ubl2.1/invoice\n\n- El modo sincrono no afecta al set de pruebas, pero la respuesta de la DIAN incluye posibles errores de validacion y estado de la factura, valida o no valida.\n\n- El modo asincrono, afecta el set de pruebas y en la respuesta no se incluye el resultado de la factura, solo se entrega un ZIP_KEY el cual debe ser consultado mediante el endpoint: \n\n.../ubl2.1/status/zip\n\nde la seccion 03 - Consultas de estado para asi poder establecer si la factura fue valida o no y los errores de validacion."
@@ -1912,10 +2056,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"sendmail\": false,\n    \"sendmailtome\": false,\n    \"is_payroll\": false \n}"
+							"raw": "{\n\t\"sendmail\": false,\n    \"sendmailtome\": false,\n    \"is_payroll\": false,\n    \"is_eqdoc\": true\n}"
 						},
 						"url": {
-							"raw": "http://apidian2024.oo/api/ubl2.1/status/zip/fd334c71-685c-4b1b-b79d-1ec313420406",
+							"raw": "http://apidian2024.oo/api/ubl2.1/status/zip/7bf7a690-c73c-4a2e-85c1-df0ac8321c70",
 							"protocol": "http",
 							"host": [
 								"apidian2024",
@@ -1926,7 +2070,7 @@
 								"ubl2.1",
 								"status",
 								"zip",
-								"fd334c71-685c-4b1b-b79d-1ec313420406"
+								"7bf7a690-c73c-4a2e-85c1-df0ac8321c70"
 							]
 						},
 						"description": "CONSULTA DE ESTADO POR ZIP_KEY\n\n- Si se instalo un dominio se debe utilizar de la siguiente manera:\n\nhttp://midominio.com/api/ubl2.1/status/zip\n\n- Requiere un token de autorizacion el cual fue devuelto al realizar el Paso 1 - Config Company, si este token se extravio, se puede consultar en la tabla de la base de datos de la API en la tabla users, en el campo API_TOKEN.\n\n- En URL el ultimo parametro corresponde al zip_key que el response del envio de un documento electronico en modo asincrono retorno.\n\n.../ubl2.1/invoice/status/zip/codigodelzip_key\n\n- El response de este endpoint muestra si el documento electronico fue valido o si fue rechazado, en cuyo caso mostrara las reglas de validacion por las cuales se rechazo."

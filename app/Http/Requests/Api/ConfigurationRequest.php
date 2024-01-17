@@ -48,6 +48,7 @@ class ConfigurationRequest extends FormRequest
             'tax_id' => 'nullable|exists:taxes,id',
             'type_environment_id' => 'nullable|exists:type_environments,id',
             'payroll_type_environment_id' => 'nullable|exists:type_environments,id',
+            'eqdocs_type_environment_id' => 'nullable|exists:type_environments,id',
             'type_operation_id' => 'nullable|exists:type_operations,id',
             'type_document_identification_id' => 'required|exists:type_document_identifications,id',
             'country_id' => 'nullable|exists:countries,id',

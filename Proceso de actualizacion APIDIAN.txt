@@ -1,11 +1,12 @@
 PROCEDIMIENTO DE ACTUALIZACION APIDIAN
 
-1... DESDE APIDIAN2021 o APIDIAN2022 HACIA APIDIAN2O23
+1... DESDE APIDIAN2021 o APIDIAN2022 o APIDIAN2023 HACIA APIDIAN2O24
 
-Dentro del directorio del apidian2021 o apidian2022:
+Dentro del directorio del apidian2021 o apidian2022 o apidian2023:
 
+	   git config --global http.sslverify false
 	a. git remote remove origin
-	b. git remote add origin https://gitlab.com/facturalatam/co-apidian2023.git
+	b. git remote add origin https://gitlab.buho.la/facturalatam/co-apidian2024.git
 	c. nano .git/config
 		Debe quedar dicho archivo de la siguiente manera, si falta algo, agregarlo manualmente
 		
@@ -17,7 +18,7 @@ Dentro del directorio del apidian2021 o apidian2022:
 				symlinks = false
 				ignorecase = true
 			[remote "origin"]
-				url = https://gitlab.com/facturalatam/co-apidian2023.git
+				url = https://gitlab.buho.la/facturalatam/co-apidian2024.git
 				fetch = +refs/heads/*:refs/remotes/origin/*
 			[branch "master"]
 				remote = origin
@@ -40,9 +41,9 @@ Dentro del directorio del apidian2021 o apidian2022:
 	q. ./urn_on.sh
 	
 	
-2... ACTUALIZAR APIDIAN2023
+2... ACTUALIZAR APIDIAN2024
 
-Dentro del directorio del apidian2023:
+Dentro del directorio del apidian2024:
 
 	a. git pull 
 	b. git pull origin master 
