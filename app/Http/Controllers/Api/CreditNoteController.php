@@ -276,8 +276,10 @@ class CreditNoteController extends Controller
             $billingReference = NULL;
         else{
             $billingReference = new BillingReference($request->billing_reference);
-            $billingReference->setSchemeNameAttribute("CUDE-SHA384");
-            $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+            if($is_eqdoc){
+                $billingReference->setSchemeNameAttribute("CUDE-SHA384");
+                $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+            }
         }
 
         // Create XML
@@ -728,8 +730,10 @@ class CreditNoteController extends Controller
             $billingReference = NULL;
         else{
             $billingReference = new BillingReference($request->billing_reference);
-            $billingReference->setSchemeNameAttribute("CUDE-SHA384");
-            $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+            if($is_eqdoc){
+                $billingReference->setSchemeNameAttribute("CUDE-SHA384");
+                $billingReference->setDocumentTypeCodeAttribute(TypeDocument::where('id', $request->billing_reference['type_document_id'])->firstOrFail()->code);
+            }
         }
 
         // Create XML
