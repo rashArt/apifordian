@@ -37,6 +37,9 @@ class DebitNoteRequest extends FormRequest
         }
 
         return [
+            // Es documento equivalente
+            'is_eqdoc' => 'nullable|boolean',
+
             // Adicionales Facturador
             'ivaresponsable' => 'nullable|string',
             'nombretipodocid' => 'nullable|string',
@@ -90,7 +93,7 @@ class DebitNoteRequest extends FormRequest
             // Document
             'type_document_id' => [
                 'required',
-                'in:5',
+                'in:5,25',
                 'exists:type_documents,id',
                 new ResolutionSetting(),
             ],
@@ -134,6 +137,7 @@ class DebitNoteRequest extends FormRequest
             'billing_reference.number' => 'required_with:billing_reference|string',
             'billing_reference.uuid' => 'required_with:billing_reference|string|size:96',
             'billing_reference.issue_date' => 'required_with:billing_reference|date_format:Y-m-d',
+            'billing_reference.type_document_id' => 'required_if:type_document_id,=,25|numeric|in:15,16,17,18,19,20,21,22,23,24',
 
             // Id moneda negociacion
             'idcurrency' => 'nullable|integer|exists:type_currencies,id',

@@ -18,7 +18,11 @@
     @endisset
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeoperation->code)}}</cbc:CustomizationID>
-    <cbc:ProfileID>DIAN 2.1: Nota Débito de Factura Electrónica de Venta</cbc:ProfileID>
+    @if($typeDocument->code == 93)
+        <cbc:ProfileID>DIAN 2.1: Nota de ajuste débito al documento equivalente</cbc:ProfileID>
+    @else
+        <cbc:ProfileID>DIAN 2.1: Nota Débito de Factura Electrónica de Venta</cbc:ProfileID>
+    @endif
     <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $resolution->next_consecutive)}}</cbc:ID>
     <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
@@ -46,9 +50,11 @@
         @include('xml._order_reference', ['node' => 'OrderReference'])
     @endisset
     {{-- DiscrepancyResponse --}}
-    @isset($discrepancycode)
-        @include('xml._discrepancy_response')
-    @endisset
+    @if($typeDocument->id != 25)
+        @isset($discrepancycode)
+            @include('xml._discrepancy_response')
+        @endisset
+    @endif
     {{-- BillingReference --}}
     @isset($request['billing_reference'])
         @include('xml._billing_reference')
