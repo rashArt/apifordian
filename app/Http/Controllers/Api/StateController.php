@@ -137,7 +137,7 @@ class StateController extends Controller
 
 //                    $xml->loadXML($signedxml);
 
-                    $filename = str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName))))));
+                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName)))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
@@ -335,7 +335,7 @@ class StateController extends Controller
 
 //                    return $this->ValueXML($signedxml, '/CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:Name/');
 
-                    $filename = str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName))))));
+                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName)))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
@@ -575,7 +575,7 @@ class StateController extends Controller
                     ];
 
                 if($respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->IsValid == 'true'){
-                    $filename = str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName))))));
+                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName)))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
@@ -753,7 +753,7 @@ class StateController extends Controller
                     ];
 
                 if($respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->IsValid == 'true'){
-                    $filename = str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName))))));
+                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName)))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
                     $cufecude = $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlDocumentKey;
