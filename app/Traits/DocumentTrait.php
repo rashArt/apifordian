@@ -352,7 +352,7 @@ trait DocumentTrait
             else
                 $totalbase = $request->legal_monetary_totals['line_extension_amount'];
 
-            if($tipodoc == "INVOICE"){
+            if($tipodoc == "INVOICE" || $tipodoc == "POS"){
                 if($company->type_environment_id == 2){
                     if(isset($request->tax_totals[0]['tax_amount'])){
                         $qrBase64 = base64_encode(QrCode::format('png')
@@ -400,16 +400,22 @@ trait DocumentTrait
                 $imageQr    =  "data:image/png;base64, ".$qrBase64;
 
                 if($template_json){
-                    $pdf = $this->initMPdf('invoice', $template_pdf);
-                    $pdf->SetHTMLHeader(View::make("pdfs.invoice.header".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->SetHTMLFooter(View::make("pdfs.invoice.footer".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
+                    if($tipodoc == 'POS')
+                        $pdf = $this->initMPdf('pos', $template_pdf);
+                    else
+                        $pdf = $this->initMPdf('invoice', $template_pdf);
+                    $pdf->SetHTMLHeader(View::make("pdfs.".$tipodoc.".header".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->SetHTMLFooter(View::make("pdfs.".$tipodoc.".footer".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->WriteHTML(View::make("pdfs.".$tipodoc.".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
                 }
                 else{
-                    $pdf = $this->initMPdf();
-                    $pdf->SetHTMLHeader(View::make("pdfs.invoice.header", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->SetHTMLFooter(View::make("pdfs.invoice.footer", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
+                    if($tipodoc == 'POS')
+                        $pdf = $this->initMPdf('pos', $template_pdf);
+                    else
+                        $pdf = $this->initMPdf();
+                    $pdf->SetHTMLHeader(View::make("pdfs.".$tipodoc.".header", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->SetHTMLFooter(View::make("pdfs.".$tipodoc.".footer", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->WriteHTML(View::make("pdfs.".$tipodoc.".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
 //                    $pdf->SetHTMLHeader(View::make("pdfs.invoice.header", compact("resolution", "date", "time", "user", "request", "company", "imgLogo")));
 //                    $pdf->SetHTMLFooter(View::make("pdfs.invoice.footer", compact("resolution", "request", "cufecude", "date", "time")));
 //                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields")), HTMLParserMode::HTML_BODY);
@@ -765,13 +771,21 @@ trait DocumentTrait
 
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
+        if($type == 'pos'){
+            $pageWidth = 80;
+            $pageHeight = 297;
+        }
+        else{
+            $pageWidth = 219;
+            $pageHeight = 279;
+        }
         $margin_left = '5';
         $margin_right = '5';
         $margin_top = '60';
         $margin_bottom = '40';
 
         $filename = base_path('resources/views/pdfs/' . $type . '/config'.$template.'.json');
-            if (file_exists($filename)) {
+        if (file_exists($filename)) {
             $jsonD =  file_get_contents('config'.$template.'.json');
             $margin = json_decode($jsonD,true);
             if(isset($margin)){
@@ -800,27 +814,29 @@ trait DocumentTrait
                 'margin_top' => $margin_top,
                 'margin_bottom' => $margin_bottom ,
                 'margin_header' => 5,
-                'margin_footer' => 2
+                'margin_footer' => 2,
+                'format' => [$pageWidth, $pageHeight], // Establece el tamaño de la página
             ]);
         }
         else{
             $pdf = new Mpdf([
-            'fontDir' => array_merge($fontDirs, [
-                base_path('public/fonts/roboto/'),
-            ]),
-            'fontdata' => $fontData + [
-                'Roboto' => [
-                    'R' => 'Roboto-Regular.ttf',
-                    'B' => 'Roboto-Bold.ttf',
-                    'I' => 'Roboto-Italic.ttf',
-                ]
-            ],
-            'default_font' => 'Roboto',
-            'margin_left' => 5,
-            'margin_top' => 35,
-            'margin_bottom' => 5,
-            'margin_header' => 5,
-            'margin_footer' => 2
+                'fontDir' => array_merge($fontDirs, [
+                    base_path('public/fonts/roboto/'),
+                ]),
+                'fontdata' => $fontData + [
+                    'Roboto' => [
+                        'R' => 'Roboto-Regular.ttf',
+                        'B' => 'Roboto-Bold.ttf',
+                        'I' => 'Roboto-Italic.ttf',
+                    ]
+                ],
+                'default_font' => 'Roboto',
+                'margin_left' => 5,
+                'margin_top' => 35,
+                'margin_bottom' => 5,
+                'margin_header' => 5,
+                'margin_footer' => 2,
+                'format' => [$pageWidth, $pageHeight], // Establece el tamaño de la página
             ]);
         }
         if($template)

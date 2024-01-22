@@ -320,7 +320,7 @@ class EqDocController extends Controller
         else
             $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}"));
 
-        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUFE(), "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
+        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;
         $invoice_doc->customer = $customer->company->identification_number;
@@ -442,7 +442,7 @@ class EqDocController extends Controller
                 'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
+                'cufe' => $signInvoice->ConsultarCUDE(),
                 'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
@@ -541,7 +541,7 @@ class EqDocController extends Controller
                 'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
+                'cufe' => $signInvoice->ConsultarCUDE(),
                 'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
@@ -767,7 +767,7 @@ class EqDocController extends Controller
           $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}"));
         $sendTestSetAsync->testSetId = $testSetId;
 
-        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUFE(), "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
+        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), "POS", $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;
         $invoice_doc->customer = $customer->company->identification_number;
@@ -803,7 +803,7 @@ class EqDocController extends Controller
                 'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
+                'cufe' => $signInvoice->ConsultarCUDE(),
                 'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
@@ -821,7 +821,7 @@ class EqDocController extends Controller
                 'urlinvoicexml'=>"{$pfs}-{$resolution->next_consecutive}.xml",
                 'urlinvoicepdf'=>"{$pfs}-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
+                'cufe' => $signInvoice->ConsultarCUDE(),
                 'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
