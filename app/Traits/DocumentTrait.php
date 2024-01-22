@@ -404,18 +404,18 @@ trait DocumentTrait
                         $pdf = $this->initMPdf('pos', $template_pdf);
                     else
                         $pdf = $this->initMPdf('invoice', $template_pdf);
-                    $pdf->SetHTMLHeader(View::make("pdfs.".$tipodoc.".header".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->SetHTMLFooter(View::make("pdfs.".$tipodoc.".footer".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->WriteHTML(View::make("pdfs.".$tipodoc.".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
+                    $pdf->SetHTMLHeader(View::make("pdfs.".strtolower($tipodoc).".header".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->SetHTMLFooter(View::make("pdfs.".strtolower($tipodoc).".footer".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->WriteHTML(View::make("pdfs.".strtolower($tipodoc).".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
                 }
                 else{
                     if($tipodoc == 'POS')
                         $pdf = $this->initMPdf('pos', $template_pdf);
                     else
                         $pdf = $this->initMPdf();
-                    $pdf->SetHTMLHeader(View::make("pdfs.".$tipodoc.".header", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->SetHTMLFooter(View::make("pdfs.".$tipodoc.".footer", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
-                    $pdf->WriteHTML(View::make("pdfs.".$tipodoc.".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
+                    $pdf->SetHTMLHeader(View::make("pdfs.".strtolower($tipodoc).".header", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->SetHTMLFooter(View::make("pdfs.".strtolower($tipodoc).".footer", compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")));
+                    $pdf->WriteHTML(View::make("pdfs.".strtolower($tipodoc).".template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields", "firma_facturacion")), HTMLParserMode::HTML_BODY);
 //                    $pdf->SetHTMLHeader(View::make("pdfs.invoice.header", compact("resolution", "date", "time", "user", "request", "company", "imgLogo")));
 //                    $pdf->SetHTMLFooter(View::make("pdfs.invoice.footer", compact("resolution", "request", "cufecude", "date", "time")));
 //                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields")), HTMLParserMode::HTML_BODY);
