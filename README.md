@@ -16,17 +16,17 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 
 ## 3.- Instalación y despliegue en local (Windows)
-[Pasos instalación Windows 2024](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Windows.txt?ref_type=heads)
+* Pasos instalación Windows 2024 [Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Windows.txt?ref_type=heads)
 
 
-* Video de instalación [Aqui](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
+* Video de instalación [Aquí](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
 
 
 ## 4.- Manuales de instalación en VPS LINUX
 
-[Pasos instalación Linux Ubuntu 20](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Linux%20Ubuntu%2020.txt?ref_type=heads)
+* Pasos instalación Linux Ubuntu 20 [Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Linux%20Ubuntu%2020.txt?ref_type=heads)
 
-* Video de instalación [Aqui](https://www.youtube.com/watch?v=rEgrHADjsCY)
+* Video de instalación [Aquí](https://www.youtube.com/watch?v=rEgrHADjsCY)
 
 
 ## 5.- Cómo pasar a producción 
