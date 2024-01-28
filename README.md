@@ -1,6 +1,6 @@
-# **API REST DIAN 2 - UBL 2.1 - VALIDACIÓN PREVIA***
+# **API REST 2024**
 
-## Acerca de FACTURALATAM - ACTUALIZACION
+## Acerca de FACTURALATAM
 
 Estamos enfocados en crear herramientas y soluciones para desarrolladores de software, empresas medianas y pequeñas, tenemos un sueño, queremos democratizar la facturación electrónica.
 
@@ -12,34 +12,28 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 ## 2.- Ejemplos para la API / Collection POSTMAN
 
-# Primero descargue la herramienta POSTMAN desde internet, y luego importe el archivo collection aquí [postman collection](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/ApiDianV2.1.postman_collection.json "Clic") 
+# Primero descargue la herramienta POSTMAN desde internet, y luego importe el archivo collection aquí [postman collection](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/ApiDianV2.1.postman_collection.json "Click") 
 
 
-## 3.- Videos para la instalación y despliegue en local (Windows)
-* Factura electrónica Colombia DIAN validación previa - PHP (1/4) Introducción [Aquí](https://www.youtube.com/watch?v=FwBaQfI2ghw)
-* Factura electrónica Colombia DIAN validación previa - PHP (2/4) Instalación [Aquí](https://youtu.be/-DMnOKSaWr8)
-* Factura electrónica Colombia DIAN validación previa - PHP (3/4) Configuración API [Aquí](https://youtu.be/CAyZ9suZLII)
-* Factura electrónica Colombia DIAN validación previa - PHP (4/4) Envío Factura [Aquí](https://youtu.be/28l74DvL8_o)
-* Video que demuestra funcionalidad de firma, envio y consulta de estado de documentos XML [Aqui](https://drive.google.com/open?id=15-saHPT-NsWZEWrNMciteSU9bBGh_Msf)
+## 3.- Instalación y despliegue en local (Windows)
+[Pasos instalación Windows 2024](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Windows.txt?ref_type=heads)
 
-* Actualización 2023 [Aqui](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
+
+* Video de instalación [Aqui](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
 
 
 ## 4.- Manuales de instalación en VPS LINUX
 
-* Actualización 2023 [Aqui](https://www.youtube.com/watch?v=rEgrHADjsCY)
+[Pasos instalación Linux Ubuntu 20](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Linux%20Ubuntu%2020.txt?ref_type=heads)
+
+* Video de instalación [Aqui](https://www.youtube.com/watch?v=rEgrHADjsCY)
 
 
 ## 5.- Cómo pasar a producción 
-
 * [Guía](https://www.youtube.com/watch?v=gBtd4XqwWtg)
 
 
-## 6. - Proceso de actualizacion
-
+## Extras   
 * Actualizacion desde APIDIAN2022 y la api APIDIAN2023 [Aquí](https://www.youtube.com/watch?v=6lwLKQCYvNY)
 
-
-## Extra, integración con el facturador PRO I   
- 
-* Proceso de Intalación e integración [Aquí](https://youtu.be/D5aMkQy9UrM) 
+* Video que demuestra funcionalidad de firma, envio y consulta de estado de documentos XML [Aqui](https://drive.google.com/open?id=15-saHPT-NsWZEWrNMciteSU9bBGh_Msf)
