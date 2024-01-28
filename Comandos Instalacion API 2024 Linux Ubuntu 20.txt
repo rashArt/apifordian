@@ -1,4 +1,5 @@
-- VPS Ubuntu 20.04 (No sirve host como hostinger.com)
+#REQUISITOS:
+- VPS Ubuntu 20 (No sirve hostings con cpanel)
 	hetzner.com
 	contabo.com
 	amazon aws
@@ -7,7 +8,7 @@
 
 - Putty (Cliente SSH)
 
-COMANDOS DE INSTALACION
+#COMANDOS DE INSTALACION
 
 apt-get update
 apt-get -y install software-properties-common
@@ -17,28 +18,23 @@ apt-get update
 apt-get -y install php7.3 php7.3-mbstring php7.3-soap php7.3-zip php7.3-mysql php7.3-curl php7.3-gd php7.3-xml php7.3-intl git curl zip unzip php7.3-intl php7.3-imap
 apt-get -y install apache2
 
-CAMBIAR PUERTO APACHE
+#CAMBIAR PUERTO APACHE (Por defecto 80)
 nano /etc/apache2/ports.conf
 service apache2 restart
 
-INSTALACION MARIADB UBUNTU 20.04
-apt update
-apt install mariadb-server
-mysql_secure_installation
+#INSTALACION MYSQL UBUNTU 20 (Mariadb)
+apt-get install mariadb-server-core-10.3 mariadb-server-10.3 mariadb-client-10.3
 
-CAMBIAR PUERTO MARIADB
-nano /etc/mysql/mariadb.conf.d/50-server.cnf
-
+#CAMBIAR PUERTO MYSQL(Mariadb)
+nano /etc/mysql/mariadb.conf.d/50-server.cnf 
 service mysql restart
 
-CREACION DE USUARIOS MYSQL
+#CREACION DE USUARIOS MYSQL
 mysql -u root 
 
-CREATE USER 'apidian'@'localhost' IDENTIFIED BY 'apidian.qwerty';
-GRANT ALL PRIVILEGES ON * . * TO 'apidian'@'localhost';
-FLUSH PRIVILEGES;
-
-CREATE USER 'apidian'@'%' IDENTIFIED BY 'apidian.qwerty';
+#CAMBIA LA CONTRASEÑA EN LUGAR DE 'uZ78R' Ó AGREGA MAS CARACTERES
+#ESTA CONTRASEÑA SE REFLEJARÁ LUEGO EN EL ARCHIVO .env
+CREATE USER 'apidian'@'%' IDENTIFIED BY 'uZ78R';
 GRANT ALL PRIVILEGES ON * . * TO 'apidian'@'%';
 FLUSH PRIVILEGES;
 
@@ -72,7 +68,7 @@ cd /etc/apache2/sites-available/
 touch api.conf
 nano api.conf
 
-<VirtualHost *:81>
+<VirtualHost *:80>
  ServerAdmin admin@example.com
  DocumentRoot /var/www/html/apidian/public
  <Directory /var/www/html/apidian/public>
