@@ -38,7 +38,6 @@ mysql -u root
 CREATE USER 'apidian'@'%' IDENTIFIED BY 'uZ78R';
 GRANT ALL PRIVILEGES ON * . * TO 'apidian'@'%';
 FLUSH PRIVILEGES;
-
 CREATE DATABASE apidian CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 exit
 
