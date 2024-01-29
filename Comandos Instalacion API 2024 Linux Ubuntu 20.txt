@@ -26,7 +26,7 @@ service apache2 restart
 #INSTALACION MYSQL UBUNTU 20 (Mariadb)
 apt-get install mariadb-server-core-10.3 mariadb-server-10.3 mariadb-client-10.3
 
-#CAMBIAR PUERTO MYSQL(Mariadb)
+#CAMBIAR PUERTO MYSQL(Mariadb / Por defecto 3306)
 nano /etc/mysql/mariadb.conf.d/50-server.cnf 
 service mysql restart
 
@@ -42,11 +42,11 @@ FLUSH PRIVILEGES;
 CREATE DATABASE apidian CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 exit
 
-INSTALAR COMPOSER
+#INSTALAR COMPOSER
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
-INSTALAR APIDDIAN
+#INSTALAR APIDDIAN
 cd /var/www/html/
 git config --global http.sslverify false
 git clone https://gitlab.buho.la/facturalatam/co-apidian2024.git apidian
