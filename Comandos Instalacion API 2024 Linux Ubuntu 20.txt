@@ -50,6 +50,13 @@ git config --global http.sslverify false
 git clone https://gitlab.buho.la/facturalatam/co-apidian2024.git apidian
 cd apidian
 cp .env.example .env
+nano .env
+
+#CAMBIAR LA CADENA DE CONEXIÓN EN EL ARCHIVO .env
+#DB_DATABASE=apidian
+#DB_USERNAME=root
+#DB_PASSWORD=uZ78R
+
 rm composer.lock
 composer install
 php artisan config:cache && php artisan cache:clear
