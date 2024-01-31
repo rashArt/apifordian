@@ -21,6 +21,7 @@ apt-get -y install apache2
 
 #CAMBIAR PUERTO APACHE (Por defecto 80)
 nano /etc/apache2/ports.conf
+# cambiar el puerto en la linea que hace mencion a "Listen 80"
 service apache2 restart
 
 #INSTALACION MYSQL UBUNTU 20 (Mariadb)
@@ -28,6 +29,7 @@ apt-get install mariadb-server-core-10.3 mariadb-server-10.3 mariadb-client-10.3
 
 #CAMBIAR PUERTO MYSQL(Mariadb / Por defecto 3306)
 nano /etc/mysql/mariadb.conf.d/50-server.cnf 
+# descomentar la linea que hace referencia a "port" y asignar el puerto de preferencia
 service mysql restart
 
 #CREACION DE USUARIOS MYSQL
@@ -52,21 +54,23 @@ cd apidian
 cp .env.example .env
 nano .env
 
-#CAMBIAR LA CADENA DE CONEXIÓN EN EL ARCHIVO .env
-#DB_DATABASE=apidian
-#DB_USERNAME=apidian
-#DB_PASSWORD=uZ78R
+#CAMBIAR LA CADENA DE CONEXIÓN EN EL ARCHIVO .env asignando el puerto configurado anteriormente
+```
+DB_PORT=3306
+DB_DATABASE=apidian
+DB_USERNAME=apidian
+DB_PASSWORD=uZ78R
+```
 
 rm composer.lock
 composer install
-php artisan config:cache && php artisan cache:clear
 php artisan key:generate
-php artisan migrate --seed
 unzip storage.zip
-chmod -R 777 storage
-chmod -R 777 bootstrap/cache
-chmod -R 777 vendor/mpdf/mpdf
+# aceptar los cambios al descomprimir
+chmod -R 777 storage bootstrap/cache vendor/mpdf/mpdf
+php artisan config:cache && php artisan cache:clear
 php artisan storage:link
+php artisan migrate --seed
 chmod 700 urn_on.sh
 ./urn_on.sh
 
@@ -74,17 +78,22 @@ cd /etc/apache2/sites-available/
 touch api.conf
 nano api.conf
 
+# Pegar el siguiente contenido, cambiar el puerto para apache si se ha modificado anteriormente
+```
 <VirtualHost *:80>
- ServerAdmin admin@example.com
- DocumentRoot /var/www/html/apidian/public
- <Directory /var/www/html/apidian/public>
- Options +FollowSymlinks
- AllowOverride All
- Require all granted
- </Directory>
- ErrorLog ${APACHE_LOG_DIR}/error.log
- CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/html/apidian/public
+
+    <Directory /var/www/html/apidian/public>
+        Options +FollowSymlinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
+```
 
 a2dissite 000-default.conf
 a2ensite api.conf
@@ -92,7 +101,3 @@ a2enmod rewrite
 service apache2 restart
 cd /var/www/html/apidian
 php artisan config:cache && php artisan config:clear && php artisan cache:clear
-
-
-
-
