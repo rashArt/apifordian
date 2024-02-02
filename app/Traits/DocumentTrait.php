@@ -264,7 +264,7 @@ trait DocumentTrait
             $DOMDocumentXML = new DOMDocument();
             $DOMDocumentXML->preserveWhiteSpace = false;
             $DOMDocumentXML->formatOutput = true;
-            if(isset($data['request']['is_eqdoc'])){
+            if(isset($data['request']['is_eqdoc']) && ($data['request']['is_eqdoc'] == true)){
                 if($data['request']['is_eqdoc'] == true && $data['typeDocument']['code'] == 94)
                     $DOMDocumentXML->loadXML(view("xml.91", $data)->render());
                 if($data['request']['is_eqdoc'] == true && $data['typeDocument']['code'] == 93)
