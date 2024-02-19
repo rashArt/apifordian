@@ -189,9 +189,12 @@ class InvoiceContingencyController extends Controller
             $calculationratedate = $request->calculationratedate;
         }
         else{
-            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
-            $calculationrate = 1;
-            $calculationratedate = Carbon::now()->format('Y-m-d');
+            $idcurrency = null;
+            $calculationrate = null;
+            $calculationratedate = null;
+//            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+//            $calculationrate = 1;
+//            $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
@@ -626,9 +629,12 @@ class InvoiceContingencyController extends Controller
             $calculationratedate = $request->calculationratedate;
         }
         else{
-            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
-            $calculationrate = 1;
-            $calculationratedate = Carbon::now()->format('Y-m-d');
+            $idcurrency = null;
+            $calculationrate = null;
+            $calculationratedate = null;
+//            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+//            $calculationrate = 1;
+//            $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
