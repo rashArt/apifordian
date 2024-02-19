@@ -788,6 +788,9 @@ class InvoiceController extends Controller
             $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
             $calculationrate = 1;
             $calculationratedate = Carbon::now()->format('Y-m-d');
+//            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+//            $calculationrate = 1;
+//            $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
