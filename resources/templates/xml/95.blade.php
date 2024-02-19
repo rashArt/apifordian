@@ -44,7 +44,9 @@
     {{-- PaymentMeans --}}
     @include('xml._payment_means')
     {{-- PaymentExchangeRate --}}
-    @include('xml._payment_exchange_rate')
+    @if($idcurrency !== null && $calculationrate !== null && $calculationratedate !== null)
+        @include('xml._payment_exchange_rate')
+    @endif
     {{-- AllowanceCharges --}}
     @include('xml._allowance_charges')
     {{-- TaxTotals --}}
