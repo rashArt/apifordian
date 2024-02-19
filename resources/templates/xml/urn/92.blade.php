@@ -68,7 +68,9 @@
     {{-- PaymentMeans --}}
     @include('xml._payment_means')
     {{-- PaymentExchangeRate --}}
-    @include('xml._payment_exchange_rate')
+    @if($idcurrency !== null && $calculationrate !== null && $calculationratedate !== null)
+        @include('xml._payment_exchange_rate')
+    @endif
     {{-- TaxTotals --}}
     @include('xml._tax_totals', ['generalView' => true])
     {{-- HoldingTaxTotals --}}
