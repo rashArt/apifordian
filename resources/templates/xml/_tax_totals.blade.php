@@ -1,4 +1,4 @@
-@for($i = 1; $i <= 18; $i++)
+@for($i = 1; $i <= 23; $i++)
     <?php $TotalImpuesto = 0; $CantItems = 0; ?>
     @foreach ($taxTotals as $key => $taxTotal)
         @if(intval(preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax->id)) === $i)
