@@ -156,8 +156,8 @@ class DebitNoteController extends Controller
         }
         else{
             $is_eqdoc = false;
-            $pf = "NC";
-            $pfs = "NCS";
+            $pf = "ND";
+            $pfs = "NDS";
         }
 
         // Customer
