@@ -61,7 +61,7 @@ class EventMail extends Mailable
             else
                 $nameZIP = $this->zipEmailEvent(storage_path("app/public/{$this->sender->company['identification_number']}/{$this->filename}.xml"), storage_path("app/public/{$this->sender->company['identification_number']}/EVS-{$this->sender->company['identification_number']}{$this->document[0]->number}{$this->event->code}.pdf"));
             return $this->view('mails.mail_event')->subject("Evento: {$this->sender->company['identification_number']};{$this->sender->name};{$this->sender->company['identification_number']}{$this->document[0]->number}{$this->event->code};{$this->document[0]->type_document->code};{$this->sender->name}")
-                                                  ->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'))
+                                                  ->from(env('MAIL_FROM_ADDRESS', config('mail.username')), 'nomail@nomail.com')
 //                                            ->from(env('MAIL_FROM_ADDRESS', config('mail.username')), env('MAIL_FROM_NAME', env('APP_NAME')))
 //                                            ->from(config('mail.username'))
                                             ->attach($nameZIP);
