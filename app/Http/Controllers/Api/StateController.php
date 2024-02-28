@@ -137,7 +137,7 @@ class StateController extends Controller
 
 //                    $xml->loadXML($signedxml);
 
-                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName)))))));
+                    $filename = str_replace('ttr', 'ad', str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName))))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
@@ -159,8 +159,12 @@ class StateController extends Controller
                     if($td == '/Invoice')
                         if(isset($this->getTag($signedxml, 'Prefix', 0)->nodeValue))
                             $resolution = Resolution::where('prefix', $this->getTag($signedxml, 'Prefix', 0)->nodeValue)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
-                        else
-                            $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        else{
+                            if($this->getTag($signedxml, 'InvoiceTypeCode', 0)->nodeValue == 35)
+                                $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->firstOrFail();
+                            else
+                                $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        }
 //                        $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
                     else
                         if($td == '/NominaIndividual' || $td == '/NominaIndividualDeAjuste')
@@ -309,10 +313,10 @@ class StateController extends Controller
                         $invoicenumber = $this->InvoiceByZipKey($company->identification_number, $trackId);
                         $signedxml = file_get_contents(storage_path("app/public/{$company->identification_number}/FES-".$invoicenumber));
                     }
-                    else
+                    else{
                         $signedxml = file_get_contents(storage_path("app/xml/{$company->id}/".$respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName.".xml"));
+                    }
 //                    $xml->loadXML($signedxml);
-
                     if(strpos($signedxml, "</Invoice>") > 0)
                         $td = '/Invoice';
                     else
@@ -335,12 +339,11 @@ class StateController extends Controller
 
 //                    return $this->ValueXML($signedxml, '/CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:Name/');
 
-                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName)))))));
+                    $filename = str_replace('ttr', 'ad', str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlFileName))))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
                     $cufecude = $respuestadian->Envelope->Body->GetStatusZipResponse->GetStatusZipResult->DianResponse->XmlDocumentKey;
-
 //                    if($td == '/NominaIndividual' || $td == 'NominaIndividualDeAjuste')
 //                        $cufecude = $this->getTag($signedxml, 'InformacionGeneral', 0, 'CUNE');
 //                    else
@@ -358,8 +361,12 @@ class StateController extends Controller
                     if($td == '/Invoice')
                         if(isset($this->getTag($signedxml, 'Prefix', 0)->nodeValue))
                             $resolution = Resolution::where('prefix', $this->getTag($signedxml, 'Prefix', 0)->nodeValue)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
-                        else
-                            $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        else{
+                            if($this->getTag($signedxml, 'InvoiceTypeCode', 0)->nodeValue == 35)
+                                $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->firstOrFail();
+                            else
+                                $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        }
 //                        $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
                     else
                         if($td == '/NominaIndividual' || $td == '/NominaIndividualDeAjuste')
@@ -575,7 +582,7 @@ class StateController extends Controller
                     ];
 
                 if($respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->IsValid == 'true'){
-                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName)))))));
+                    $filename = str_replace('ttr', 'ad', str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName))))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
 
@@ -609,8 +616,12 @@ class StateController extends Controller
                     if($td == '/Invoice')
                         if(isset($this->getTag($signedxml, 'Prefix', 0)->nodeValue))
                             $resolution = Resolution::where('prefix', $this->getTag($signedxml, 'Prefix', 0)->nodeValue)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
-                        else
-                            $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        else{
+                            if($this->getTag($signedxml, 'InvoiceTypeCode', 0)->nodeValue == 35)
+                                $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->firstOrFail();
+                            else
+                                $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        }
 //                        $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
                     else
                         if($td == '/NominaIndividual' || $td == '/NominaIndividualDeAjuste')
@@ -760,7 +771,7 @@ class StateController extends Controller
                     ];
 
                 if($respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->IsValid == 'true'){
-                    $filename = str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName)))))));
+                    $filename = str_replace('ttr', 'ad', str_replace('pos', 'ad', str_replace('ads', 'ad', str_replace('dse', 'ad', str_replace('ni', 'ad', str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlFileName))))))));
                     if($request->atacheddocument_name_prefix)
                         $filename = $request->atacheddocument_name_prefix.$filename;
                     $cufecude = $respuestadian->Envelope->Body->GetStatusResponse->GetStatusResult->XmlDocumentKey;
@@ -793,8 +804,12 @@ class StateController extends Controller
                     if($td == '/Invoice')
                         if(isset($this->getTag($signedxml, 'Prefix', 0)->nodeValue))
                             $resolution = Resolution::where('prefix', $this->getTag($signedxml, 'Prefix', 0)->nodeValue)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
-                        else
-                            $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        else{
+                            if($this->getTag($signedxml, 'InvoiceTypeCode', 0)->nodeValue == 35)
+                                $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->firstOrFail();
+                            else
+                                $resolution = Resolution::where('prefix', NULL)->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
+                        }
 //                        $resolution = Resolution::where('prefix', $this->ValueXML($signedxml, $td."/cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cac:CorporateRegistrationScheme/cbc:ID/"))->where('resolution', $this->getTag($signedxml, 'InvoiceAuthorization', 0)->nodeValue)->firstOrFail();
                     else
                         if($td == '/NominaIndividual' || $td == '/NominaIndividualDeAjuste')

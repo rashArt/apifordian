@@ -66,19 +66,27 @@ class EqDocRequest extends FormRequest
             'software_manufacturer.software_name' => 'required|string',
 
             // Informacion beneficios del comprador
-            'buyer_benefits' => 'required|array',
-            'buyer_benefits.code' => 'required|string',
-            'buyer_benefits.name' => 'required|string',
-            'buyer_benefits.points' => 'required|string',
+            'buyer_benefits' => 'nullable|required_if:type_document_id,=,15|array',
+            'buyer_benefits.code' => 'nullable|required_with:buyer_benefits|string',
+            'buyer_benefits.name' => 'nullable|required_with:buyer_benefits|string',
+            'buyer_benefits.points' => 'nullable|required_with:buyer_benefits|string',
 
             // Informacion de la caja
-            'cash_information' => 'required|array',
-            'cash_information.plate_number' => 'required|string',
-            'cash_information.location' => 'required|string',
-            'cash_information.cashier' => 'required|string',
-            'cash_information.cash_type' => 'required|string',
-            'cash_information.sales_code' => 'required|string',
-            'cash_information.subtotal' => 'required|numeric',
+            'cash_information' => 'nullable|required_if:type_document_id,=,15|array',
+            'cash_information.plate_number' => 'nullable|required_with:cash_information|string',
+            'cash_information.location' => 'nullable|required_with:cash_information|string',
+            'cash_information.cashier' => 'nullable|required_with:cash_information|string',
+            'cash_information.cash_type' => 'nullable|required_with:cash_information|string',
+            'cash_information.sales_code' => 'nullable|required_with:cash_information|string',
+            'cash_information.subtotal' => 'nullable|required_with:cash_information|numeric',
+
+            // Informacion para transporte terrestre
+            'transportation_information' => 'nullable|required_if:type_document_id,=,19|array',
+            'transportation_information.transport_mode' => 'nullable|required_with:transportation_information|string',
+            'transportation_information.plate_number' => 'nullable|required_with:transportation_information|string',
+            'transportation_information.transport_mean' => 'nullable|required_with:transportation_information|string',
+            'transportation_information.origin_place' => 'nullable|required_with:transportation_information|string',
+            'transportation_information.destination_place' => 'nullable|required_with:transportation_information|string',
 
             // HTML string body email
             'html_header' => 'nullable|string',
@@ -124,7 +132,7 @@ class EqDocRequest extends FormRequest
             // Document
             'type_document_id' => [
                 'required',
-                'in:15',
+                'in:15, 19',
                 'exists:type_documents,id',
                 new ResolutionSetting(),
             ],
@@ -155,7 +163,7 @@ class EqDocRequest extends FormRequest
             'due_date' => 'nullable|date_format:Y-m-d|after_or_equal:date',
 
             // Postal zone code
-            'postal_zone_code' => 'required|numeric',
+            'postal_zone_code' => 'nullable|required_if:type_document_id,=,15|numeric',
 
             // Notes
             'notes' => 'nullable|string',
