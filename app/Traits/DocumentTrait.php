@@ -213,10 +213,18 @@ trait DocumentTrait
     protected function createXML(array $data)
     {
         if(in_array($data['typeDocument']['code'], ['01', '02', '03', '05', '95', '91', '92', '20', '35', '93', '94'])){
-            if($data['company']['eqdocs_type_environment_id'] == 2)
-                $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
-            else
-                $urlquery = 'https://catalogo-vpfe.dian.gov.co';
+            if(in_array($data['typeDocument']['code'], ['20', '93', '94', '35'])){
+                if($data['company']['eqdocs_type_environment_id'] == 2)
+                    $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
+                else
+                    $urlquery = 'https://catalogo-vpfe.dian.gov.co';
+            }
+            else{
+                if($data['company']['type_environment_id'] == 2)
+                    $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
+                else
+                    $urlquery = 'https://catalogo-vpfe.dian.gov.co';
+            }
 
             if(in_array($data['typeDocument']['code'], ['01', '02', '03', '20', '35']))
                 if(isset($data['request']['tax_totals'][0]['tax_amount']))
