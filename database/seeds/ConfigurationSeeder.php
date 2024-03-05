@@ -137,6 +137,9 @@ class ConfigurationSeeder extends Seeder
         'incoterms' => [
             'columns' => 'id, name, code, @created_at, @updated_at',
         ],
+        'credit_note_discrepancy_responses_sd' => [
+            'columns' => 'id, name, code, @created_at, @updated_at',
+        ],
     ];
 
     /**

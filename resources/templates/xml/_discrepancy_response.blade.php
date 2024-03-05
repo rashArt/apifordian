@@ -5,7 +5,11 @@
     <cbc:ResponseCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $discrepancycode)}}</cbc:ResponseCode>
     @isset($discrepancycode)
         @if(in_array($request['type_document_id'], [4, 13, 26]))
-            @inject('Discrepancy', 'App\CreditNoteDiscrepancyResponse')
+            @if($request['type_document_id'] == 13)
+                @inject('Discrepancy', 'App\CreditNoteDiscrepancyResponseSD')
+            @else
+                @inject('Discrepancy', 'App\CreditNoteDiscrepancyResponse')
+            @endif
         @else
             @inject('Discrepancy', 'App\DebitNoteDiscrepancyResponse')
         @endif
