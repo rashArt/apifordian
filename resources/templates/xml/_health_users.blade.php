@@ -5,6 +5,10 @@
             <Value>{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->provider_code)}}</Value>
         </AdditionalInformation>
         <AdditionalInformation>
+            <Name>MODALIDAD_PAGO</Name>
+            <Value schemeName="salud_modalidad_pago.gc" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_contracting_payment_method()->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_contracting_payment_method()->name)}}</Value>
+        </AdditionalInformation>
+        <AdditionalInformation>
             <Name>TIPO_DOCUMENTO_IDENTIFICACION</Name>
             <Value schemeName="salud_identificacion.gc" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_type_document_identification()->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_type_document_identification()->name)}}</Value>
         </AdditionalInformation>
@@ -35,10 +39,6 @@
         <AdditionalInformation>
             <Name>TIPO_USUARIO</Name>
             <Value schemeName="salud_tipo_usuario.gc" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_type_user()->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_type_user()->name)}}</Value>
-        </AdditionalInformation>
-        <AdditionalInformation>
-            <Name>MODALIDAD_CONTRATACION</Name>
-            <Value schemeName="salud_modalidad_pago.gc" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_contracting_payment_method()->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $healthUser->health_contracting_payment_method()->name)}}</Value>
         </AdditionalInformation>
         <AdditionalInformation>
             <Name>COBERTURA_PLAN_BENEFICIOS</Name>
