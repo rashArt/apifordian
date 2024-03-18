@@ -13,6 +13,7 @@ use App\TypeOperation;
 use App\PaymentMethod;
 use App\Municipality;
 use App\OrderReference;
+use App\HealthField;
 use App\AllowanceCharge;
 use App\LegalMonetaryTotal;
 use App\PrepaidPayment;
@@ -226,6 +227,12 @@ class InvoiceContingencyController extends Controller
         else
             $orderreference = NULL;
 
+        // Health Fields
+        if($request->health_fields)
+            $healthfields = new HealthField($request->health_fields);
+        else
+            $healthfields = NULL;
+
         // Additional document reference
         $AdditionalDocumentReferenceID = $request->AdditionalDocumentReferenceID;
         $AdditionalDocumentReferenceDate = $request->AdditionalDocumentReferenceDate;
@@ -313,6 +320,8 @@ class InvoiceContingencyController extends Controller
             $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), $request->GuardarEn."\\FES-{$resolution->next_consecutive}");
         else
             $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}"));
+
+        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;
         $invoice_doc->customer = $customer->company->identification_number;
@@ -434,6 +443,7 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signInvoice->ConsultarCUDE(),
+                'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
@@ -531,6 +541,7 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"{$filename}.xml",
                 'cude' => $signInvoice->ConsultarCUDE(),
+                'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
@@ -666,6 +677,12 @@ class InvoiceContingencyController extends Controller
         else
             $orderreference = NULL;
 
+        // Health Fields
+        if($request->health_fields)
+            $healthfields = new HealthField($request->health_fields);
+        else
+            $healthfields = NULL;
+
         // Additional document reference
         $AdditionalDocumentReferenceID = $request->AdditionalDocumentReferenceID;
         $AdditionalDocumentReferenceDate = $request->AdditionalDocumentReferenceDate;
@@ -753,6 +770,9 @@ class InvoiceContingencyController extends Controller
             $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), $request->GuardarEn."\\FES-{$resolution->next_consecutive}");
         else
             $sendTestSetAsync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}"));
+
+        $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), "INVOICE", $withHoldingTaxTotal, $notes, $healthfields);
+
         $sendTestSetAsync->testSetId = $testSetId;
 
         $invoice_doc->prefix = $resolution->prefix;
@@ -790,6 +810,7 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signInvoice->ConsultarCUDE(),
+                'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
@@ -806,6 +827,7 @@ class InvoiceContingencyController extends Controller
                 'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
                 'urlinvoiceattached'=>"Attachment-{$resolution->next_consecutive}.xml",
                 'cude' => $signInvoice->ConsultarCUDE(),
+                'QRStr' => $QRStr,
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
