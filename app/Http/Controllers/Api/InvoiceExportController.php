@@ -190,11 +190,11 @@ class InvoiceExportController extends Controller
         $typeoperation = TypeOperation::findOrFail($request->type_operation_id);
 
         // Currency id
-        $idcurrency = TypeCurrency::findOrFail($request->idcurrency);
+//        $idcurrency = TypeCurrency::findOrFail($request->idcurrency);
 
         // Calculation rate
-        $calculationrate = $request->calculationrate;
-        $calculationratedate = $request->calculationratedate;
+//        $calculationrate = $request->calculationrate;
+//        $calculationratedate = $request->calculationratedate;
 
         // Resolution
         $request->resolution->number = $request->number;
@@ -271,7 +271,8 @@ class InvoiceExportController extends Controller
         }
 
         // Create XML
-        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))
@@ -628,11 +629,11 @@ class InvoiceExportController extends Controller
         $typeoperation = TypeOperation::findOrFail($request->type_operation_id);
 
         // Currency id
-        $idcurrency = TypeCurrency::findOrFail($request->idcurrency);
+//        $idcurrency = TypeCurrency::findOrFail($request->idcurrency);
 
         // Calculation rate
-        $calculationrate = $request->calculationrate;
-        $calculationratedate = $request->calculationratedate;
+//        $calculationrate = $request->calculationrate;
+//        $calculationratedate = $request->calculationratedate;
 
         // Resolution
         $request->resolution->number = $request->number;
@@ -710,7 +711,8 @@ class InvoiceExportController extends Controller
         }
 
         // Create XML
-        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))

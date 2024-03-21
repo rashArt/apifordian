@@ -4,7 +4,7 @@
         <td style="width: 23%;" class="text-center vertical-align-top">
             <div id="reference">
                 @if($request->type_document_id == 3)
-                    <p style="font-weight: 700;"><strong>FACTURA ELECTRONICA DE VENTA DE CONTINGENCIA No</strong></p>
+                    <p style="font-weight: 700;"><strong>FACTURA ELECTRONICA DE CONTINGENCIA No</strong></p>
                 @else
                     <p style="font-weight: 700;"><strong>FACTURA ELECTRONICA DE VENTA No</strong></p>
                 @endif

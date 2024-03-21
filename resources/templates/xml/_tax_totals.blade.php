@@ -7,35 +7,35 @@
     @endforeach
     @if($CantItems > 0)
             <cac:TaxTotal>
-                @if(isset($idcurrency))
+{{--                @if(isset($idcurrency))
                     <cbc:TaxAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($TotalImpuesto, 2, '.', ''))}}</cbc:TaxAmount>
                     <cbc:RoundingAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">0.00</cbc:RoundingAmount>
-                @else
+                @else   --}}
                     <cbc:TaxAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($TotalImpuesto, 2, '.', ''))}}</cbc:TaxAmount>
                     <cbc:RoundingAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">0.00</cbc:RoundingAmount>
-                @endif
+{{--                @endif  --}}
         @foreach ($taxTotals as $key => $taxTotal)
             @if(intval(preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->tax->id)) === $i)
                 <cac:TaxSubtotal>
                     @if (!$taxTotal->is_fixed_value)
-                        @if(isset($idcurrency))
+{{--                        @if(isset($idcurrency))
                             <cbc:TaxableAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->taxable_amount, 2, '.', ''))}}</cbc:TaxableAmount>
-                        @else
+                        @else   --}}
                             <cbc:TaxableAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->taxable_amount, 2, '.', ''))}}</cbc:TaxableAmount>
-                        @endif
+{{--                        @endif  --}}
                     @endif
-                    @if(isset($idcurrency))
+{{--                    @if(isset($idcurrency))
                         <cbc:TaxAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->tax_amount, 2, '.', ''))}}</cbc:TaxAmount>
-                    @else
+                    @else   --}}
                         <cbc:TaxAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->tax_amount, 2, '.', ''))}}</cbc:TaxAmount>
-                    @endif
+{{--                    @endif  --}}
                     @if ($taxTotal->is_fixed_value)
                         <cbc:BaseUnitMeasure unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $taxTotal->unit_measure->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->base_unit_measure, 6, '.', ''))}}</cbc:BaseUnitMeasure>
-                        @if(isset($idcurrency))
+{{--                        @if(isset($idcurrency))
                             <cbc:PerUnitAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->per_unit_amount, 2, '.', ''))}}</cbc:PerUnitAmount>
-                        @else
+                        @else   --}}
                             <cbc:PerUnitAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($taxTotal->per_unit_amount, 2, '.', ''))}}</cbc:PerUnitAmount>
-                        @endif
+{{--                        @endif  --}}
                     @endif
                     <cac:TaxCategory>
                         @if (!$taxTotal->is_fixed_value)

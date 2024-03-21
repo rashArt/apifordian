@@ -1,4 +1,3 @@
-
 <?php echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'; ?>
 <Invoice
     xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
@@ -25,11 +24,11 @@
     @isset($notes)
         <cbc:Note>{{preg_replace("/[\r\n|\n|\r]+/", "", $notes)}}</cbc:Note>
     @endisset
-    @if(isset($idcurrency))
+{{--    @if(isset($idcurrency))
       <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}</cbc:DocumentCurrencyCode>
-    @else
-      <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}</cbc:DocumentCurrencyCode>
-    @endif
+    @else   --}}
+    <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}</cbc:DocumentCurrencyCode>
+{{--    @endif  --}}
     <cbc:LineCountNumeric>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLines->count())}}</cbc:LineCountNumeric>
     {{-- OrderReference --}}
     @isset($orderreference)
@@ -59,9 +58,9 @@
     {{-- AllowanceCharges --}}
     @include('xml._allowance_charges')
     {{-- PaymentExchangeRate --}}
-    @if($idcurrency !== null && $calculationrate !== null && $calculationratedate !== null)
+{{--    @if($idcurrency !== null && $calculationrate !== null && $calculationratedate !== null)
         @include('xml._payment_exchange_rate')
-    @endif
+    @endif  --}}
     {{-- TaxTotals --}}
     @include('xml._tax_totals', ['generalView' => true])
     {{-- HoldingTaxTotals --}}

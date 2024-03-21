@@ -22,11 +22,11 @@
             <cbc:Note>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->notes)}}</cbc:Note>
         @endif
         <cbc:InvoicedQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->unit_measure->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->invoiced_quantity, 6, '.', ''))}}</cbc:InvoicedQuantity>
-        @if(isset($idcurrency))
+{{--        @if(isset($idcurrency))
             <cbc:LineExtensionAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->line_extension_amount, 2, '.', ''))}}</cbc:LineExtensionAmount>
-        @else
+        @else   --}}
             <cbc:LineExtensionAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->line_extension_amount, 2, '.', ''))}}</cbc:LineExtensionAmount>
-        @endif
+{{--        @endif  --}}
         @if(isset($invoiceLine->type_generation_transmition))
             <cac:InvoicePeriod>
                 <cbc:StartDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->start_date)}}</cbc:StartDate>
@@ -40,11 +40,11 @@
         @if (preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->free_of_charge_indicator) === 'true')
             <cac:PricingReference>
                 <cac:AlternativeConditionPrice>
-                @if(isset($idcurrency))
+{{--                @if(isset($idcurrency))
                     <cbc:PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->price_amount, 2, '.', ''))}}</cbc:PriceAmount>
-                @else
+                @else   --}}
                     <cbc:PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->price_amount, 2, '.', ''))}}</cbc:PriceAmount>
-                @endif
+{{--                @endif  --}}
                 </cac:AlternativeConditionPrice>
             </cac:PricingReference>
         @endif
@@ -93,11 +93,11 @@
             @endif
         </cac:Item>
         <cac:Price>
-            @if(isset($idcurrency))
+{{--            @if(isset($idcurrency))
                 <cbc:PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format(($invoiceLine->free_of_charge_indicator === 'true') ? 0 : $invoiceLine->price_amount, 2, '.', ''))}}</cbc:PriceAmount>
-            @else
+            @else   --}}
                 <cbc:PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format(($invoiceLine->free_of_charge_indicator === 'true') ? 0 : $invoiceLine->price_amount, 2, '.', ''))}}</cbc:PriceAmount>
-            @endif
+{{--            @endif  --}}
             <cbc:BaseQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->unit_measure->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->base_quantity, 6, '.', ''))}}</cbc:BaseQuantity>
         </cac:Price>
     </cac:InvoiceLine>

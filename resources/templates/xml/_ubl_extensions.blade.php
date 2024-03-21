@@ -31,4 +31,83 @@
     <ext:UBLExtension>
         <ext:ExtensionContent/>
     </ext:UBLExtension>
+    @if(isset($request['k_supplement']))
+        <ext:UBLExtension>
+            <ext:ExtensionContent>
+                <CustomTagGeneral>
+                    <Interoperabilidad>
+                        <Group schemeName="Exportación">
+                            <Collection schemeName="DATOS ADICIONALES">
+                                <AdditionalInformation>
+                                    <name>Responsable/Encargado</name>
+                                    <value>{{$request['k_supplement']['responsible_incharge']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Lugar de Salida</name>
+                                    <value>{{$request['k_supplement']['departure_place']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Medio de transporte</name>
+                                    <value>{{$request['k_supplement']['conveyance']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Tipo de Doc.de transporte</name>
+                                    <value>{{$request['k_supplement']['transport_document_type']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>N° de Doc. de transporte</name>
+                                    <value>{{$request['k_supplement']['transport_document_number']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Transportadora o Tramitadora</name>
+                                    <value>{{$request['k_supplement']['transporter_processor']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>País de Origen de la M/cia</name>
+                                    <value>{{$request['k_supplement']['merchandise_origin_country']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Destino</name>
+                                    <value>{{$request['k_supplement']['destination']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Términos de pago</name>
+                                    <value>{{$request['k_supplement']['payment_means']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Seguro</name>
+                                    <value>{{$request['k_supplement']['insurance_carrier']}}</value>
+                                </AdditionalInformation>
+                                <AdditionalInformation>
+                                    <name>Observaciones</name>
+                                    <value>{{$request['k_supplement']['observations']}}</value>
+                                </AdditionalInformation>
+                            </Collection>
+                        </Group>
+                    </Interoperabilidad>
+                    <TotalesCop>
+                        <FctConvCop>{{$request['k_supplement']['FctConvCop']}}</FctConvCop>
+                        <MonedaCop>{{$request['k_supplement']['MonedaCop']}}</MonedaCop>
+                        <SubTotalCop>{{$request['k_supplement']['SubTotalCop']}}</SubTotalCop>
+                        <DescuentoDetalleCop>{{$request['k_supplement']['DescuentoDetalleCop']}}</DescuentoDetalleCop>
+                        <RecargoDetalleCop>{{$request['k_supplement']['RecargoDetalleCop']}}</RecargoDetalleCop>
+                        <TotalBrutoFacturaCop>{{$request['k_supplement']['TotalBrutoFacturaCop']}}</TotalBrutoFacturaCop>
+                        <TotIvaCop>{{$request['k_supplement']['TotIvaCop']}}</TotIvaCop>
+                        <TotIncCop>{{$request['k_supplement']['TotIncCop']}}</TotIncCop>
+                        <TotBolCop>{{$request['k_supplement']['TotBolCop']}}</TotBolCop>
+                        <ImpOtroCop>{{$request['k_supplement']['ImpOtroCop']}}</ImpOtroCop>
+                        <MntImpCop>{{$request['k_supplement']['MntImpCop']}}</MntImpCop>
+                        <TotalNetoFacturaCop>{{$request['k_supplement']['TotalNetoFacturaCop']}}</TotalNetoFacturaCop>
+                        <MntDctoCop>{{$request['k_supplement']['MntDctoCop']}}</MntDctoCop>
+                        <MntRcgoCop>{{$request['k_supplement']['MntRcgoCop']}}</MntRcgoCop>
+                        <VlrPagarCop>{{$request['k_supplement']['VlrPagarCop']}}</VlrPagarCop>
+                        <ReteFueCop>{{$request['k_supplement']['ReteFueCop']}}</ReteFueCop>
+                        <ReteIvaCop>{{$request['k_supplement']['ReteIvaCop']}}</ReteIvaCop>
+                        <ReteIcaCop>{{$request['k_supplement']['ReteIcaCop']}}</ReteIcaCop>
+                        <TotAnticiposCop>{{$request['k_supplement']['TotAnticiposCop']}}</TotAnticiposCop>
+                    </TotalesCop>
+                </CustomTagGeneral>
+            </ext:ExtensionContent>
+        </ext:UBLExtension>
+    @endif
 </ext:UBLExtensions>

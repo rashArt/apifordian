@@ -114,16 +114,16 @@
                     </tr>
                     <tr>
                         <td>T.R.M:</td>
-                        <td>{{number_format($request['calculationrate'], 2)}}</td>
+                        <td>{{number_format($request['k_supplement']['FctConvCop'], 2)}}</td>
                     </tr>
                     <tr>
-                        <td>Fecha T.R.M:</td>
-                        <td>{{$request['calculationratedate']}}</td>
+                        <td>Destino</td>
+                        <td>{{$request['k_supplement']['destination']}}</td>
                     </tr>
                     <tr>
                         @inject('currency', 'App\TypeCurrency')
                         <td>Tipo Moneda:</td>
-                        <td>{{$currency->findOrFail($request['idcurrency'])['name']}}</td>
+                        <td>{{$currency->where('code', 'like', '%'.$request['k_supplement']['MonedaCop'].'%')->firstOrFail()['name']}}</td>
                     </tr>
                     @endif
                 </table>

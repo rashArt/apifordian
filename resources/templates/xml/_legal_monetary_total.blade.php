@@ -1,43 +1,43 @@
 <cac:{{preg_replace("/[\r\n|\n|\r]+/", "", $node)}}>
-    @if(isset($idcurrency))
+{{--    @if(isset($idcurrency))
         <cbc:LineExtensionAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->line_extension_amount, 2, '.', ''))}}</cbc:LineExtensionAmount>
-    @else
+    @else   --}}
         <cbc:LineExtensionAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->line_extension_amount, 2, '.', ''))}}</cbc:LineExtensionAmount>
-    @endif  
-    @if(isset($idcurrency))
+{{--    @endif  --}}
+{{--    @if(isset($idcurrency))
         <cbc:TaxExclusiveAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->tax_exclusive_amount, 2, '.', ''))}}</cbc:TaxExclusiveAmount>
-    @else
+    @else   --}}
         <cbc:TaxExclusiveAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->tax_exclusive_amount, 2, '.', ''))}}</cbc:TaxExclusiveAmount>
-    @endif  
-    @if(isset($idcurrency))
+{{--    @endif  --}}
+{{--    @if(isset($idcurrency))
         <cbc:TaxInclusiveAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->tax_inclusive_amount, 2, '.', ''))}}</cbc:TaxInclusiveAmount>
-    @else
+    @else   --}}
         <cbc:TaxInclusiveAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->tax_inclusive_amount, 2, '.', ''))}}</cbc:TaxInclusiveAmount>
-    @endif  
+{{--    @endif  --}}
     @if ($legalMonetaryTotals->allowance_total_amount)
-        @if(isset($idcurrency))
+{{--        @if(isset($idcurrency))
             <cbc:AllowanceTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->allowance_total_amount, 2, '.', ''))}}</cbc:AllowanceTotalAmount>
-        @else
+        @else   --}}
             <cbc:AllowanceTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->allowance_total_amount, 2, '.', ''))}}</cbc:AllowanceTotalAmount>
-        @endif  
+{{--        @endif  --}}
     @endif
     @if ($legalMonetaryTotals->charge_total_amount)
-        @if(isset($idcurrency))
+{{--        @if(isset($idcurrency))
             <cbc:ChargeTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->charge_total_amount, 2, '.', ''))}}</cbc:ChargeTotalAmount>
-        @else
+        @else   --}}
             <cbc:ChargeTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->charge_total_amount, 2, '.', ''))}}</cbc:ChargeTotalAmount>
-        @endif  
+{{--        @endif  --}
     @endif
     @if ($legalMonetaryTotals->pre_paid_amount)
-        @if(isset($idcurrency))
+{{--        @if(isset($idcurrency))
             <cbc:PrepaidAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->pre_paid_amount, 2, '.', ''))}}</cbc:PrepaidAmount>
-        @else
+        @else   --}}
             <cbc:PrepaidAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->pre_paid_amount, 2, '.', ''))}}</cbc:PrepaidAmount>
-        @endif  
+{{--        @endif  --}}
     @endif
-    @if(isset($idcurrency))
+{{--    @if(isset($idcurrency))
         <cbc:PayableAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->payable_amount, 2, '.', ''))}}</cbc:PayableAmount>
-    @else
+    @else   --}}
         <cbc:PayableAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->payable_amount, 2, '.', ''))}}</cbc:PayableAmount>
-    @endif  
+{{--    @endif  --}}
 </cac:{{$node}}>
