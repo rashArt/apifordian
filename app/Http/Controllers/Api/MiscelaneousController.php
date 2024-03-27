@@ -113,7 +113,7 @@ class MiscelaneousController extends Controller
 
     public function SearchCompany($nit)
     {
-        $client = new ClientScrap(); //Instancia de "use Goutte\Client;"
+        $client = new ClientScrap(HttpClient::create(['timeout' => 80, 'verify_peer' => false]));
         $crawler = $client->request('GET', "https://www.einforma.co/servlet/app/portal/ENTP/prod/LISTA_EMPRESAS/razonsocial/{$nit}");
         $name = $crawler->filter('#titEtiqueta')->text("No se encontro NIT.");
         if($name !== "No se encontro NIT."){
@@ -138,7 +138,7 @@ class MiscelaneousController extends Controller
 
     public function nameByNit($nit)
     {
-       $client = new ClientScrap();
+       $client = new ClientScrap(HttpClient::create(['timeout' => 80, 'verify_peer' => false]));
        $crawler = $client->request('GET', "https://www.einforma.co/servlet/app/portal/ENTP/prod/LISTA_EMPRESAS/razonsocial/{$nit}");
        $crawler->filter('h1[class="title01"]')->each(function($node){
           $this->setNameClient($node->text());
