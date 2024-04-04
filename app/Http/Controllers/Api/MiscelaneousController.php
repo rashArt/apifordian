@@ -15,6 +15,7 @@ use App\Traits\DocumentTrait;
 use Exception;
 use PDFMerger;
 use Goutte\Client as ClientScrap;
+use Symfony\Component\HttpClient\HttpClient;
 
 class MiscelaneousController extends Controller
 {
@@ -144,7 +145,7 @@ class MiscelaneousController extends Controller
           $this->setNameClient($node->text());
        });
        if(!is_null($this->nameclient)){
-           $arrayName = explode(" ", $name);
+           $arrayName = explode(" ", $this->nameclient);
            if(count($arrayName) == 1)
                return [
                    'success' => true,
