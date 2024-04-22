@@ -12,7 +12,7 @@ class Company extends Model
      * @var array
      */
     protected $with = [
-        'user', 'software', 'certificate', 'resolutions', 'language', 'tax', 'country', 'type_document_identification', 'type_operation', 'type_environment', 'payroll_type_environment','type_currency', 'type_organization', 'municipality', 'type_liability', 'type_regime', 'send', 'type_plan', 'type_plan2', 'type_plan3', 'type_plan4',
+        'user', 'software', 'certificate', 'resolutions', 'language', 'tax', 'country', 'type_document_identification', 'type_operation', 'type_environment', 'eqdocs_type_environment', 'payroll_type_environment','type_currency', 'type_organization', 'municipality', 'type_liability', 'type_regime', 'send', 'type_plan', 'type_plan2', 'type_plan3', 'type_plan4',
     ];
 
     /**
@@ -30,7 +30,7 @@ class Company extends Model
      * @var array
      */
     protected $hidden = [
-        'software', 'certificate', 'resolutions', 'language', 'tax', 'country', 'type_document_identification', 'type_operation', 'type_environment', 'payroll_type_environment', 'type_currency', 'type_organization', 'municipality', 'type_liability', 'type_regime', 'type_plan', 'type_plan2', 'type_plan3', 'type_plan4', 'absolut_plan_documents',
+        'software', 'certificate', 'resolutions', 'language', 'tax', 'country', 'type_document_identification', 'type_operation', 'type_environment', 'eqdocs_type_environment', 'payroll_type_environment', 'type_currency', 'type_organization', 'municipality', 'type_liability', 'type_regime', 'type_plan', 'type_plan2', 'type_plan3', 'type_plan4', 'absolut_plan_documents',
     ];
 
     /**
@@ -130,6 +130,14 @@ class Company extends Model
      * Get the payroll_type environment identification that owns the company.
      */
     public function payroll_type_environment()
+    {
+        return $this->belongsTo(TypeEnvironment::class);
+    }
+
+    /**
+     * Get the type environment identification that owns the company.
+     */
+    public function eqdocs_type_environment()
     {
         return $this->belongsTo(TypeEnvironment::class);
     }
