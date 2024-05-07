@@ -26,7 +26,7 @@
             <cbc:ChargeTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->charge_total_amount, 2, '.', ''))}}</cbc:ChargeTotalAmount>
         @else   --}}
             <cbc:ChargeTotalAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($legalMonetaryTotals->charge_total_amount, 2, '.', ''))}}</cbc:ChargeTotalAmount>
-{{--        @endif  --}
+{{--        @endif  --}}
     @endif
     @if ($legalMonetaryTotals->pre_paid_amount)
 {{--        @if(isset($idcurrency))

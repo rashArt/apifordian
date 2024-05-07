@@ -132,7 +132,7 @@ class EqDocRequest extends FormRequest
             // Document
             'type_document_id' => [
                 'required',
-                'in:15, 19',
+                'in:15, 19, 24',
                 'exists:type_documents,id',
                 new ResolutionSetting(),
             ],
