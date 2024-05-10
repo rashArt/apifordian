@@ -9,8 +9,9 @@ class CreateIncotermsTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return void Prueba
      */
+
     public function up()
     {
         Schema::create('incoterms', function (Blueprint $table) {
