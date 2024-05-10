@@ -232,7 +232,7 @@ class SendEventController extends Controller
         }
 
         // Verify Certificate
-        $certificate_days_left = 0;
+        $certificate_days_left = 100;
         $c = $this->verify_certificate($user);
         if(!$c['success'])
             return $c;

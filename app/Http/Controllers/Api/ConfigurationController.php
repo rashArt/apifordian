@@ -321,35 +321,35 @@ class ConfigurationController extends Controller
             if(is_null(auth()->user()->company->software))
                 $software = auth()->user()->company->software()->create(
                     [
-                        'identifier' => $request->id ?? '',
-                        'pin' => $request->pin ?? '',
-                        'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_payroll' => $request->idpayroll ?? '',
-                        'pin_payroll' => $request->pinpayroll ?? '',
+                        'identifier' => isset($request->id) ? $request->id : '',
+                        'pin' => isset($request->pin) ? $request->pin : '',
+                        'url' => isset($request->url) ? $request->url : 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'url_payroll' => isset($request->urlpayroll) ? $request->urlpayroll : 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => isset($request->idpayroll) ? $request->idpayroll : '',
+                        'pin_payroll' => isset($request->pinpayroll) ? $request->pinpayroll : '',
 //                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
 //                        'identifier_sd' => $request->idsd ?? '',
 //                        'pin_sd' => $request->pinsd ?? '',
-                        'url_eqdocs' => $request->urleqdocs ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_eqdocs' => $request->ideqdocs ?? '',
-                        'pin_eqdocs' => $request->pineqdocs ?? '',
+                        'url_eqdocs' => isset($request->urleqdocs) ? $request->urleqdocs : 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_eqdocs' => isset($request->ideqdocs) ? $request->ideqdocs : '',
+                        'pin_eqdocs' => isset($request->pineqdocs) ? $request->pineqdocs : '',
                     ]
                 );
             else
                 $software = auth()->user()->company->software()->update(
                     [
-                        'identifier' => $request->id ?? $s->identifier,
-                        'pin' => $request->pin ?? $s->pin,
-                        'url' => $request->url ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'url_payroll' => $request->urlpayroll ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_payroll' => $request->idpayroll ?? $s->identifier_payroll,
-                        'pin_payroll' => $request->pinpayroll ?? $s->pin_payroll,
+                        'identifier' => isset($request->id) ? $request->id : $s->identifier,
+                        'pin' => isset($request->pin) ? $request->pin : $s->pin,
+                        'url' => isset($request->url) ? $request->url : 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'url_payroll' => isset($request->urlpayroll) ? $request->urlpayroll : 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
+                        'identifier_payroll' => isset($request->idpayroll) ? $request->idpayroll : $s->identifier_payroll,
+                        'pin_payroll' => isset($request->pinpayroll) ? $request->pinpayroll : $s->pin_payroll,
 //                        'url_sd' => $request->urlsd ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
 //                        'identifier_sd' => $request->idsd ?? $s->identifier_sd,
 //                        'pin_sd' => $request->pinsd ?? $s->pin_sd,
-                        'url_eqdocs' => $request->urleqdocs ?? 'https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc',
-                        'identifier_eqdocs' => $request->ideqdocs ?? '',
-                        'pin_eqdocs' => $request->pineqdocs ?? '',
+                        'url_eqdocs' => isset($request->urleqdocs) ? $request->urleqdocs : $s->url_eqdocs,
+                        'identifier_eqdocs' => isset($request->ideqdocs) ? $request->ideqdocs : $s->identifier_eqdocs,
+                        'pin_eqdocs' => isset($request->pineqdocs) ? $request->pineqdocs :  $s->pin_eqdocs,
                     ]
                 );
 
