@@ -140,6 +140,9 @@ class ConfigurationSeeder extends Seeder
         'credit_note_discrepancy_responses_sd' => [
             'columns' => 'id, name, code, @created_at, @updated_at',
         ],
+        'type_spds' => [
+            'columns' => 'id, name, code, @created_at, @updated_at',
+        ],
     ];
 
     /**

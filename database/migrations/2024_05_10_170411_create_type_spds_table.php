@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIncotermsTable extends Migration
+class CreateTypeSPDsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateIncotermsTable extends Migration
 
     public function up()
     {
-        Schema::create('incoterms', function (Blueprint $table) {
+        Schema::create('type_spds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->char('code');
@@ -29,6 +29,6 @@ class CreateIncotermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incoterms');
+        Schema::dropIfExists('type_spds');
     }
 }
