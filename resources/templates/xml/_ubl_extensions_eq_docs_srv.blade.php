@@ -117,13 +117,75 @@
                                             </CargosDebitoAlItem>
                                         @endif
                                         @if(isset($spd['subscriber_consumption']['unstructured_price']))
+                                            <UnstructuredPrice>
+                                                <PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$spd['subscriber_consumption']['unstructured_price']['price_amount']}}</PriceAmount>
+                                                <BaseQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$spd['subscriber_consumption']['unstructured_price']['base_quantity']}}</BaseQuantity>
+                                            </UnstructuredPrice>
                                         @endif
-                                        <UnstructuredPrice>
-                                            <PriceAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$spd['subscriber_consumption']['unstructured_price']['price_amount']}}</PriceAmount>
-                                            <BaseQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$spd['subscriber_consumption']['unstructured_price']['base_quantity']}}</BaseQuantity>
-                                        </UnstructuredPrice>
+                                        @if(isset($spd['subscriber_consumption']['utiliy_meter']))
+                                            <UtilityMeter>
+                                                <MeterNumber>{{$spd['subscriber_consumption']['utiliy_meter']['meter_number']}}</MeterNumber>
+                                                <MeterReading>
+                                                    <PreviousMeterReadingDate>{{$spd['subscriber_consumption']['utiliy_meter']['previous_meter_reading_date']}}</PreviousMeterReadingDate>
+                                                    <PreviousMeterQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$spd['subscriber_consumption']['utiliy_meter']['previous_meter_quantity']}}</PreviousMeterQuantity>
+                                                    <LatestMeterReadingDate>{{$spd['subscriber_consumption']['utiliy_meter']['latest_meter_reading_date']}}</LatestMeterReadingDate>
+                                                    <LatestMeterQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$spd['subscriber_consumption']['utiliy_meter']['previous_meter_quantity']}}</LatestMeterQuantity>
+                                                    <MeterReadingMethod>{{$spd['subscriber_consumption']['utiliy_meter']['meter_reading_method']}}</MeterReadingMethod>
+                                                    <DurationMeasure unitCode="DAY">{{$spd['subscriber_consumption']['utiliy_meter']['duration_measure']}}</DurationMeasure>
+                                                </MeterReading>
+                                            </UtilityMeter>
+                                        @endif
                                     </SPDDebitForPartialConsumption>
                                 </SPDDebitsForPartialConsumption>
+                                @if(isset($spd['subscriber_consumption']['consumption_history']))
+                                    <ConsumptionHistory>
+                                        @foreach($spd['subscriber_consumption']['consumption_history'] as $key => $ch)
+                                            <Consummonth>
+                                                <TotalInvoicedQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$ch['total_invoiced_quantity']}}</TotalInvoicedQuantity>
+                                                <Period>
+                                                    <StartDate>{{$ch['start_date']}}</StartDate>
+                                                    <EndDate>{{$ch['end_date']}}</EndDate>
+                                                    <DurationMeasure unitCode="DAY">{{$ch['duration_measure']}}</DurationMeasure>
+                                                </Period>
+                                            </Consummonth>
+                                        @endforeach
+                                    </ConsumptionHistory>
+                                @endif
+                                @if(isset($spd['subscriber_consumption']['payment_agreements']))
+                                    <SubInvoiceLines>
+                                        @foreach($spd['subscriber_consumption']['payment_agreements'] as $key => $payment_agreement)
+                                            <SubInvoiceLine>
+                                                <ID>{{$payment_agreement['contract_number']}}</ID>
+                                                <ItemBienServicio>
+                                                    <BSName>{{$payment_agreement['good_service_name']}}</BSName>
+                                                    <Description>{{$payment_agreement['description']}}</Description>
+                                                </ItemBienServicio>
+                                                <SubscriberPaymentsTerms>
+                                                    <Termino concepto="cuotasAPagar">{{$payment_agreement['fees_to_pay']}}</Termino>
+                                                    <Termino concepto="cuotasPagadas">{{$payment_agreement['paid_fees']}}</Termino>
+                                                    <InterestRate>
+                                                        <cbc:Percent>{{$payment_agreement['interest_rate']}}</cbc:Percent>
+                                                    </InterestRate>
+                                                </SubscriberPaymentsTerms>
+                                                <Balance>
+                                                    <pendingpayment>
+                                                        <DebitLineAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$payment_agreement['balance_to_pay']}}</DebitLineAmount>
+                                                    </pendingpayment>
+                                                    <Transactions>
+                                                        <Transaction>
+                                                            <TransactionDescription>{{$payment_agreement['transaction_description']}}</TransactionDescription>
+                                                            <CreditLineAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$payment_agreement['fee_value_to_pay']}}</CreditLineAmount>
+                                                        </Transaction>
+                                                    </Transactions>
+                                                    <AdjustmentAccounting>
+                                                        <DescuentoCreditoAlItem currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$payment_agreement['item_credit_discount']}}</DescuentoCreditoAlItem>
+                                                        <CargoDebitoAlItem currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{$payment_agreement['item_debit_charge']}}</CargoDebitoAlItem>
+                                                    </AdjustmentAccounting>
+                                                </Balance>
+                                            </SubInvoiceLine>
+                                        @endforeach
+                                    </SubInvoiceLines>
+                                @endif
                             </ConsumptionSection>
                         </SubscriberConsumption>
                     </Services_SPD>
