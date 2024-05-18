@@ -390,6 +390,20 @@
                                     <td class="text-right">{{number_format(0, 2)}}</td>
                                 @endif
                             </tr>
+                            @if(isset($request->legal_monetary_totals['charge_total_amount']))
+                                <?php $charge_number = 0; ?>
+                                @foreach($request['allowance_charges'] as $allowance_charge)
+                                    @if(isset($allowance_charge))
+                                        @if($allowance_charge['charge_indicator'] == true)
+                                            <?php $charge_number++; ?>
+                                            <tr>
+                                                <td>{{$allowance_charge['allowance_charge_reason'] ?? "Cargo Global Nro: ".$charge_number}}</td>
+                                                <td class="text-right">{{number_format($allowance_charge['amount'], 2)}}</td>
+                                            </tr>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @endif
                             @if(isset($request->previous_balance))
                                 @if($request->previous_balance > 0)
                                     <tr>
