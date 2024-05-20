@@ -89,6 +89,10 @@ class EqDocRequest extends FormRequest
             'transportation_information.destination_place' => 'nullable|required_with:transportation_information|string',
 
             // SPD
+            'last_valid_payment_date' => 'required_if:type_document_id,=,24|date_format:Y-m-d',
+            'payment_reference' => 'required_if:type_document_id,=,24|string',
+            'payment_reference' => 'required_if:type_document_id,=,24|string',
+            'stratum_id' => 'required_if:type_document_id,=,24|integer',
 
             'spd' => 'nullable|required_if:type_document_id,=,24',
             'spd.*.agency_information' => 'required_with:spd|array',
@@ -381,6 +385,7 @@ class EqDocRequest extends FormRequest
             'invoice_lines.*.tax_totals.*.per_unit_amount' => 'nullable|required_if:invoice_lines.*.tax_totals.*.tax_id,10|numeric',
             'invoice_lines.*.tax_totals.*.base_unit_measure' => 'nullable|required_if:invoice_lines.*.tax_totals.*.tax_id,10|numeric',
             'invoice_lines.*.description' => 'required|string',
+            'invoice_lines.*.seller_code' => 'nullable|required_if:type_document_id,=,24|string',
             'invoice_lines.*.notes' => 'nullable|string',
             'invoice_lines.*.code' => 'required|string',
             'invoice_lines.*.type_item_identification_id' => 'required|exists:type_item_identifications,id',

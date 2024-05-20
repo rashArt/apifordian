@@ -10,6 +10,9 @@
             <cbc:Name>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->name)}}</cbc:Name>
         </cac:PartyName>
             <cac:PhysicalLocation>
+                @if(!isset($supplier) &&  $typeDocument->id == '24')
+                    <cbc:LocationTypeCode listID="01">{{preg_replace("/[\r\n|\n|\r]+/", "", $request['stratum_id'])}}</cbc:LocationTypeCode>
+                @endif
                 <cac:Address>
                     @isset($supplier)
                         <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->code)}}</cbc:ID>

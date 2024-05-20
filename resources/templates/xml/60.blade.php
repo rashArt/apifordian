@@ -25,11 +25,13 @@
     @isset($notes)
         <cbc:Note>{{preg_replace("/[\r\n|\n|\r]+/", "", $notes)}}</cbc:Note>
     @endisset
+	<cbc:TaxPointDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['last_valid_payment_date'])}}</cbc:TaxPointDate>
     @if(isset($idcurrency))
         <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $idcurrency->code)}}</cbc:DocumentCurrencyCode>
     @else
         <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}</cbc:DocumentCurrencyCode>
     @endif
+	<cbc:AccountingCostCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['payment_reference'])}}</cbc:AccountingCostCode>
     <cbc:LineCountNumeric>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLines->count())}}</cbc:LineCountNumeric>
     {{-- OrderReference --}}
     @isset($orderreference)
