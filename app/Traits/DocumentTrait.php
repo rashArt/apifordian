@@ -426,7 +426,10 @@ trait DocumentTrait
 //                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields")), HTMLParserMode::HTML_BODY);
                 }
 
-                $filename = storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf");
+                if($tipodoc == "INVOICE")
+                    $filename = storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf");
+                else
+                    $filename = storage_path("app/public/{$company->identification_number}/POSS-{$resolution->next_consecutive}.pdf");
             }
             else
                 if($tipodoc == "NC"){
