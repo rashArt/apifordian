@@ -3,7 +3,11 @@
         <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
         <cbc:ChargeIndicator>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->charge_indicator)}}</cbc:ChargeIndicator>
         @if (($allowanceCharge->charge_indicator === 'false') && ($allowanceCharge->discount))
-            <cbc:AllowanceChargeReasonCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->discount->code)}}</cbc:AllowanceChargeReasonCode>
+            @if($request['is_eqdoc'] == true)
+                <cbc:AllowanceChargeReasonCode>00</cbc:AllowanceChargeReasonCode>
+            @else
+                <cbc:AllowanceChargeReasonCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->discount->code)}}</cbc:AllowanceChargeReasonCode>
+            @endif
         @endif
         <cbc:AllowanceChargeReason>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->allowance_charge_reason)}}</cbc:AllowanceChargeReason>
         <cbc:MultiplierFactorNumeric>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->multiplier_factor_numeric)}}</cbc:MultiplierFactorNumeric>
