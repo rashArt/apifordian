@@ -3,7 +3,7 @@
         <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
         <cbc:ChargeIndicator>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->charge_indicator)}}</cbc:ChargeIndicator>
         @if (($allowanceCharge->charge_indicator === 'false') && ($allowanceCharge->discount))
-            @if($request['is_eqdoc'] == true)
+            @if($request['is_eqdoc'] == true or $typeDocument->id == 15))
                 <cbc:AllowanceChargeReasonCode>00</cbc:AllowanceChargeReasonCode>
             @else
                 <cbc:AllowanceChargeReasonCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->discount->code)}}</cbc:AllowanceChargeReasonCode>
