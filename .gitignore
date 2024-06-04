@@ -15,3 +15,4 @@ yarn-error.log
 produccion.bat
 habilitacion.bat
 /storage/api-docs
+composer.lock
