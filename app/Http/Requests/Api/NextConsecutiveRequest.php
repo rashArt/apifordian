@@ -26,7 +26,7 @@ class NextConsecutiveRequest extends FormRequest
     {
         return [
             // Datos del Request
-            'type_document_id' => 'required|in:1,2,3,4,5,9,10,11,12',
+            'type_document_id' => 'required|in:1,2,3,4,5,9,10,11,12,26',
             'prefix' => 'required|string',
         ];
     }
