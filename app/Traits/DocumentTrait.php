@@ -355,7 +355,10 @@ trait DocumentTrait
                 $totalbase = $request->legal_monetary_totals['line_extension_amount'];
 
             if($tipodoc == 'TTR' or $tipodoc == 'SRV')
-                return 'https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey='.$cufecude;
+                if($company->eqdocs_type_environment_id == 2)
+                    return 'https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey='.$cufecude;
+                else
+                    return 'https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey='.$cufecude;
 
             if($tipodoc == "INVOICE" || $tipodoc == "POS"){
                 if($company->type_environment_id == 2){
