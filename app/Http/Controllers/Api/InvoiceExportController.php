@@ -271,8 +271,8 @@ class InvoiceExportController extends Controller
         }
 
         // Create XML
-//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
-        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'prepaidpayments', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'prepaidpayments', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))
@@ -711,8 +711,8 @@ class InvoiceExportController extends Controller
         }
 
         // Create XML
-//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
-        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+//        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'idcurrency', 'calculationrate', 'calculationratedate', 'prepaidpayment', 'prepaidpayments', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
+        $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'prepaidpayments', 'deliveryterms', 'delivery', 'deliveryparty', 'request'));
 
         // Register Customer
         if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))

@@ -250,24 +250,14 @@ class InvoiceRequest extends FormRequest
             'health_fields.health_type_operation_id' => 'nullable|required_with:health_fields|exists:health_type_operations,id',
             'health_fields.*.users_info' => 'nullable|array',
             'health_fields.*.users_info.*.provider_code' => 'nullable|string',
-            'health_fields.*.users_info.*.health_type_document_identification_id' => 'nullable|exists:health_type_document_identifications,id',
-            'health_fields.*.users_info.*.identification_number' => 'nullable|alpha_num|between:3,16',
-            'health_fields.*.users_info.*.surname' => 'nullable|string',
-            'health_fields.*.users_info.*.second_surname' => 'nullable|string',
-            'health_fields.*.users_info.*.first_name' => 'nullable|string',
-            'health_fields.*.users_info.*.middle_name' => 'nullable|string',
-            'health_fields.*.users_info.*.health_type_user_id' => 'nullable|exists:health_type_users,id',
             'health_fields.*.users_info.*.health_contracting_payment_method_id' => 'nullable|required_with:health_fields|exists:health_contracting_payment_methods,id',
             'health_fields.*.users_info.*.health_coverage_id' => 'nullable|required_with:health_fields|exists:health_coverages,id',
-            'health_fields.*.users_info.*.autorization_numbers' => 'nullable|string',
-            'health_fields.*.users_info.*.mipres' => 'nullable|string',
-            'health_fields.*.users_info.*.mipres_delivery' => 'nullable|string',
             'health_fields.*.users_info.*.contract_number' => 'nullable|string',
             'health_fields.*.users_info.*.policy_number' => 'nullable|string',
             'health_fields.*.users_info.*.co_payment' => 'nullable|numeric|min:0|not_in:0',
             'health_fields.*.users_info.*.moderating_fee' => 'nullable|numeric|min:0|not_in:0',
-            'health_fields.*.users_info.*.recovery_fee' => 'nullable|numeric|min:0|not_in:0',
             'health_fields.*.users_info.*.shared_payment' => 'nullable|numeric|min:0|not_in:0',
+            'health_fields.*.users_info.*.advance_payment' => 'nullable|numeric|min:0|not_in:0',
 
             // Payment form
             'payment_form' => 'nullable|array',
@@ -306,12 +296,19 @@ class InvoiceRequest extends FormRequest
             'with_holding_tax_total.*.base_unit_measure' => 'nullable|numeric',
 
             // Prepaid Payment
-            'prepaid_payment' => 'nullable|array',
+            'prepaid_payment' => 'nullable|array|prohibited_with:prepaid_payments',
             'prepaid_payment.idpayment' => 'nullable|string',
             'prepaid_payment.paidamount' => 'nullable|numeric',
             'prepaid_payment.receiveddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.paiddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.instructionid' => 'nullable|string',
+            // Prepaid Payments
+            'prepaid_payments' => 'nullable|array|prohibited_with:prepaid_payment',
+            'prepaid_payments.*.idpayment' => 'nullable|string',
+            'prepaid_payments.*.paidamount' => 'nullable|numeric',
+            'prepaid_payments.*.receiveddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.paiddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.instructionid' => 'nullable|string',
 
             // Previous Balance
             'previous_balance' => 'nullable|numeric',
