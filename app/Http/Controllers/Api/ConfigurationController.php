@@ -47,7 +47,7 @@ class ConfigurationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['token'])
+        $this->middleware(['api.token'])
             ->only('store');
     }
 
