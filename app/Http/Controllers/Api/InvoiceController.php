@@ -871,6 +871,12 @@ class InvoiceController extends Controller
         else
             $prepaidpayment = NULL;
 
+        // Prepaid Payments
+        $prepaidpayments = collect();
+        foreach ($request->prepaid_payments ?? [] as $prepaidPayment) {
+            $prepaidpayments->push(new PrepaidPayment($prepaidPayment));
+        }
+
         // Legal monetary totals
         $legalMonetaryTotals = new LegalMonetaryTotal($request->legal_monetary_totals);
 

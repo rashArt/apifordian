@@ -274,6 +274,12 @@ class InvoiceContingencyController extends Controller
         else
             $prepaidpayment = NULL;
 
+        // Prepaid Payments
+        $prepaidpayments = collect();
+        foreach ($request->prepaid_payments ?? [] as $prepaidPayment) {
+            $prepaidpayments->push(new PrepaidPayment($prepaidPayment));
+        }
+
         // Legal monetary totals
         $legalMonetaryTotals = new LegalMonetaryTotal($request->legal_monetary_totals);
 
@@ -723,6 +729,12 @@ class InvoiceContingencyController extends Controller
             $prepaidpayment = new PrepaidPayment($request->prepaid_payment);
         else
             $prepaidpayment = NULL;
+
+        // Prepaid Payments
+        $prepaidpayments = collect();
+        foreach ($request->prepaid_payments ?? [] as $prepaidPayment) {
+            $prepaidpayments->push(new PrepaidPayment($prepaidPayment));
+        }
 
         // Legal monetary totals
         $legalMonetaryTotals = new LegalMonetaryTotal($request->legal_monetary_totals);
