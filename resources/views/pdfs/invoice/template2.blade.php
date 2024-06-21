@@ -107,7 +107,7 @@
                         <td>{{$request['number_account'] }}</td>
                     </tr>
                     @endif
-                    @if(isset($request['deliveryterms']))
+                    @if(isset($request['deliveryterms']) && ($request['deliveryterms'] != []))
                     <tr>
                         <td>Terminos de Entrega:</td>
                         <td>{{$request['deliveryterms']['loss_risk_responsibility_code']}} - {{ $request['deliveryterms']['loss_risk'] }}</td>
