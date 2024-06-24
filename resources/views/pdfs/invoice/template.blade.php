@@ -384,22 +384,22 @@
             @if(isset($request->tarifaica))
                 @if(isset($request->legal_monetary_totals['allowance_total_amount']))
                     @if(isset($request->previous_balance))
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance, $request->idcurrency, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance - $TotalRetenciones, $request->idcurrency, 2))}} M/CTE*********.</p>
                     @else
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], $request->idcurrency, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] - $TotalRetenciones, $request->idcurrency, 2))}} M/CTE*********.</p>
                     @endif
                 @else
                     @if(isset($request->previous_balance))
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance - $TotalRetenciones, 2))}} M/CTE*********.</p>
                     @else
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 - $TotalRetenciones, 2))}} M/CTE*********.</p>
                     @endif
                 @endif
             @else
                 @if(isset($request->previous_balance))
-                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2), $request->idcurrency)}} M/CTE*********.</p>
+                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->previous_balance - $TotalRetenciones, 2), $request->idcurrency)}} M/CTE*********.</p>
                 @else
-                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'], 2), $request->idcurrency)}} M/CTE*********.</p>
+                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] - $TotalRetenciones, 2), $request->idcurrency)}} M/CTE*********.</p>
                 @endif
             @endif
         </div>
