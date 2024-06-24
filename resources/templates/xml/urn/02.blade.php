@@ -55,6 +55,8 @@
         {{-- PrepaidPayment --}}
         @include('xml._prepaid_payment', ['node' => 'PrepaidPayment'])
     @endisset
+    {{-- PrepaidPayments --}}
+    @include('xml._prepaid_payments')
     {{-- AllowanceCharges --}}
     @include('xml._allowance_charges')
     {{-- PaymentExchangeRate --}}

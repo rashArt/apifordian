@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "516293c7-a7b8-4b8f-83bc-42420ee4695e",
+		"_postman_id": "f65a5f0f-c77b-43a5-9d34-cf8c46b201e0",
 		"name": "ApiDianV2.1",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1536905"
 	},
 	"item": [
 		{
@@ -28,39 +29,32 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "cache-control",
-										"value": "no-cache",
-										"type": "text"
+										"value": "no-cache"
 									},
 									{
 										"key": "Connection",
-										"value": "keep-alive",
-										"type": "text"
+										"value": "keep-alive"
 									},
 									{
 										"key": "Accept-Encoding",
-										"value": "gzip, deflate",
-										"type": "text"
+										"value": "gzip, deflate"
 									},
 									{
 										"key": "Host",
 										"value": "localhost",
-										"type": "text",
 										"disabled": true
 									},
 									{
 										"key": "accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "X-CSRF-TOKEN",
-										"value": "",
-										"type": "text"
+										"value": ""
 									}
 								],
 								"body": {
@@ -102,13 +96,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -150,13 +142,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -198,12 +188,10 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
 										"key": "accept",
-										"type": "text",
 										"value": "application/json"
 									}
 								],
@@ -246,12 +234,10 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
 										"key": "accept",
-										"type": "text",
 										"value": "application/json"
 									}
 								],
@@ -290,8 +276,7 @@
 							},
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -334,39 +319,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "localhost",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -408,39 +386,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "localhost",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -482,13 +453,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -530,12 +499,10 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -578,13 +545,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -626,39 +591,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -700,13 +658,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -748,13 +704,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -796,13 +750,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -844,12 +796,10 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -892,13 +842,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -940,12 +888,10 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -1007,8 +953,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1018,7 +962,6 @@
 									{
 										"key": "host",
 										"value": "apidian2022.oo",
-										"type": "text",
 										"disabled": true
 									}
 								],
@@ -1060,8 +1003,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1107,8 +1048,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1155,8 +1094,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1202,8 +1139,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1254,8 +1189,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1301,8 +1234,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1348,8 +1279,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1395,8 +1324,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1447,8 +1374,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1494,8 +1419,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1541,8 +1464,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1588,8 +1509,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1640,8 +1559,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1688,8 +1605,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1736,8 +1651,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1789,8 +1702,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1836,8 +1747,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1883,8 +1792,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1930,8 +1837,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -1977,8 +1882,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -2032,8 +1935,6 @@
 										"header": [
 											{
 												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
 												"value": "application/json"
 											},
 											{
@@ -2043,7 +1944,6 @@
 											{
 												"key": "host",
 												"value": "apidian2022.oo",
-												"type": "text",
 												"disabled": true
 											}
 										],
@@ -2091,8 +1991,6 @@
 										"header": [
 											{
 												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
 												"value": "application/json"
 											},
 											{
@@ -2102,7 +2000,6 @@
 											{
 												"key": "host",
 												"value": "apidian2022.oo",
-												"type": "text",
 												"disabled": true
 											}
 										],
@@ -2147,8 +2044,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -2195,8 +2090,6 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json"
 									},
 									{
@@ -2532,8 +2425,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -2626,8 +2517,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -2674,8 +2563,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -2857,8 +2744,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -2959,8 +2844,7 @@
 							},
 							{
 								"key": "host",
-								"value": "apidian2021.oo",
-								"type": "text"
+								"value": "apidian2021.oo"
 							}
 						],
 						"body": {
@@ -3010,7 +2894,6 @@
 							{
 								"key": "host",
 								"value": "apidian2021.oo",
-								"type": "text",
 								"disabled": true
 							}
 						],
@@ -3061,7 +2944,6 @@
 							{
 								"key": "host",
 								"value": "apidian2021.oo",
-								"type": "text",
 								"disabled": true
 							}
 						],
@@ -3211,8 +3093,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -3265,38 +3145,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "localhost",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3338,38 +3211,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3411,38 +3277,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3484,38 +3343,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3555,38 +3407,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "localhost",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3631,38 +3476,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3708,38 +3546,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3782,38 +3613,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "localhost",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -3861,7 +3685,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3913,7 +3736,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3955,7 +3777,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3995,7 +3816,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4045,7 +3865,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4099,7 +3918,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4147,7 +3965,6 @@
 							},
 							{
 								"key": "Accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4185,19 +4002,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4239,19 +4052,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4286,19 +4095,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4340,38 +4145,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -4417,38 +4215,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"type": "text",
 								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"type": "text",
 								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"type": "text",
 								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
-								"type": "text",
 								"value": "apidian2022-bercode.oo",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"type": "text",
 								"value": ""
 							}
 						],
@@ -4491,8 +4282,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4565,8 +4354,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4659,8 +4446,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4716,9 +4501,7 @@
 							},
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "Accept",
@@ -4763,21 +4546,17 @@
 						"method": "POST",
 						"header": [
 							{
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"key": "Authorization",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -4834,8 +4613,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4881,8 +4658,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4928,8 +4703,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -4939,7 +4712,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"number\": 990000961,\r\n\t\"type_document_id\": 1,\r\n\t\"date\": \"2024-03-14\",\r\n\t\"time\": \"04:08:12\",\r\n\t\"resolution_number\": \"18760000001\",\r\n\t\"prefix\": \"SETP\",\r\n    \"notes\": \"ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA\",\r\n    \"disable_confirmation_text\": true,\r\n    \"establishment_name\": \"TORRE SOFTWARE\",\r\n    \"establishment_address\": \"BRR LIMONAR MZ 6 CS 3 ET 1 PISO 2\",\r\n    \"establishment_phone\": \"3226563672\",\r\n    \"establishment_municipality\": 600,\r\n    \"atacheddocument_name_prefix\": \"FES-SETP990000244-\",\r\n    \"establishment_email\": \"alternate_email@alternate.com\",\r\n\t\"sendmail\": true,\r\n    \"seze\": \"2021-2017\",\r\n    \"head_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL ENCABEZADO DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"foot_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL PIE DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"health_fields\": {\r\n        \"invoice_period_start_date\": \"2024-02-01\",\r\n        \"invoice_period_end_date\": \"2024-03-01\",\r\n        \"health_type_operation_id\": 1,\r\n        \"users_info\":[\r\n            {\r\n                \"provider_code\": \"AF-0000500-85-XX-001\",\r\n                \"health_type_document_identification_id\": 4,\r\n                \"identification_number\": \"A89008003\",\r\n                \"surname\": \"OBANDO\",\r\n                \"second_surname\": \"LONDOÑO\",\r\n                \"first_name\": \"ALEXANDER\",\r\n                \"health_type_user_id\": 1,\r\n                \"health_contracting_payment_method_id\": 2,\r\n                \"health_coverage_id\": 5,\r\n                \"autorization_numbers\": \"A12345;604567;AX-2345\",\r\n                \"mipres\": \"RNA3D345;664FF04567;ARXXX-2765345\",\r\n                \"mipres_delivery\": \"RN6645G-345;6-064XX54FF04567;XXX-2-OO-987D65345\",\r\n                \"contract_number\": \"1000-2021-0005698\",\r\n                \"policy_number\": \"1045-2FG01-0567228\",\r\n                \"co_payment\": \"3300.00\",\r\n                \"moderating_fee\": \"5800.00\",\r\n                \"recovery_fee\": \"105000.00\",\r\n                \"shared_payment\": \"225000.00\"\r\n            },\r\n            {\r\n                \"provider_code\": \"AF-0000500-85-XX-002\",\r\n                \"health_type_document_identification_id\": 3,\r\n                \"identification_number\": \"41946692\",\r\n                \"surname\": \"CARDONA\",\r\n                \"second_surname\": \"VILLADA\",\r\n                \"first_name\": \"ELIZABETH\",\r\n                \"health_type_user_id\": 2,\r\n                \"health_contracting_payment_method_id\": 3,\r\n                \"health_coverage_id\": 3,\r\n                \"autorization_numbers\": \"A12345;604567;AX-2345\",\r\n                \"mipres\": \"RNA3D345;664FF04567;ARXXX-2765345\",\r\n                \"mipres_delivery\": \"RN6645G-345;6-064XX54FF04567;XXX-2-OO-987D65345\",\r\n                \"contract_number\": \"1000-2021-0005698\",\r\n                \"policy_number\": \"1045-2FG01-0567228\",\r\n                \"co_payment\": \"3300.00\",\r\n                \"moderating_fee\": \"5800.00\",\r\n                \"recovery_fee\": \"105000.00\",\r\n                \"shared_payment\": \"225000.00\"\r\n            }\r\n        ]\r\n    },\r\n\t\"customer\": {\r\n\t\t\"identification_number\": 900166483,\r\n\t\t\"dv\": 1,\r\n\t\t\"name\": \"INVERSIONES DAVAL SAS\",\r\n\t\t\"phone\": \"3103891693\",\r\n\t\t\"address\": \"CLL 4 NRO 33-90\",\r\n\t\t\"email\": \"alexanderobandolondono@gmail.com\",\r\n\t\t\"merchant_registration\": \"0000000-00\",\r\n\t\t\"type_document_identification_id\": 6,\r\n\t\t\"type_organization_id\": 1,\r\n        \"type_liability_id\": 7,\r\n\t\t\"municipality_id\": 822,\r\n\t\t\"type_regime_id\": 1\r\n\t},\r\n\t\"payment_form\": {\r\n\t\t\"payment_form_id\": 2,\r\n\t\t\"payment_method_id\": 30,\r\n\t\t\"payment_due_date\": \"2024-04-17\",\r\n\t\t\"duration_measure\": \"30\"\r\n\t},\t\r\n\t\"allowance_charges\": [\r\n\t\t{\r\n\t\t\t\"discount_id\": 1,\r\n\t\t\t\"charge_indicator\": false,\r\n\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\"amount\": \"230000.00\",\r\n\t\t\t\"base_amount\": \"9663865.54\"\r\n\t\t}\r\n\t],\r\n\t\"legal_monetary_totals\": {\r\n\t\t\"line_extension_amount\": \"9663865.54\",\r\n\t\t\"tax_exclusive_amount\": \"9663865.55\",\r\n\t\t\"tax_inclusive_amount\": \"11500000.00\",\r\n\t\t\"allowance_total_amount\": \"230000.00\",\r\n\t\t\"charge_total_amount\": \"0.00\",\r\n\t\t\"payable_amount\": \"11270000.00\"\r\n\t},\r\n\t\"tax_totals\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"tax_id\": 1,\r\n\t\t\t\"tax_amount\": \"1836134.45\",\r\n\t\t\t\"percent\": \"19\",\r\n\t\t\t\"taxable_amount\": \"9663865.55\"\r\n\t\t}\r\n\t],\r\n\t\"invoice_lines\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"1260504.20\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"allowance_charges\": [{\r\n\t\t\t\t\t\"charge_indicator\": false,\r\n\t\t\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\t\t\"amount\": \"30000.00\",\r\n\t\t\t\t\t\"base_amount\": \"1500000.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"239495.80\",\r\n\t\t\t\t\t\"taxable_amount\": \"1260504.20\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"BONOS POR SERVICIOS\",\r\n\t\t\t\"code\": \"BONOS\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"1290504.20\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n,\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"8403361.34\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"allowance_charges\": [{\r\n\t\t\t\t\t\"charge_indicator\": false,\r\n\t\t\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\t\t\"amount\": \"200000.00\",\r\n\t\t\t\t\t\"base_amount\": \"10000000.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"1596638.65\",\r\n\t\t\t\t\t\"taxable_amount\": \"8403361.34\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"COMISION POR SERVICIOS\",\r\n            \"notes\": \"ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.\",\r\n\t\t\t\"code\": \"COMISION\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"8603361.34\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n\t\t\r\n\t]\r\n}\r\n\r\n"
+							"raw": "{\r\n\t\"number\": 990000961,\r\n\t\"type_document_id\": 1,\r\n\t\"date\": \"2024-03-14\",\r\n\t\"time\": \"04:08:12\",\r\n\t\"resolution_number\": \"18760000001\",\r\n\t\"prefix\": \"SETP\",\r\n    \"notes\": \"ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA, ESTA ES UNA NOTA DE PRUEBA\",\r\n    \"disable_confirmation_text\": true,\r\n    \"establishment_name\": \"TORRE SOFTWARE\",\r\n    \"establishment_address\": \"BRR LIMONAR MZ 6 CS 3 ET 1 PISO 2\",\r\n    \"establishment_phone\": \"3226563672\",\r\n    \"establishment_municipality\": 600,\r\n    \"atacheddocument_name_prefix\": \"FES-SETP990000244-\",\r\n    \"establishment_email\": \"alternate_email@alternate.com\",\r\n\t\"sendmail\": true,\r\n    \"seze\": \"2021-2017\",\r\n    \"head_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL ENCABEZADO DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"foot_note\": \"PRUEBA DE TEXTO LIBRE QUE DEBE POSICIONARSE EN EL PIE DE PAGINA DE LA REPRESENTACION GRAFICA DE LA FACTURA ELECTRONICA VALIDACION PREVIA DIAN\",\r\n    \"health_fields\": {\r\n        \"invoice_period_start_date\": \"2024-02-01\",\r\n        \"invoice_period_end_date\": \"2024-03-01\",\r\n        \"health_type_operation_id\": 1,\r\n        \"users_info\":[\r\n            {\r\n                \"provider_code\": \"AF-0000500-85-XX-001\",\r\n                \"health_contracting_payment_method_id\": 2,\r\n                \"health_coverage_id\": 5,\r\n                \"contract_number\": \"1000-2021-0005698\",\r\n                \"policy_number\": \"1045-2FG01-0567228\",\r\n                \"co_payment\": \"3300.00\",\r\n                \"moderating_fee\": \"5800.00\",\r\n                \"shared_payment\": \"225000.00\",\r\n                \"advance_payment\": \"105000.00\"\r\n            },\r\n            {\r\n                \"provider_code\": \"AF-0000500-85-XX-002\",\r\n                \"health_contracting_payment_method_id\": 3,\r\n                \"health_coverage_id\": 3,\r\n                \"contract_number\": \"1000-2021-0005698\",\r\n                \"policy_number\": \"1045-2FG01-0567228\",\r\n                \"co_payment\": \"3300.00\",\r\n                \"moderating_fee\": \"5800.00\",\r\n                \"shared_payment\": \"105000.00\",\r\n                \"advance_payment\": \"225000.00\"\r\n            }\r\n        ]\r\n    },\r\n\t\"customer\": {\r\n\t\t\"identification_number\": 900166483,\r\n\t\t\"dv\": 1,\r\n\t\t\"name\": \"INVERSIONES DAVAL SAS\",\r\n\t\t\"phone\": \"3103891693\",\r\n\t\t\"address\": \"CLL 4 NRO 33-90\",\r\n\t\t\"email\": \"alexanderobandolondono@gmail.com\",\r\n\t\t\"merchant_registration\": \"0000000-00\",\r\n\t\t\"type_document_identification_id\": 6,\r\n\t\t\"type_organization_id\": 1,\r\n        \"type_liability_id\": 7,\r\n\t\t\"municipality_id\": 822,\r\n\t\t\"type_regime_id\": 1\r\n\t},\r\n\t\"payment_form\": {\r\n\t\t\"payment_form_id\": 2,\r\n\t\t\"payment_method_id\": 30,\r\n\t\t\"payment_due_date\": \"2024-04-17\",\r\n\t\t\"duration_measure\": \"30\"\r\n\t},\t\r\n\t\"allowance_charges\": [\r\n\t\t{\r\n\t\t\t\"discount_id\": 1,\r\n\t\t\t\"charge_indicator\": false,\r\n\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\"amount\": \"230000.00\",\r\n\t\t\t\"base_amount\": \"9663865.54\"\r\n\t\t}\r\n\t],\r\n\t\"legal_monetary_totals\": {\r\n\t\t\"line_extension_amount\": \"9663865.54\",\r\n\t\t\"tax_exclusive_amount\": \"9663865.55\",\r\n\t\t\"tax_inclusive_amount\": \"11500000.00\",\r\n\t\t\"allowance_total_amount\": \"230000.00\",\r\n\t\t\"charge_total_amount\": \"0.00\",\r\n\t\t\"payable_amount\": \"11270000.00\"\r\n\t},\r\n\t\"tax_totals\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"tax_id\": 1,\r\n\t\t\t\"tax_amount\": \"1836134.45\",\r\n\t\t\t\"percent\": \"19\",\r\n\t\t\t\"taxable_amount\": \"9663865.55\"\r\n\t\t}\r\n\t],\r\n\t\"invoice_lines\": \r\n\t[\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"1260504.20\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"allowance_charges\": [{\r\n\t\t\t\t\t\"charge_indicator\": false,\r\n\t\t\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\t\t\"amount\": \"30000.00\",\r\n\t\t\t\t\t\"base_amount\": \"1500000.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"239495.80\",\r\n\t\t\t\t\t\"taxable_amount\": \"1260504.20\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"BONOS POR SERVICIOS\",\r\n\t\t\t\"code\": \"BONOS\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"1290504.20\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n,\r\n\t\t{\r\n\t\t\t\"unit_measure_id\": 70,\r\n\t\t\t\"invoiced_quantity\": \"1\",\r\n\t\t\t\"line_extension_amount\": \"8403361.34\",\r\n\t\t\t\"free_of_charge_indicator\": false,\r\n\t\t\t\"allowance_charges\": [{\r\n\t\t\t\t\t\"charge_indicator\": false,\r\n\t\t\t\t\t\"allowance_charge_reason\": \"DESCUENTO GENERAL\",\r\n\t\t\t\t\t\"amount\": \"200000.00\",\r\n\t\t\t\t\t\"base_amount\": \"10000000.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"tax_totals\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"tax_id\": 1,\r\n\t\t\t\t\t\"tax_amount\": \"1596638.65\",\r\n\t\t\t\t\t\"taxable_amount\": \"8403361.34\",\r\n\t\t\t\t\t\"percent\": \"19.00\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"description\": \"COMISION POR SERVICIOS\",\r\n            \"notes\": \"ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.\",\r\n\t\t\t\"code\": \"COMISION\",\r\n\t\t\t\"type_item_identification_id\": 4,\r\n\t\t\t\"price_amount\": \"8603361.34\",\r\n\t\t\t\"base_quantity\": \"1\"\r\n\t\t}\r\n\t\t\r\n\t]\r\n}\r\n\r\n"
 						},
 						"url": {
 							"raw": "http://apidian2024.oo/api/ubl2.1/invoice",
@@ -4975,8 +4748,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5022,8 +4793,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5069,8 +4838,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5116,8 +4883,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5163,8 +4928,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5210,8 +4973,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5257,8 +5018,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5340,19 +5099,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5395,19 +5150,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5449,19 +5200,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5505,19 +5252,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5561,19 +5304,15 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
 								"value": "Bearer a25b9533afbae4d16a25505524bd89f1dfaa604e97111dea7502a139abcde18a",
-								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
 								"key": "accept",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5637,7 +5376,6 @@
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -5681,8 +5419,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5730,8 +5466,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5825,8 +5559,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5874,8 +5606,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5923,8 +5653,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -5972,8 +5700,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -6026,39 +5752,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6099,39 +5818,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6175,39 +5887,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6252,39 +5957,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6329,39 +6027,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6407,39 +6098,32 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "cache-control",
-								"value": "no-cache",
-								"type": "text"
+								"value": "no-cache"
 							},
 							{
 								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
+								"value": "keep-alive"
 							},
 							{
 								"key": "Accept-Encoding",
-								"value": "gzip, deflate",
-								"type": "text"
+								"value": "gzip, deflate"
 							},
 							{
 								"key": "Host",
 								"value": "apidian2022.oo",
-								"type": "text",
 								"disabled": true
 							},
 							{
 								"key": "accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "X-CSRF-TOKEN",
-								"value": "",
-								"type": "text"
+								"value": ""
 							}
 						],
 						"body": {
@@ -6476,8 +6160,7 @@
 							},
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -6525,8 +6208,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{
@@ -6572,8 +6253,6 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							},
 							{

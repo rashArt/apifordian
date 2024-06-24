@@ -161,27 +161,15 @@
                             <p style="font-size: 8px">{{$item->provider_code}}</p>
                         </td>
                         <td>
-                            <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
-                            <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->surname}}</p>
-                            <p style="font-size: 8px">Tipo Documento: {{$item->health_type_document_identification()->name}}</p>
-                            <p style="font-size: 8px">Tipo Usuario: {{$item->health_type_user()->name}}</p>
-                        </td>
-                        <td>
                             <p style="font-size: 8px">Modalidad Contratación: {{$item->health_contracting_payment_method()->name}}</p>
                             <p style="font-size: 8px">Nro. Contrato: {{$item->contract_number}}</p>
                             <p style="font-size: 8px">Cobertura: {{$item->health_coverage()->name}}</p>
                         </td>
                         <td>
-                            <p style="font-size: 8px">Nros Autorización: {{$item->autorization_numbers}}</p>
-                            <p style="font-size: 8px">Nro MIPRES: {{$item->mipres}}</p>
-                            <p style="font-size: 8px">Entrega MIPRES: {{$item->mipres_delivery}}</p>
-                            <p style="font-size: 8px">Nro Poliza: {{$item->policy_number}}</p>
-                        </td>
-                        <td>
                             <p style="font-size: 8px">Copago: {{number_format($item->co_payment, 2)}}</p>
                             <p style="font-size: 8px">Cuota Moderardora: {{number_format($item->moderating_fee, 2)}}</p>
-                            <p style="font-size: 8px">Cuota Recuperación: {{number_format($item->recovery_fee, 2)}}</p>
                             <p style="font-size: 8px">Pagos Compartidos: {{number_format($item->shared_payment, 2)}}</p>
+                            <p style="font-size: 8px">Anticipos: {{number_format($item->advance_payment, 2)}}</p>
                         </td>
                     </tr>
                 @endforeach

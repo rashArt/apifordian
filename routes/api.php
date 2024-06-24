@@ -20,6 +20,8 @@ Route::prefix('/ubl2.1')->group(function () {
         Route::post('/delete/{nit}/{email}', 'Api\ConfigurationController@destroyCompany');
     });
 
+    Route::get('/listing', 'Api\ListingController@all');
+
     // Plan
     Route::put('/plan', 'Api\ConfigurationController@storePlan');
     Route::get('/plan/query/{id?}', 'Api\ConfigurationController@queryPlan');

@@ -280,12 +280,19 @@ class InvoiceExportRequest extends FormRequest
             'with_holding_tax_total.*.base_unit_measure' => 'nullable|numeric',
 
             // Prepaid Payment
-            'prepaid_payment' => 'nullable|array',
+            'prepaid_payment' => 'nullable|array|prohibited_with:prepaid_payments',
             'prepaid_payment.idpayment' => 'nullable|string',
             'prepaid_payment.paidamount' => 'nullable|numeric',
             'prepaid_payment.receiveddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.paiddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.instructionid' => 'nullable|string',
+            // Prepaid Payments
+            'prepaid_payments' => 'nullable|array|prohibited_with:prepaid_payment',
+            'prepaid_payments.*.idpayment' => 'nullable|string',
+            'prepaid_payments.*.paidamount' => 'nullable|numeric',
+            'prepaid_payments.*.receiveddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.paiddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.instructionid' => 'nullable|string',
 
             // Legal monetary totals
             'legal_monetary_totals' => 'required|array',

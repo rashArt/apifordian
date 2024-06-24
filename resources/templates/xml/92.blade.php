@@ -19,10 +19,10 @@
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeoperation->code)}}</cbc:CustomizationID>
     @if($typeDocument->code == 93 or $typeDocument->code == 94)
-        <cbc:ProfileID>DIAN 2.1: Nota de ajuste crédito al documento equivalente</cbc:ProfileID>
+        <cbc:ProfileID>DIAN 2.1: Nota de ajuste débito al documento equivalente</cbc:ProfileID>
         <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->eqdocs_type_environment->code)}}</cbc:ProfileExecutionID>
     @else
-        <cbc:ProfileID>DIAN 2.1: Nota Crédito de Factura Electrónica de Venta</cbc:ProfileID>
+        <cbc:ProfileID>DIAN 2.1: Nota Débito de Factura Electrónica de Venta</cbc:ProfileID>
         <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     @endif
     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $resolution->next_consecutive)}}</cbc:ID>
