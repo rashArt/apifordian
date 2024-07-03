@@ -50,6 +50,8 @@ class EqDocRequest extends FormRequest
             'establishment_email' => 'nullable|string|email',
             'establishment_logo' => 'nullable|string',
 
+            'email_pos_customer' => 'nullable|string|email',
+
             // Lista de correos a enviar copia
             'email_cc_list' => 'nullable|array',
             'email_cc_list.*.email' => 'nullable|required_with:email_cc_list,|string|email',

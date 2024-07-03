@@ -42,6 +42,8 @@ class InvoiceRequest extends FormRequest
             'tarifaica' => 'nullable|string',
             'actividadeconomica' => 'nullable|string',
 
+            'email_pos_customer' => 'nullable|string|email',
+
             // Datos del Establecimiento
             'establishment_name' => 'nullable|string',
             'establishment_address' => 'nullable|string',
