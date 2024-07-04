@@ -305,6 +305,12 @@ class InvoiceController extends Controller
         // Customer company
         $customer->company = new Company($customerAll->toArray());
 
+        if($customer->company->identification_number !== '222222222222' && isset($request->email_pos_customer))
+            return[
+                'success' => false,
+                'message' => 'El campo email_pos_customer solo es valido cuando se envia para el nit 222222222222 - CONSUMIDOR FINAL.',
+            ];
+
         // Delivery
         if($request->delivery){
             $deliveryAll = collect($request->delivery);
@@ -552,9 +558,12 @@ class InvoiceController extends Controller
                                                ->where('state_document_id', '=', 1)->get();
                     if(isset($request->sendmail)){
                         if($request->sendmail){
-                            if(count($invoice) > 0 && $customer->company->identification_number != '222222222222'){
+                            if((count($invoice) > 0 && $customer->company->identification_number != '222222222222') || (count($invoice) > 0 && isset($request->email_pos_customer))){
                                 try{
-                                    Mail::to($customer->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
+                                    if(isset($request->email_pos_customer))
+                                        Mail::to($request->email_pos_customer)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
+                                    else
+                                        Mail::to($customer->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
                                     if($request->sendmailtome)
                                         Mail::to($user->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, FALSE, $request));
                                     if($request->email_cc_list){
@@ -651,9 +660,12 @@ class InvoiceController extends Controller
                                                ->where('state_document_id', '=', 1)->get();
                     if(isset($request->sendmail)){
                         if($request->sendmail){
-                            if(count($invoice) > 0 && $customer->company->identification_number != '222222222222'){
+                            if((count($invoice) > 0 && $customer->company->identification_number != '222222222222') || (count($invoice) > 0 && isset($request->email_pos_customer))){
                                 try{
-                                    Mail::to($customer->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
+                                    if(isset($request->email_pos_customer))
+                                        Mail::to($request->email_pos_customer)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
+                                    else
+                                        Mail::to($customer->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, TRUE, $request));
                                     if($request->sendmailtome)
                                         Mail::to($user->email)->send(new InvoiceMail($invoice, $customer, $company, FALSE, FALSE, $filename, FALSE, $request));
                                     if($request->email_cc_list){
