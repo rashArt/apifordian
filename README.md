@@ -31,7 +31,7 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 ## 5.- Cómo pasar a producción 
 * Configuración / Habilitación / Producción API 
-[Aquí] (https://www.youtube.com/watch?v=TSF2nHN4W1I)
+[Aquí](https://www.youtube.com/watch?v=TSF2nHN4W1I)
 
 
 ## 6.- Cómo pasar a producción 
