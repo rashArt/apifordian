@@ -30,10 +30,13 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 
 ## 5.- Cómo pasar a producción 
+* Configuración / Habilitación / Producción API 
+[Aquí] (https://www.youtube.com/watch?v=TSF2nHN4W1I)
+
+
+## 6.- Cómo pasar a producción 
 * [Guía](https://www.youtube.com/watch?v=gBtd4XqwWtg)
 
 
 ## Extras   
 * Actualizacion desde APIDIAN2022 y la api APIDIAN2023 [Aquí](https://www.youtube.com/watch?v=6lwLKQCYvNY)
-
-* Video que demuestra funcionalidad de firma, envio y consulta de estado de documentos XML [Aqui](https://drive.google.com/open?id=15-saHPT-NsWZEWrNMciteSU9bBGh_Msf)
