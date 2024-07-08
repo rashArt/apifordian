@@ -14,6 +14,7 @@ class RenameEnvironmentSdFieldToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
+            $table->dropForeign(['sd_type_environment_id']);
             $table->renameColumn('sd_type_environment_id', 'eqdocs_type_environment_id');
         });
     }
