@@ -79,6 +79,11 @@
             @endif
             <p></p>
         @endif
+        @if($invoice[0]->ambient_id == 1)
+            <a style="font-weight: bold; text-decoration: none; border: 0;padding: 10px 32px; color: #0880e8; border-radius: 50px; border: 2px solid #0880e8; background: #fff; margin-bottom: 10px !important; text-align: center;" href="https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey={{$invoice[0]->cufe}}">Verificar En La DIAN</a>
+        @else
+            <a style="font-weight: bold; text-decoration: none; border: 0;padding: 10px 32px; color: #0880e8; border-radius: 50px; border: 2px solid #0880e8; background: #fff; margin-bottom: 10px !important; text-align: center;" href="https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey={{$invoice[0]->cufe}}">Verificar En La DIAN</a>
+        @endif
 
         @if($request_in && $request_in->html_footer)
             {!! $request_in->html_footer !!}

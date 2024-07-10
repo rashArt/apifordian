@@ -355,7 +355,10 @@ trait DocumentTrait
                 $totalbase = $request->legal_monetary_totals['line_extension_amount'];
 
             if($tipodoc == 'TTR' or $tipodoc == 'SRV')
-                return 'https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey='.$cufecude;
+                if($company->eqdocs_type_environment_id == 2)
+                    return 'https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey='.$cufecude;
+                else
+                    return 'https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey='.$cufecude;
 
             if($tipodoc == "INVOICE" || $tipodoc == "POS"){
                 if($company->type_environment_id == 2){
@@ -1475,7 +1478,8 @@ trait DocumentTrait
 
                 if(!is_null($company->start_plan_date4))
                     if($document_name == "SUPPORT DOCUMENT"){
-                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '11')->orWhere('type_document_id', '13')->where('created_at', '>=', $company->start_plan_date4)->count();
+//                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '11')->orWhere('type_document_id', '13')->where('created_at', '>=', $company->start_plan_date4)->count();
+                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->whereIn('type_document_id', ['11', '13'])->where('created_at', '>=', $company->start_plan_date4)->count();
                         return $qty_docs;
                     }
             }

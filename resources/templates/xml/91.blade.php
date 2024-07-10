@@ -5,7 +5,7 @@
     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
-    xmlns:sts="dian:gov:co:facturaelectronica:Structures-2-1"
+    xmlns:sts="urn:dian:gov:co:facturaelectronica:Structures-2-1"
     xmlns:xades="http://uri.etsi.org/01903/v1.3.2#"
     xmlns:xades141="http://uri.etsi.org/01903/v1.4.1#"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -18,14 +18,19 @@
     @endisset
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeoperation->code)}}</cbc:CustomizationID>
-    @if($typeDocument->code == 94)
+    @if($typeDocument->code == 93 or $typeDocument->code == 94)
         <cbc:ProfileID>DIAN 2.1: Nota de ajuste crédito al documento equivalente</cbc:ProfileID>
+        <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->eqdocs_type_environment->code)}}</cbc:ProfileExecutionID>
     @else
         <cbc:ProfileID>DIAN 2.1: Nota Crédito de Factura Electrónica de Venta</cbc:ProfileID>
+        <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     @endif
-    <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $resolution->next_consecutive)}}</cbc:ID>
-    <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
+    @if($request['is_eqdoc'] == true)
+        <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->eqdocs_type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
+    @else
+        <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
+    @endif
     <cbc:IssueDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $date ?? Carbon\Carbon::now()->format('Y-m-d'))}}</cbc:IssueDate>
     <cbc:IssueTime>{{preg_replace("/[\r\n|\n|\r]+/", "", $time ?? Carbon\Carbon::now()->format('H:i:s'))}}-05:00</cbc:IssueTime>
     <cbc:CreditNoteTypeCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->code)}}</cbc:CreditNoteTypeCode>

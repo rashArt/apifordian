@@ -107,7 +107,7 @@
                         <td>{{$request['number_account'] }}</td>
                     </tr>
                     @endif
-                    @if(isset($request['deliveryterms']))
+                    @if(isset($request['deliveryterms']) && ($request['deliveryterms'] != []))
                     <tr>
                         <td>Terminos de Entrega:</td>
                         <td>{{$request['deliveryterms']['loss_risk_responsibility_code']}} - {{ $request['deliveryterms']['loss_risk'] }}</td>
@@ -159,27 +159,15 @@
                             <p style="font-size: 8px">{{$item->provider_code}}</p>
                         </td>
                         <td>
-                            <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
-                            <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->surname}}</p>
-                            <p style="font-size: 8px">Tipo Documento: {{$item->health_type_document_identification()->name}}</p>
-                            <p style="font-size: 8px">Tipo Usuario: {{$item->health_type_user()->name}}</p>
-                        </td>
-                        <td>
                             <p style="font-size: 8px">Modalidad Contratación: {{$item->health_contracting_payment_method()->name}}</p>
                             <p style="font-size: 8px">Nro. Contrato: {{$item->contract_number}}</p>
                             <p style="font-size: 8px">Cobertura: {{$item->health_coverage()->name}}</p>
                         </td>
                         <td>
-                            <p style="font-size: 8px">Nros Autorización: {{$item->autorization_numbers}}</p>
-                            <p style="font-size: 8px">Nro MIPRES: {{$item->mipres}}</p>
-                            <p style="font-size: 8px">Entrega MIPRES: {{$item->mipres_delivery}}</p>
-                            <p style="font-size: 8px">Nro Poliza: {{$item->policy_number}}</p>
-                        </td>
-                        <td>
                             <p style="font-size: 8px">Copago: {{number_format($item->co_payment, 2)}}</p>
                             <p style="font-size: 8px">Cuota Moderardora: {{number_format($item->moderating_fee, 2)}}</p>
-                            <p style="font-size: 8px">Cuota Recuperación: {{number_format($item->recovery_fee, 2)}}</p>
                             <p style="font-size: 8px">Pagos Compartidos: {{number_format($item->shared_payment, 2)}}</p>
+                            <p style="font-size: 8px">Anticipos: {{number_format($item->advance_payment, 2)}}</p>
                         </td>
                     </tr>
                 @endforeach
@@ -390,6 +378,22 @@
                                     <td class="text-right">{{number_format(0, 2)}}</td>
                                 @endif
                             </tr>
+                            @if(isset($request->legal_monetary_totals['charge_total_amount']))
+                                @if($request->legal_monetary_totals['charge_total_amount'] > 0)
+                                    <?php $charge_number = 0; ?>
+                                    @foreach($request['allowance_charges'] as $allowance_charge)
+                                        @if(isset($allowance_charge))
+                                            @if($allowance_charge['charge_indicator'] == true)
+                                                <?php $charge_number++; ?>
+                                                <tr>
+                                                    <td>{{$allowance_charge['allowance_charge_reason'] ?? "Cargo Global Nro: ".$charge_number}}</td>
+                                                    <td class="text-right">{{number_format($allowance_charge['amount'], 2)}}</td>
+                                                </tr>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endif
                             @if(isset($request->previous_balance))
                                 @if($request->previous_balance > 0)
                                     <tr>
@@ -433,9 +437,9 @@
                                         @endif
                                     @else   --}}
                                         @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2)}}</td>
+                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance - $TotalRetenciones, 2)}}</td>
                                         @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0, 2)}}</td>
+                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0 - $TotalRetenciones, 2)}}</td>
                                         @endif
 {{--                                    @endif  --}}
                                 @else
@@ -447,9 +451,9 @@
                                         @endif
                                     @else   --}}
                                         @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2)}}</td>
+                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->previous_balance - $TotalRetenciones, 2)}}</td>
                                         @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'], 2)}}</td>
+                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] - $TotalRetenciones, 2)}}</td>
                                         @endif
 {{--                                    @endif  --}}
                                 @endif
@@ -476,16 +480,16 @@
                     @endif
                 @else   --}}
                     @if(isset($request->previous_balance))
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance - $TotalRetenciones, 2))}} M/CTE*********.</p>
                     @else
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0, 2))}} M/CTE*********.</p>
+                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 - $TotalRetenciones, 2))}} M/CTE*********.</p>
                     @endif
 {{--                @endif  --}}
             @else
                 @if(isset($request->previous_balance))
-                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2), $request->idcurrency)}} M/CTE*********.</p>
+                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->previous_balance - $TotalRetenciones, 2), $request->idcurrency)}} M/CTE*********.</p>
                 @else
-                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'], 2), $request->idcurrency)}} M/CTE*********.</p>
+                    <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] - $TotalRetenciones, 2), $request->idcurrency)}} M/CTE*********.</p>
                 @endif
             @endif
         </div>

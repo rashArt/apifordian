@@ -40,6 +40,17 @@ class ConfigurationController extends Controller
 {
     use DocumentTrait;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['api.token'])
+            ->only('store');
+    }
+
     public function table_health_type_document_identifications(){
         $health_type_document_identifications = HealthTypeDocumentIdentification::all();
         return compact('health_type_document_identifications');

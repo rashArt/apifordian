@@ -168,6 +168,8 @@ class CreditNoteController extends Controller
 
         // Customer company
         $customer->company = new Company($customerAll->toArray());
+        if(!isset($customer->dv))
+            $customer->company->dv = $this->validarDigVerifDIAN($customer->company->identification_number);
 
         // Type operation id
         if(!$request->type_operation_id)
@@ -631,6 +633,8 @@ class CreditNoteController extends Controller
 
         // Customer company
         $customer->company = new Company($customerAll->toArray());
+        if(!isset($customer->dv))
+            $customer->company->dv = $this->validarDigVerifDIAN($customer->company->identification_number);
 
         // Type operation id
         if(!$request->type_operation_id)

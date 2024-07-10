@@ -714,9 +714,9 @@ td, th {
                                         <tr>
                                             <td>Total Factura:</td>
                                             @if(isset($request->tarifaica))
-                                                <td>{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
+                                                <td>{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] - $TotalRetenciones, 2)}}</td>
                                             @else
-                                                <td>{{number_format($request->legal_monetary_totals['payable_amount'], 2)}}</td>
+                                                <td>{{number_format($request->legal_monetary_totals['payable_amount'] - $TotalRetenciones, 2)}}</td>
                                             @endif
                                         </tr>
                                     </tbody>

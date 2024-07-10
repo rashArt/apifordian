@@ -50,6 +50,8 @@ class EqDocRequest extends FormRequest
             'establishment_email' => 'nullable|string|email',
             'establishment_logo' => 'nullable|string',
 
+            'email_pos_customer' => 'nullable|string|email',
+
             // Lista de correos a enviar copia
             'email_cc_list' => 'nullable|array',
             'email_cc_list.*.email' => 'nullable|required_with:email_cc_list,|string|email',
@@ -348,6 +350,13 @@ class EqDocRequest extends FormRequest
             'prepaid_payment.receiveddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.paiddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.instructionid' => 'nullable|string',
+            // Prepaid Payments
+            'prepaid_payments' => 'nullable|array',
+            'prepaid_payments.*.idpayment' => 'nullable|string',
+            'prepaid_payments.*.paidamount' => 'nullable|numeric',
+            'prepaid_payments.*.receiveddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.paiddate' => 'nullable|date_format:Y-m-d',
+            'prepaid_payments.*.instructionid' => 'nullable|string',
 
             // Previous Balance
             'previous_balance' => 'nullable|numeric',
