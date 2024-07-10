@@ -10,6 +10,9 @@
             <cbc:Name>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->name)}}</cbc:Name>
         </cac:PartyName>
             <cac:PhysicalLocation>
+                @if(!isset($supplier) &&  $typeDocument->id == '24')
+                    <cbc:LocationTypeCode listID="01">{{preg_replace("/[\r\n|\n|\r]+/", "", $request['stratum_id'])}}</cbc:LocationTypeCode>
+                @endif
                 <cac:Address>
                     @isset($supplier)
                         <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->code)}}</cbc:ID>
@@ -85,7 +88,7 @@
         </cac:PartyTaxScheme>
         <cac:PartyLegalEntity>
             <cbc:RegistrationName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->name)}}</cbc:RegistrationName>
-            @if(in_array($typeDocument->id, ['15', '26', '19']))
+            @if(in_array($typeDocument->id, ['15', '26', '19', '24']))
                 <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="31">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:CompanyID>
             @else
                 <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->type_document_identification->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:CompanyID>

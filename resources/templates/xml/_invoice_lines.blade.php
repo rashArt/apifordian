@@ -27,6 +27,9 @@
         @else   --}}
             <cbc:LineExtensionAmount currencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", number_format($invoiceLine->line_extension_amount, 2, '.', ''))}}</cbc:LineExtensionAmount>
 {{--        @endif  --}}
+        @if($typeDocument->id == '24')
+    		<cbc:AccountingCostCode>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:AccountingCostCode>
+        @endif
         @if(isset($invoiceLine->type_generation_transmition))
             <cac:InvoicePeriod>
                 <cbc:StartDate>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->start_date)}}</cbc:StartDate>
@@ -54,6 +57,12 @@
         @include('xml._tax_totals', ['taxTotals' => $invoiceLine->tax_totals])
         <cac:Item>
             <cbc:Description>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->description)}}</cbc:Description>
+            @if($typeDocument->id == '24')
+    			<cac:SellersItemIdentification>
+	    			<cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->code)}}</cbc:ID>
+		    		<cbc:ExtendedID>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->seller_code)}}</cbc:ExtendedID>
+    			</cac:SellersItemIdentification>
+            @endif
             @if(isset($invoiceLine->brandname))
                 <cbc:BrandName>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->brandname)}}</cbc:BrandName>
             @endif
