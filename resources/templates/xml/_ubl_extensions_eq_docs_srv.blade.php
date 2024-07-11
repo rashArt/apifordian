@@ -81,7 +81,7 @@
 		    				<DurationOfTheBillingCycle unitOfTime="mes">{{$spd['subscriber_consumption']['duration_of_the_billing_cycle']}}</DurationOfTheBillingCycle>
 			    			<Note>{{$spd['subscriber_consumption']['consumption_section_note']}}</Note>
 				    		<ConsumptionSection>
-					    		<SPDDebitsForPartialConsumption>
+					    		<SPDDebitsForPartialConsumption>{{preg_replace("/[\r\n|\n|\r]+/", "", $type_spd->findOrFail($spd['agency_information']['type_spd_id'])['name'])}}
 						            <SPDDebitForPartialConsumption>
                                         @inject('um', 'App\UnitMeasure')
     									<TotalMeteredQuantity unitCode="{{preg_replace("/[\r\n|\n|\r]+/", "", $um->findOrFail($spd['subscriber_consumption']['total_metered_unit_id'])['code'])}}">{{$spd['subscriber_consumption']['total_metered_quantity']}}"</TotalMeteredQuantity>

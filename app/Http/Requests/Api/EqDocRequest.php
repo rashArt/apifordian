@@ -237,7 +237,7 @@ class EqDocRequest extends FormRequest
             'reviewed' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|exists:type_operations',
+            'type_operation_id' => 'nullable|numeric|exists:type_operations,id',
 
             // Id moneda negociacion
             'idcurrency' => 'nullable|integer|exists:type_currencies,id',

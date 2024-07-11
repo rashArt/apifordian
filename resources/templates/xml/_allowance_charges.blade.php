@@ -1,6 +1,10 @@
 @foreach ($allowanceCharges as $key => $allowanceCharge)
     <cac:AllowanceCharge>
-        <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+        @if($typeDocument->id == '24')
+            <cbc:ID schemeName="1">{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+        @else
+            <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", ($key + 1))}}</cbc:ID>
+        @endif
         <cbc:ChargeIndicator>{{preg_replace("/[\r\n|\n|\r]+/", "", $allowanceCharge->charge_indicator)}}</cbc:ChargeIndicator>
         @if (($allowanceCharge->charge_indicator === 'false') && ($allowanceCharge->discount))
             @if($request['is_eqdoc'] == true or $typeDocument->id == 15)

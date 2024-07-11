@@ -58,6 +58,7 @@
         <cac:Item>
             <cbc:Description>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->description)}}</cbc:Description>
             @if($typeDocument->id == '24')
+    			<cbc:PackSizeNumeric>0</cbc:PackSizeNumeric>
     			<cac:SellersItemIdentification>
 	    			<cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->code)}}</cbc:ID>
 		    		<cbc:ExtendedID>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->seller_code)}}</cbc:ExtendedID>
@@ -70,7 +71,11 @@
                 <cbc:ModelName>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->modelname)}}</cbc:ModelName>
             @endif
             <cac:StandardItemIdentification>
-                <cbc:ID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->name)}}" schemeAgencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->code_agency)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->code)}}</cbc:ID>
+                @if($typeDocument->id == '24')
+    				<cbc:ID schemeAgencyID="195" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->code)}}" schemeName="EAN13">{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->code)}}</cbc:ID>
+                @else
+                    <cbc:ID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->name)}}" schemeAgencyID="{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->type_item_identification->code_agency)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLine->code)}}</cbc:ID>
+                @endif
             </cac:StandardItemIdentification>
             @if(isset($invoiceLine->agentparty))
                 <cac:InformationContentProviderParty>

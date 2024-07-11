@@ -32,6 +32,7 @@
         <cbc:DocumentCurrencyCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_currency->code)}}</cbc:DocumentCurrencyCode>
     @endif
 	<cbc:AccountingCostCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['payment_reference'])}}</cbc:AccountingCostCode>
+	<cbc:AccountingCost>9602034</cbc:AccountingCost>
     <cbc:LineCountNumeric>{{preg_replace("/[\r\n|\n|\r]+/", "", $invoiceLines->count())}}</cbc:LineCountNumeric>
     {{-- OrderReference --}}
     @isset($orderreference)
@@ -41,6 +42,17 @@
     @include('xml._accounting', ['node' => 'AccountingSupplierParty', 'supplier' => true])
     {{-- AccountingCustomerParty --}}
     @include('xml._accounting', ['node' => 'AccountingCustomerParty', 'user' => $customer])
+	<cac:TaxRepresentativeParty>
+		<cac:PartyIdentification>
+			<cbc:ID schemeAgencyID="195"
+      				schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)"
+      				schemeID="4"
+      				schemeName="31">800197268</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>DIAN</cbc:Name>
+		</cac:PartyName>
+	</cac:TaxRepresentativeParty>
     {{-- Delivery --}}
     @isset($delivery)
       @include('xml._delivery')
