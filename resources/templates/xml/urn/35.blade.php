@@ -14,7 +14,7 @@
     @include('xml._ubl_extensions_eq_docs_ttr')
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>{{preg_replace("/[\r\n|\n|\r]+/", "", $typeoperation->code)}}</cbc:CustomizationID>
-    <cbc:ProfileID>DIAN 2.1: Documento Equivalente Tiquete de Transporte  Terrestre de Pasajeros</cbc:ProfileID>
+    <cbc:ProfileID>DIAN 2.1: Documento Equivalente Tiquete de Transporte Terrestre de Pasajeros</cbc:ProfileID>
     <cbc:ProfileExecutionID>{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}</cbc:ProfileExecutionID>
     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $resolution->next_consecutive)}}</cbc:ID>
     <cbc:UUID schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $company->type_environment->code)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $typeDocument->cufe_algorithm)}}"/>
