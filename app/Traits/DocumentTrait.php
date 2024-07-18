@@ -212,8 +212,8 @@ trait DocumentTrait
      */
     protected function createXML(array $data)
     {
-        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
-            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24'){
+        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
+            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60'){
                 if($data['company']['eqdocs_type_environment_id'] == 2)
                     $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
                 else
@@ -226,7 +226,7 @@ trait DocumentTrait
                     $urlquery = 'https://catalogo-vpfe.dian.gov.co';
             }
 
-            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24')
+            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60')
                 if(isset($data['request']['tax_totals'][0]['tax_amount']))
                     $QRCode = 'NumFac: '.$data['resolution']['next_consecutive'].PHP_EOL.'FecFac: '.$data['date'].PHP_EOL.'NitFac: '.$data['user']['company']['identification_number'].PHP_EOL.'DocAdq: '.$data['customer']['company']['identification_number'].PHP_EOL.'ValFac: '.$data['legalMonetaryTotals']['tax_exclusive_amount'].PHP_EOL.'ValIva: '.$data['request']['tax_totals'][0]['tax_amount'].PHP_EOL.'ValOtroIm: '.$data['legalMonetaryTotals']['allowance_total_amount'].PHP_EOL.'ValTotal: '.$data['legalMonetaryTotals']['payable_amount'].PHP_EOL.'CUFE: -----CUFECUDE-----'.PHP_EOL.$urlquery.'/document/searchqr?documentkey=-----CUFECUDE-----';
                 else
