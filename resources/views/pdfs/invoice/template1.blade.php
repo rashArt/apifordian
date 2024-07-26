@@ -29,7 +29,7 @@
                     </tr>
                 </table>
             </td>
-    
+
             <!-- Segunda Columna -->
             <td class="vertical-align-top" style="width: 25%; padding-left: 1rem">
                 <table>
@@ -61,7 +61,7 @@
                     </tr>
                 </table>
             </td>
-    
+
             <!-- Tercera Columna -->
             <td class="vertical-align-top" style="width: 25%; padding-left: 1rem">
                 <table>
@@ -88,7 +88,7 @@
                         <td>{{$paymentForm->payment_due_date}}</td>
                     </tr>
                 </table>
-            </td>    
+            </td>
             <!-- Cuarta Columna -->
             <td class="vertical-align-top" style="width: 35%; text-align: center">
                 <table>
@@ -96,10 +96,10 @@
                         <td><img style="width: 120px;" src="{{$imageQr}}"></td>
                     </tr>
                     <!-- Puedes agregar más filas aquí si es necesario -->
-                </table>   
+                </table>
             </td>
         </tr>
-    </table>   
+    </table>
 
     <br>
     @isset($healthfields)
@@ -414,7 +414,7 @@
                 </td>
             </tr>
         </tbody>
-    </table> 
+    </table>
 
     @inject('Varios', 'App\Custom\NumberSpellOut')
     <div class="text-right" style="margin-top: -25px;">
@@ -423,20 +423,20 @@
                 @php
                     // Inicializamos con payable_amount
                     $totalAmount = $request->legal_monetary_totals['payable_amount'];
-    
+
                     // Verificamos si existe previous_balance
                     if (isset($request->previous_balance)) {
                         $totalAmount += $request->previous_balance;
                     }
-    
+
                     // Verificamos si existen retenciones y las restamos
                     if (isset($TotalRetenciones)) {
                         $totalAmount -= $TotalRetenciones;
                     }
-    
+
                     // Finalmente, redondeamos el total a dos decimales
                     $totalAmount = round($totalAmount, 2);
-                    
+
                     // Definimos la moneda
                     $idcurrency = $request->idcurrency ?? null;
                 @endphp
@@ -444,18 +444,18 @@
             </p>
         </div>
     </div>
-    
+
     @if(isset($notes))
     <div style="margin-top:-10px; border: 1px solid grey; border-radius: 1px; padding: 1px;">
-        <div id="note">           
-            <p><strong>NOTAS:</strong>{{$notes}}</p>            
+        <div id="note">
+            <p><strong>NOTAS:</strong>{{$notes}}</p>
         </div>
     </div>
     @endif
 
     @if(isset($request->head_note))
-    <p style="margin-top:1px;text-align: center;"><strong>{{$request->head_note}}</strong></p>       
-    @endif 
+    <p style="margin-top:1px;text-align: center;"><strong>{{$request->head_note}}</strong></p>
+    @endif
 
 {{--
 <div class="summary" >
@@ -490,7 +490,7 @@
     <hr style="margin-top: -10px;">
     <p style="font-size: 10px;margin-top: -9px;" id='mi-texto'>Factura No: {{$resolution->prefix}} - {{$request->number}} - Fecha y Hora de Generación: {{$date}} - {{$time}}<br> CUFE: <strong>{{$cufecude}}</strong></p>
     @isset($request->foot_note)
-        <p style="font-size: 9px;" id='mi-texto-1'><strong>{{$request->foot_note}}</strong>Modalidad de emisión de Facturas Electrónicas: SOFTWARE PROPIO - Fabricante Software: ARAWANA HOME STUDIO - Nit: 901.559.146-5. "Modo de operación: Software Propio - by "Factura Facil"</p>
+        <p style="font-size: 9px;" id='mi-texto-1'><strong>{{$request->foot_note}}</strong></p>
     @endisset
 </div>
 

@@ -322,7 +322,7 @@
                             </td>
                             <td class="text-right">{{number_format($item['invoiced_quantity'], 2)}}</td>
                             <td class="text-right">{{$um->findOrFail($item['unit_measure_id'])['name']}}</td>
-    
+
                             @if(isset($item['tax_totals']))
                                 @if(isset($item['allowance_charges']))
                                     <td class="text-right">{{number_format(($item['line_extension_amount'] + $item['allowance_charges'][0]['amount']) / $item['invoiced_quantity'], 2)}}</td>
@@ -336,7 +336,7 @@
                                     <td class="text-right">{{number_format($item['line_extension_amount'] / $item['invoiced_quantity'], 2)}}</td>
                                 @endif
                             @endif
-    
+
                             @if(isset($item['tax_totals']))
                                 @if(isset($item['tax_totals'][0]['tax_amount']))
                                     <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'] / $item['invoiced_quantity'], 2)}}</td>
@@ -346,7 +346,7 @@
                             @else
                                 <td class="text-right">E</td>
                             @endif
-    
+
                             @if(isset($item['allowance_charges']))
                                 <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
                                 <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
@@ -491,20 +491,20 @@
                         @php
                             // Inicializamos con payable_amount
                             $totalAmount = $request->legal_monetary_totals['payable_amount'];
-            
+
                             // Verificamos si existe previous_balance
                             if (isset($request->previous_balance)) {
                                 $totalAmount += $request->previous_balance;
                             }
-            
+
                             // Verificamos si existen retenciones y las restamos
                             if (isset($TotalRetenciones)) {
                                 $totalAmount -= $TotalRetenciones;
                             }
-            
+
                             // Finalmente, redondeamos el total a dos decimales
                             $totalAmount = round($totalAmount, 2);
-                            
+
                             // Definimos la moneda
                             $idcurrency = $request->idcurrency ?? null;
                         @endphp
@@ -512,11 +512,11 @@
                     </p>
                 </div>
             </div>
-            
+
 
         @if(isset($notes))
         <div class="summarys">
-            <div class="text-word" id="note">           
+            <div class="text-word" id="note">
                 <p><strong>NOTAS:</strong></p>
                 <p style="font-style: italic; font-size: 9px">{{$notes}}</p>
             </div>
@@ -549,7 +549,7 @@
             </table>
         @endif
     </div>
-    
+
     --}}
 
     <!-- Footer -->
@@ -564,13 +564,12 @@
     <div style="text-align: center;">
         <img style="width: 70%;" src="{{$imageQr}}">
     </div>
-    
+
     @isset($request->foot_note)
         <p id='mi-texto-1'>{{$request->foot_note}}</p>
     @endisset
 
     <h3> GRACIAS POR SU COMPRA</h3>
-    <p>Modalidad de emisión de Facturas Electrónicas: SOFTWARE PROPIO - Fabricante Software: ARAWANA HOME STUDIO - Nit: 901.559.146-5. "Modo de operación: Software Propio - by "Factura Facil"</p>
 </div>
 </body>
 </html>
