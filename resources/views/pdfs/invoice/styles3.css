@@ -1,0 +1,41 @@
+.tabla-impuestos, .tabla-totales {
+    width: 100%;
+    font-size: 8px;
+    border-collapse: collapse;
+}
+
+.tabla-impuestos th, .tabla-impuestos td, .tabla-totales th, .tabla-totales td {
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.tabla-impuestos th, .tabla-totales th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.tabla-totales td {
+    text-align: right;
+}
+
+
+.tabla-items {
+    width: 100%;
+    font-size: 8px;
+    border-collapse: collapse;
+}
+
+.tabla-items th, .tabla-items td {
+   /* border: 1px solid black;*/
+    padding: 2px;
+    text-align: center;
+}
+
+.tabla-items td.desc, .tabla-items th.desc {
+    text-align: left;
+}
+
+.tabla-items td.nota {
+    font-style: italic;
+    font-size: 7px;
+}

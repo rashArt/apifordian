@@ -212,8 +212,8 @@ trait DocumentTrait
      */
     protected function createXML(array $data)
     {
-        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
-            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60'){
+        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
+            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24'){
                 if($data['company']['eqdocs_type_environment_id'] == 2)
                     $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
                 else
@@ -226,7 +226,7 @@ trait DocumentTrait
                     $urlquery = 'https://catalogo-vpfe.dian.gov.co';
             }
 
-            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '60')
+            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24')
                 if(isset($data['request']['tax_totals'][0]['tax_amount']))
                     $QRCode = 'NumFac: '.$data['resolution']['next_consecutive'].PHP_EOL.'FecFac: '.$data['date'].PHP_EOL.'NitFac: '.$data['user']['company']['identification_number'].PHP_EOL.'DocAdq: '.$data['customer']['company']['identification_number'].PHP_EOL.'ValFac: '.$data['legalMonetaryTotals']['tax_exclusive_amount'].PHP_EOL.'ValIva: '.$data['request']['tax_totals'][0]['tax_amount'].PHP_EOL.'ValOtroIm: '.$data['legalMonetaryTotals']['allowance_total_amount'].PHP_EOL.'ValTotal: '.$data['legalMonetaryTotals']['payable_amount'].PHP_EOL.'CUFE: -----CUFECUDE-----'.PHP_EOL.$urlquery.'/document/searchqr?documentkey=-----CUFECUDE-----';
                 else
@@ -355,7 +355,7 @@ trait DocumentTrait
                 $totalbase = $request->legal_monetary_totals['line_extension_amount'];
 
             if($tipodoc == 'TTR' or $tipodoc == 'SRV')
-                if($company->eqdocs_type_environment_id == 2)
+                if($company->eqdocs_type_environment_id == 1)
                     return 'https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey='.$cufecude;
                 else
                     return 'https://catalogo-vpfe-hab.dian.gov.co/document/searchqr?documentkey='.$cufecude;
@@ -429,10 +429,7 @@ trait DocumentTrait
 //                    $pdf->WriteHTML(View::make("pdfs.invoice.template".$template_pdf, compact("user", "company", "customer", "resolution", "date", "time", "paymentForm", "request", "cufecude", "imageQr", "imgLogo", "withHoldingTaxTotal", "notes", "healthfields")), HTMLParserMode::HTML_BODY);
                 }
 
-                if($tipodoc == "INVOICE")
-                    $filename = storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf");
-                else
-                    $filename = storage_path("app/public/{$company->identification_number}/POSS-{$resolution->next_consecutive}.pdf");
+                $filename = storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.pdf");
             }
             else
                 if($tipodoc == "NC"){
@@ -782,21 +779,13 @@ trait DocumentTrait
 
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
-        if($type == 'pos'){
-            $pageWidth = 80;
-            $pageHeight = 297;
-        }
-        else{
-            $pageWidth = 219;
-            $pageHeight = 279;
-        }
-        $margin_left = '5';
-        $margin_right = '5';
-        $margin_top = '60';
-        $margin_bottom = '40';
+        $margin_left = null;
+        $margin_right = null;
+        $margin_top = null;
+        $margin_bottom = null;
 
         $filename = base_path('resources/views/pdfs/' . $type . '/config'.$template.'.json');
-        if (file_exists($filename)) {
+            if (file_exists($filename)) {
             $jsonD =  file_get_contents('config'.$template.'.json');
             $margin = json_decode($jsonD,true);
             if(isset($margin)){
@@ -807,6 +796,38 @@ trait DocumentTrait
                 $margin_left = $margin['left'];
             }
         }
+
+         if($template == 1){
+
+            $format_print = 'A4';
+            $margin_top = '28';
+            $margin_left = '5';
+            $margin_right = '5';
+            $margin_bottom = '12';
+
+         }elseif($template == 2)  {
+
+            $format_print = 'A4';
+            $margin_top = '39';
+            $margin_left = '10';
+            $margin_right = '10';
+            $margin_bottom = '12';
+
+         } elseif($template == 3)  {
+
+
+            $margin_top = '2';
+            // Definir el ancho y el alto en milímetros (por ejemplo, para un largo de 150mm)
+            $ancho = 80;  // 80mm de ancho para la impresora de tirilla
+            $alto = 297;   // El alto puede ser más largo dependiendo del contenido a imprimir
+            $margin_left = '2';
+            $margin_right = '2';
+            $margin_bottom = '5';
+
+            $format_print = [$ancho, $alto];
+
+         }
+
         if($template){
             $pdf = new Mpdf([
                 'fontDir' => array_merge($fontDirs, [
@@ -826,28 +847,27 @@ trait DocumentTrait
                 'margin_bottom' => $margin_bottom ,
                 'margin_header' => 5,
                 'margin_footer' => 2,
-                'format' => [$pageWidth, $pageHeight], // Establece el tamaño de la página
+                'format' => $format_print,  // Esta es la línea que se añade para definir el tamaño del papel
             ]);
         }
         else{
             $pdf = new Mpdf([
-                'fontDir' => array_merge($fontDirs, [
-                    base_path('public/fonts/roboto/'),
-                ]),
-                'fontdata' => $fontData + [
-                    'Roboto' => [
-                        'R' => 'Roboto-Regular.ttf',
-                        'B' => 'Roboto-Bold.ttf',
-                        'I' => 'Roboto-Italic.ttf',
-                    ]
-                ],
-                'default_font' => 'Roboto',
-                'margin_left' => 5,
-                'margin_top' => 35,
-                'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 2,
-                'format' => [$pageWidth, $pageHeight], // Establece el tamaño de la página
+            'fontDir' => array_merge($fontDirs, [
+                base_path('public/fonts/roboto/'),
+            ]),
+            'fontdata' => $fontData + [
+                'Roboto' => [
+                    'R' => 'Roboto-Regular.ttf',
+                    'B' => 'Roboto-Bold.ttf',
+                    'I' => 'Roboto-Italic.ttf',
+                ]
+            ],
+            'default_font' => 'Roboto',
+            'margin_left' => 5,
+            'margin_top' => 35,
+            'margin_bottom' => 5,
+            'margin_header' => 5,
+            'margin_footer' => 2
             ]);
         }
         if($template)
@@ -856,7 +876,6 @@ trait DocumentTrait
             $pdf->WriteHTML(file_get_contents(base_path('resources/views/pdfs/' . $type . '/styles.css')), HTMLParserMode::HEADER_CSS);
         return $pdf;
     }
-
     /**
      * Zip Email Payroll
      *
@@ -1478,8 +1497,7 @@ trait DocumentTrait
 
                 if(!is_null($company->start_plan_date4))
                     if($document_name == "SUPPORT DOCUMENT"){
-//                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '11')->orWhere('type_document_id', '13')->where('created_at', '>=', $company->start_plan_date4)->count();
-                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->whereIn('type_document_id', ['11', '13'])->where('created_at', '>=', $company->start_plan_date4)->count();
+                        $qty_docs = Document::where('identification_number', $company->identification_number)->where('state_document_id', 1)->where('type_document_id', '11')->orWhere('type_document_id', '13')->where('created_at', '>=', $company->start_plan_date4)->count();
                         return $qty_docs;
                     }
             }
@@ -1532,4 +1550,3 @@ trait DocumentTrait
             ];
     }
 }
-

@@ -137,10 +137,15 @@ Route::middleware('auth:api')->group(function () {
             Route::post('/', 'Api\InvoiceExportController@store');
         });
 
-        // Contingency Invoice
+        // Contingency Invoice type 3
         Route::prefix('/invoice-contingency')->group(function () {
             Route::post('/{testSetId}', 'Api\InvoiceContingencyController@testSetStore');
             Route::post('/', 'Api\InvoiceContingencyController@store');
+        });
+
+        // Contingency Invoice type 4
+        Route::prefix('/invoice-contingency-4')->group(function () {
+            Route::post('/', 'Api\InvoiceContingencyController@store-type-4');
         });
 
         // AUI Invoice

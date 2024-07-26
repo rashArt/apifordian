@@ -6,27 +6,14 @@
 </head> --}}
 
 <body>
-    <hr>
-    @if(isset($request->head_note))
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-bordered table-condensed table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th class="text-center"><p><strong>{{$request->head_note}}<br/>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-    @endif
-    <table style="font-size: 10px">
+    <table style="font-size: 10px; width: 100%; margin-top:-20px;">
         <tr>
-            <td class="vertical-align-top" style="width: 30%;">
+            <!-- Primera Columna -->
+            <td class="vertical-align-top" style="width: 25%;">
                 <table>
                     <tr>
                         <td>CC o NIT:</td>
-                        <td>{{$customer->company->identification_number}}-{{$request->customer['dv'] ?? NULL}} </td>
+                        <td>{{$customer->company->identification_number}}-{{$request->customer['dv'] ?? NULL}}</td>
                     </tr>
                     <tr>
                         <td>Cliente:</td>
@@ -36,6 +23,16 @@
                         <td>Régimen:</td>
                         <td>{{$customer->company->type_regime->name}}</td>
                     </tr>
+                    <tr>
+                        <td>Medio de Pago:</td>
+                        <td>{{$paymentForm->nameMethod}}</td>
+                    </tr>
+                </table>
+            </td>
+    
+            <!-- Segunda Columna -->
+            <td class="vertical-align-top" style="width: 25%; padding-left: 1rem">
+                <table>
                     <tr>
                         <td>Obligación:</td>
                         <td>{{$customer->company->type_liability->name}}</td>
@@ -47,11 +44,27 @@
                     <tr>
                         <td>Ciudad:</td>
                         @if($customer->company->country->id == 46)
-                            <td>{{$customer->company->municipality->name}} - {{$customer->company->country->name}} </td>
+                            <td>{{$customer->company->municipality->name}} - {{$customer->company->country->name}}</td>
                         @else
-                            <td>{{$customer->company->municipality_name}} - {{$customer->company->state_name}} - {{$customer->company->country->name}} </td>
+                            <td>{{$customer->company->municipality_name}} - {{$customer->company->state_name}} - {{$customer->company->country->name}}</td>
                         @endif
                     </tr>
+                    @if(isset($request['order_reference']['id_order']))
+                    <tr>
+                        <td>Número Pedido:</td>
+                        <td>{{$request['order_reference']['id_order']}}</td>
+                    </tr>
+                    @endif
+                    <tr>
+                        <td>Plazo Para Pagar:</td>
+                        <td>{{$paymentForm->duration_measure}} Días</td>
+                    </tr>
+                </table>
+            </td>
+    
+            <!-- Tercera Columna -->
+            <td class="vertical-align-top" style="width: 25%; padding-left: 1rem">
+                <table>
                     <tr>
                         <td>Teléfono:</td>
                         <td>{{$customer->company->phone}}</td>
@@ -60,80 +73,34 @@
                         <td>Email:</td>
                         <td>{{$customer->email}}</td>
                     </tr>
-                </table>
-            </td>
-            <td class="vertical-align-top" style="width: 40%; padding-left: 1rem">
-                <table>
                     <tr>
                         <td>Forma de Pago:</td>
                         <td>{{$paymentForm->name}}</td>
                     </tr>
-                    <tr>
-                        <td>Medio de Pago:</td>
-                        <td>{{$paymentForm->nameMethod}}</td>
-                    </tr>
-                    <tr>
-                        <td>Plazo Para Pagar:</td>
-                        <td>{{$paymentForm->duration_measure}} Dias</td>
-                    </tr>
-                    <tr>
-                        <td>Fecha Vencimiento:</td>
-                        <td>{{$paymentForm->payment_due_date}}</td>
-                    </tr>
-                    @if(isset($request['order_reference']['id_order']))
-                    <tr>
-                        <td>Número Pedido:</td>
-                        <td>{{$request['order_reference']['id_order']}}</td>
-                    </tr>
-                    @endif
                     @if(isset($request['order_reference']['issue_date_order']))
                     <tr>
                         <td>Fecha Pedido:</td>
                         <td>{{$request['order_reference']['issue_date_order']}}</td>
                     </tr>
                     @endif
-                    @if(isset($healthfields))
                     <tr>
-                        <td>Inicio Periodo Facturación:</td>
-                        <td>{{$healthfields->invoice_period_start_date}}</td>
+                        <td>Fecha Vencimiento:</td>
+                        <td>{{$paymentForm->payment_due_date}}</td>
                     </tr>
-                    <tr>
-                        <td>Fin Periodo Facturación:</td>
-                        <td>{{$healthfields->invoice_period_end_date}}</td>
-                    </tr>
-                    @endif
-                    @if(isset($request['number_account']))
-                    <tr>
-                        <td>Número de cuenta:</td>
-                        <td>{{$request['number_account'] }}</td>
-                    </tr>
-                    @endif
-                    @if(isset($request['deliveryterms']))
-                    <tr>
-                        <td>Terminos de Entrega:</td>
-                        <td>{{$request['deliveryterms']['loss_risk_responsibility_code']}} - {{ $request['deliveryterms']['loss_risk'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>T.R.M:</td>
-                        <td>{{number_format($request['k_supplement']['FctConvCop'], 2)}}</td>
-                    </tr>
-                    <tr>
-                        <td>Destino</td>
-                        <td>{{$request['k_supplement']['destination']}}</td>
-                    </tr>
-                    <tr>
-                        @inject('currency', 'App\TypeCurrency')
-                        <td>Tipo Moneda:</td>
-                        <td>{{$currency->where('code', 'like', '%'.$request['k_supplement']['MonedaCop'].'%')->firstOrFail()['name']}}</td>
-                    </tr>
-                    @endif
                 </table>
-            </td>
-            <td class="vertical-align-top" style="width: 30%; text-align: right">
-                <img style="width: 150px;" src="{{$imageQr}}">
+            </td>    
+            <!-- Cuarta Columna -->
+            <td class="vertical-align-top" style="width: 35%; text-align: center">
+                <table>
+                    <tr>
+                        <td><img style="width: 120px;" src="{{$imageQr}}"></td>
+                    </tr>
+                    <!-- Puedes agregar más filas aquí si es necesario -->
+                </table>   
             </td>
         </tr>
-    </table>
+    </table>   
+
     <br>
     @isset($healthfields)
         <table class="table" style="width: 100%;">
@@ -188,7 +155,7 @@
         </table>
         <br>
     @endisset
-    <table class="table" style="width: 100%;">
+    <table class="table" style="margin-top:-12px;width: 100%;">
         <thead>
             <tr>
                 <th class="text-center">#</th>
@@ -233,7 +200,7 @@
                         <td>
                             @if(isset($item['notes']))
                                 {{$item['description']}}
-                                <p style="font-style: italic; font-size: 10px"><strong> {{$item['notes']}}</strong></p>
+                                <p style="font-style: italic; font-size: 7px"><strong>{{$item['notes']}}</strong></p>
                             @else
                                 {{$item['description']}}
                             @endif
@@ -447,8 +414,7 @@
                 </td>
             </tr>
         </tbody>
-    </table>
-    <br>
+    </table> 
 
     @inject('Varios', 'App\Custom\NumberSpellOut')
     <div class="text-right" style="margin-top: -25px;">
@@ -479,42 +445,54 @@
         </div>
     </div>
     
-        @if(isset($notes))
-        <div class="summarys">
-            <div class="text-word" id="note">           
-                <p><strong>NOTAS:</strong></p>
-                <p style="font-style: italic; font-size: 9px">{{$notes}}</p>
-            </div>
+    @if(isset($notes))
+    <div style="margin-top:-10px; border: 1px solid grey; border-radius: 1px; padding: 1px;">
+        <div id="note">           
+            <p><strong>NOTAS:</strong>{{$notes}}</p>            
         </div>
-        @endif
+    </div>
+    @endif
 
-    {{--
-    <div class="summary" >
-        <div class="text-word" id="note">
-            @if(isset($request->disable_confirmation_text))
-                @if(!$request->disable_confirmation_text)
-                    <p style="font-style: italic;">INFORME EL PAGO AL TELEFONO {{$company->phone}} o al e-mail {{$user->email}}<br>
-                        {{-- <br>
-                        <div id="firma">
-                            <p><strong>FIRMA ACEPTACIÓN:</strong></p><br>
-                            <p><strong>CC:</strong></p><br>
-                            <p><strong>FECHA:</strong></p><br>
-                        </div>
-                    </p>
-                @endif
+    @if(isset($request->head_note))
+    <p style="margin-top:1px;text-align: center;"><strong>{{$request->head_note}}</strong></p>       
+    @endif 
+
+{{--
+<div class="summary" >
+    <div class="text-word" id="note">
+        @if(isset($request->disable_confirmation_text))
+            @if(!$request->disable_confirmation_text)
+                <p style="font-style: italic;">INFORME EL PAGO AL TELEFONO {{$company->phone}} o al e-mail {{$user->email}}<br>
+                    {{-- <br>
+                    <div id="firma">
+                        <p><strong>FIRMA ACEPTACIÓN:</strong></p><br>
+                        <p><strong>CC:</strong></p><br>
+                        <p><strong>FECHA:</strong></p><br>
+                    </div>
+                </p>
             @endif
-        </div>
-        @if(isset($firma_facturacion) and !is_null($firma_facturacion))
-            <table style="font-size: 10px">
-                <tr>
-                    <td class="vertical-align-top" style="width: 50%; text-align: right">
-                        <img style="width: 250px;" src="{{$firma_facturacion}}">
-                    </td>
-                </tr>
-            </table>
         @endif
     </div>
-    
-    --}}
+    @if(isset($firma_facturacion) and !is_null($firma_facturacion))
+        <table style="font-size: 10px">
+            <tr>
+                <td class="vertical-align-top" style="width: 50%; text-align: right">
+                    <img style="width: 250px;" src="{{$firma_facturacion}}">
+                </td>
+            </tr>
+        </table>
+    @endif
+</div>
+
+--}}
+
+<div>
+    <hr style="margin-top: -10px;">
+    <p style="font-size: 10px;margin-top: -9px;" id='mi-texto'>Factura No: {{$resolution->prefix}} - {{$request->number}} - Fecha y Hora de Generación: {{$date}} - {{$time}}<br> CUFE: <strong>{{$cufecude}}</strong></p>
+    @isset($request->foot_note)
+        <p style="font-size: 9px;" id='mi-texto-1'><strong>{{$request->foot_note}}</strong>Modalidad de emisión de Facturas Electrónicas: SOFTWARE PROPIO - Fabricante Software: ARAWANA HOME STUDIO - Nit: 901.559.146-5. "Modo de operación: Software Propio - by "Factura Facil"</p>
+    @endisset
+</div>
+
 </body>
 </html>

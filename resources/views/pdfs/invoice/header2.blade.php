@@ -1,13 +1,13 @@
 
 <table width="100%">
     <tr>
-        <td style="width: 18%;" class="text-center vertical-align-top">
+        <td style="width: 23%;" class="text-center vertical-align-top">
             <div id="reference">
                 <p style="font-weight: 700;"><strong>FACTURA ELECTRONICA DE VENTA</strong></p>
                 <br>
                 <p style="color: black;
                     font-weight: bold;
-                    font-size: 10px;
+                    font-size: 14px;
                     margin-bottom: 8px;
                     border: 1px solid #000;
                     padding: 5px 8px;
@@ -17,7 +17,7 @@
                     <br>
                 <p style="color: black;
                     font-weight: bold;
-                    font-size: 8px;
+                    font-size: 11px;
                     margin-bottom: 8px;
                     border: 1px solid #000;
                     padding: 5px 8px;
@@ -25,10 +25,11 @@
                     display: inline-block;
                     border-radius: 6px;">Fecha Emisión: {{$date}}</p>
                     <br>
-                <p>Fecha Validación DIAN: {{$date}} Hora Validación DIAN: {{$time}}</p>
+                <p>Fecha Validación DIAN: {{$date}}<br>
+                    Hora Validación DIAN: {{$time}}</p>
             </div>
         </td>
-        <td style="width: 65%; padding: 0 1rem;" class="text-center vertical-align-top">
+        <td style="width: 60%; padding: 0 1rem;" class="text-center vertical-align-top">
             <div id="empresa-header">
                 <strong>{{$user->name}}</strong><br>
                 @if(isset($request->establishment_name) && $request->establishment_name != 'Oficina Principal')
@@ -96,9 +97,8 @@
                @endif
             </div>
         </td>
-        <td style="width: 20%; text-align: right;" class="vertical-align-top">
-            <img  style="width: 136px; height: auto;" src="{{$imgLogo}}" alt="logo">
+        <td style="width: 25%; text-align: right;" class="vertical-align-top">
+            <img  style="width: 150px; height: auto;" src="{{$imgLogo}}" alt="logo">
         </td>
     </tr>
 </table>
-<hr>

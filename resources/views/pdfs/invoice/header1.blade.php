@@ -96,9 +96,9 @@
                @endif
             </div>
         </td>
-        <td style="width: 20%; text-align: right;" class="vertical-align-top">
-            <img  style="width: 136px; height: auto;" src="{{$imgLogo}}" alt="logo">
+        <td style="width: 25%; text-align: right;" class="vertical-align-top">
+            <img  style="width: 120px; height: auto;" src="{{$imgLogo}}" alt="logo">
         </td>
     </tr>
 </table>
-<hr>
+<hr style="margin-top: 1px;">
