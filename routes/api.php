@@ -145,7 +145,7 @@ Route::middleware('auth:api')->group(function () {
 
         // Contingency Invoice type 4
         Route::prefix('/invoice-contingency-4')->group(function () {
-            Route::post('/', 'Api\InvoiceContingencyController@store-type-4');
+            Route::post('/', 'Api\InvoiceContingencyController@store_type_4');
         });
 
         // AUI Invoice

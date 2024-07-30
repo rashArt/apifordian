@@ -954,7 +954,7 @@ trait DocumentTrait
      *
      * @return string
      */
-    protected function zipBase64(Company $company, Resolution $resolution, Sign $sign, $GuardarEn = false, $batch = false)
+    protected function zipBase64(Company $company, Resolution $resolution, Sign $sign, $GuardarEn = false, $batch = false, $ret_array = false)
     {
         $dir = preg_replace("/[\r\n|\n|\r]+/", "", "zip/{$resolution->company_id}");
         $nameXML = preg_replace("/[\r\n|\n|\r]+/", "", $this->getFileName($company, $resolution));
@@ -989,7 +989,13 @@ trait DocumentTrait
             copy(preg_replace("/[\r\n|\n|\r]+/", "", storage_path($this->pathZIP)), $GuardarEn.".zip");
         }
 
-        return $this->ZipBase64Bytes = base64_encode(file_get_contents(preg_replace("/[\r\n|\n|\r]+/", "", storage_path($this->pathZIP))));
+        if($ret_array)
+            return[
+                'ZipBase64Bytes' => $this->ZipBase64Bytes = base64_encode(file_get_contents(preg_replace("/[\r\n|\n|\r]+/", "", storage_path($this->pathZIP)))),
+                'xml_filename' => $nameXML
+            ];
+        else
+            return $this->ZipBase64Bytes = base64_encode(file_get_contents(preg_replace("/[\r\n|\n|\r]+/", "", storage_path($this->pathZIP))));
     }
 
     /**
