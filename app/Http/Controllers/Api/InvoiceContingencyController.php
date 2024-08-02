@@ -880,6 +880,11 @@ class InvoiceContingencyController extends Controller
                         ]
                     ]
               ];
+
+              $file = fopen(storage_path("app/public/{$company->identification_number}/Type4XMLFilename-{$resolution->next_consecutive}.xml"), "w");
+              fwrite($file, '<?xml version="1.0" encoding="utf-8" standalone="no"?><XmlFileName>'.$xml_filename.'</XmlFileName>');
+              fclose($file);
+
 //            $respuestadian = $sendBillSync->signToSend(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"));
 //            if(isset($respuestadian->html))
 //                return [
@@ -970,11 +975,82 @@ class InvoiceContingencyController extends Controller
             'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
             'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
             'urlinvoiceattached'=>"{$filename}.xml",
-            'cufe' => $signInvoice->ConsultarCUDE(),
+            'cude' => $signInvoice->ConsultarCUDE(),
             'QRStr' => $QRStr,
             'certificate_days_left' => $certificate_days_left,
             'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
         ];
+    }
+
+    public function send_pendings($prefix = null, $number = null)
+    {
+        // User
+        $user = auth()->user();
+
+        // User company
+        $company = $user->company;
+
+        // Verify Certificate
+        $certificate_days_left = 0;
+        $c = $this->verify_certificate();
+        if(!$c['success'])
+            return $c;
+        else
+            $certificate_days_left = $c['certificate_days_left'];
+
+        if($company->state == false)
+            return [
+                'success' => false,
+                'message' => 'La empresa se encuentra en el momento INACTIVA para enviar documentos electronicos...',
+            ];
+
+        if($prefix == null && $number == null)
+            $documents = Document::where('type_document_id', 12)->where('state_document_id', 2)->where('identification_number', $company->identification_number)->get();
+
+        if($prefix != null && $number == null)
+            $documents = Document::where('type_document_id', 12)->where('state_document_id', 2)->where('identification_number', $company->identification_number)->where('prefix', $prefix)->get();
+
+        if($prefix == null && $number != null)
+            return [
+                'success' => false,
+                'message' => 'Para hacer envios los envios pendientes debe al menos suministrar el prefijo de las facturas de contingencia tipo 4 que desea enviar....',
+            ];
+
+        if($prefix != null && $number != null)
+            $documents = Document::where('type_document_id', 12)->where('state_document_id', 2)->where('identification_number', $company->identification_number)->where('prefix', $prefix)->where('number', $number)->get();
+
+        $respuestas_dian = [];
+        if(count($documents) > 0){
+            foreach($documents as $document){
+                $sendBillSync = new SendBillSync($company->certificate->path, $company->certificate->password);
+                $sendBillSync->To = $company->software->url;
+                $sendBillSync->fileName = "{$document->prefix}{$document->number}.xml";
+                $sendBillSync->contentFile = base64_encode(file_get_contents(preg_replace("/[\r\n|\n|\r]+/", "", storage_path("app/public/{$company->identification_number}/FES-{$document->prefix}{$document->number}.zip"))));
+
+                $respuestadian = $sendBillSync->signToSend(storage_path("app/public/{$company->identification_number}/ReqFE-{$document->prefix}{$document->number}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaFE-{$document->prefix}{$document->number}.xml"));
+                if(isset($respuestadian->html))
+                    return [
+                        'success' => false,
+                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde..."
+                    ];
+
+                if($respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->IsValid == 'true'){
+                    $document->state_document_id = 1;
+                    $document->save();
+                    $respuestas_dian[] = $respuestadian;
+                }
+            }
+            return [
+                'success' => true,
+                'message' => 'Envios de documentos de contingencia tipo 4 realizados con exito.',
+                'responses' => json_encode($respuestas_dian),
+            ];
+        }
+        else
+            return [
+                'success' => true,
+                'message' => 'No existen registros de documentos de contingencia tipo 4 para realizar envios....',
+            ];
     }
 
     /**

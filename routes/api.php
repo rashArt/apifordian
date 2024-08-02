@@ -145,6 +145,7 @@ Route::middleware('auth:api')->group(function () {
 
         // Contingency Invoice type 4
         Route::prefix('/invoice-contingency-4')->group(function () {
+            Route::post('/send_pendings/{prefix?}/{number?}', 'Api\InvoiceContingencyController@send_pendings');
             Route::post('/', 'Api\InvoiceContingencyController@store_type_4');
         });
 

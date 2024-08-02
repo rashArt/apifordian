@@ -1,6 +1,9 @@
 <cac:{{$node}}>
     <cbc:AdditionalAccountID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->type_organization->code)}}</cbc:AdditionalAccountID>
     <cac:Party>
+        @if(isset($request['actividadeconomica']))
+            <cbc:IndustryClassificationCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['actividadeconomica'])}}</cbc:IndustryClassificationCode>
+        @endif
         @if ($user->company->type_organization->code == 2)
             <cac:PartyIdentification>
                <cbc:ID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->dv)}}" schemeName="{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->type_document_identification->code)}}">{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->identification_number)}}</cbc:ID>
