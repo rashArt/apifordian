@@ -39,3 +39,6 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 ## Extras   
 * Actualizacion desde APIDIAN2022 y la api APIDIAN2023 [Aquí](https://www.youtube.com/watch?v=6lwLKQCYvNY)
+
+* Script de actualización
+[Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Proceso%20de%20actualizacion%20APIDIAN.txt?ref_type=heads)
