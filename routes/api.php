@@ -316,6 +316,12 @@ Route::prefix('/information')->group(function () {
     Route::get('/{nit}/page/{page}/page', 'ResumeController@information_by_page');
 });
 
+Route::prefix('/total_documents')->group(function () {
+    Route::get('/{nit}', 'ResumeController@information_totals');
+    Route::get('/{nit}/{desde}', 'ResumeController@information_totals');
+    Route::get('/{nit}/{desde}/{hasta}', 'ResumeController@information_totals');
+});
+
 // Send email change customer password
 Route::prefix('/change-customer-password')->group(function () {
     Route::post('/{customer_idnumber}/{show_view}', 'CustomerLoginController@RetrievePassword');
