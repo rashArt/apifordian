@@ -24,6 +24,8 @@ class ResumeController extends Controller
 
     public function information_totals($nit, $desde = NULL, $hasta = NULL)
     {
+        set_time_limit(0);
+        ini_set("pcre.backtrack_limit", "5000000");
         if($desde && !$hasta)
           $hasta = $desde;
         else
