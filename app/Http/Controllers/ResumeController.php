@@ -46,65 +46,73 @@ class ResumeController extends Controller
             ];
         }
 
-        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $n = DocumentPayroll::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 9)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $na = DocumentPayroll::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 10)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $ds = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 11)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $nds = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 13)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $pos = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 15)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $ncp = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 26)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
-        $ndp = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 25)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+//        $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $i = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 1, $desde, $hasta])[0]->total;
+//        $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $c = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 4, $desde, $hasta])[0]->total;
+//        $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $d = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 5, $desde, $hasta])[0]->total;
+        $n = DocumentPayroll::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 9)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count();
+        $na = DocumentPayroll::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 10)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->count();
+//        $ds = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 11)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $ds = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 11, $desde, $hasta])[0]->total;
+//        $nds = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 13)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $nds = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 13, $desde, $hasta])[0]->total;
+//        $pos = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 15)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $pos = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 15, $desde, $hasta])[0]->total;
+//        $ncp = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 26)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $ncp = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 26, $desde, $hasta])[0]->total;
+//        $ndp = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 25)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $ndp = DB::select("SELECT count(*) as total FROM documents WHERE state_document_id = 1 AND identification_number = ? AND type_document_id = ? AND date_issue >= ? AND date_issue <= ?", [$company->identification_number, 25, $desde, $hasta])[0]->total;
 
         $invoice = (object)[
             'name' => 'Factura de Venta Nacional',
-            'count' => count($i),
+            'count' => $i,
         ];
 
         $credit_note = (object)[
             'name' => 'Nota Credito',
-            'count' => count($c),
+            'count' => $c,
         ];
 
         $debit_note = (object)[
             'name' => 'Nota Debito',
-            'count' => count($d),
+            'count' => $d,
         ];
 
         $payroll = (object)[
             'name' => 'Nomina Individual',
-            'count' => count($n),
+            'count' => $n,
         ];
 
         $payroll_note = (object)[
             'name' => 'Notas de Ajuste de Nomina Individual',
-            'count' => count($na),
+            'count' => $na,
         ];
 
         $support_document = (object)[
             'name' => 'Documento Soporte a No Obligados a Facturar',
-            'count' => count($ds),
+            'count' => $ds,
         ];
 
         $support_document_note = (object)[
             'name' => 'Notas de Ajuste al Documento Soporte a No Obligados a Facturar',
-            'count' => count($nds),
+            'count' => $nds,
         ];
 
         $pos = (object)[
             'name' => 'Documento Equivalente POS',
-            'count' => count($pos),
+            'count' => $pos,
         ];
 
         $pos_credit_note = (object)[
             'name' => 'Nota Credito a Documento POS',
-            'count' => count($ncp),
+            'count' => $ncp,
         ];
 
         $pos_debit_note = (object)[
             'name' => 'Nota Debito a Documento POS',
-            'count' => count($ndp),
+            'count' => $ndp,
         ];
 
         return [
