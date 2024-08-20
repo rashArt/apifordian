@@ -227,9 +227,7 @@
         <table class="table" style="width: 100%">
     <thead>
         <th class="text-center" style="width: 12%;">Cod Prestador</th>
-        <th class="text-center" style="width: 29%;">Usuario</th>
         <th class="text-center" style="width: 29%;">Info. Contrat.</th>
-        <th class="text-center" style="width: 12%;">Cuota Moderadora</th>
         <th class="text-center" style="width: 18%;">Info. de Pagos</th>
     </thead>
     <tbody>
@@ -237,27 +235,13 @@
         <tr>
             <td style="font-size: 8px;">{{$item->provider_code}}</td>
             <td>
-                <p style="font-size: 8px">Modaldidad Contratacion: {{$item->health_contracting_payment_method()->name}}</p>
-                <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
-                <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->surname}}</p>
-                <p style="font-size: 8px">Tipo de ID: {{$item->health_type_document_identification()->name}}</p>
-                <p style="font-size: 8px">Tipo Usuario: {{$item->health_type_user()->name}}</p>
-            </td>
-            <td>
                 <p style="font-size: 8px">Modalidad Contratacion: {{$item->health_contracting_payment_method()->name}}</p>
                 <p style="font-size: 8px">Nro Contrato: {{$item->contract_number}}</p>
                 <p style="font-size: 8px">Cobertura: {{$item->health_coverage()->name}}</p>
             </td>
             <td>
-                <p style="font-size: 8px">Cuota Moderadora: {{number_format($item->co_payment, 2)}}</p>
-            </td>
-            <td>
-                <p style="font-size: 8px">Nro Autorizacion: {{$item->authorization_numbers}}</p>
-                <p style="font-size: 8px">Nro MIPRES: {{$item->mipres}}</p>
-                <p style="font-size: 8px">Entrega: {{$item->care_delivery}}</p>
-                <p style="font-size: 8px">Nro Poliza: {{$item->policy_number}}</p>
-                <p style="font-size: 8px">Cuota Moderadora: {{number_format($item->moderating_fee, 2)}}</p>
-                <p style="font-size: 8px">Recuperacion: {{number_format($item->recovery_fee, 2)}}</p>
+                <p style="font-size: 8px">Copago: {{number_format($item->co_payment, 2)}}</p>
+                <p style="font-size: 8px">Cuota Moderardora: {{number_format($item->moderating_fee, 2)}}</p>
                 <p style="font-size: 8px">Pagos Compartidos: {{number_format($item->shared_payment, 2)}}</p>
                 <p style="font-size: 8px">Anticipos: {{number_format($item->advance_payment, 2)}}</p>
             </td>
