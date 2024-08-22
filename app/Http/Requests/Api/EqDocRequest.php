@@ -90,6 +90,17 @@ class EqDocRequest extends FormRequest
             'transportation_information.origin_place' => 'nullable|required_with:transportation_information|string',
             'transportation_information.destination_place' => 'nullable|required_with:transportation_information|string',
 
+            // Informacion para boletas de cine
+            'show_room_information' => 'nullable|required_if:type_document_id,=,16|array',
+            'show_room_information.show_room_name' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.address' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.exhibition_room' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.total_chairs' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.name_function' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.select_location' => 'nullable|required_with:show_room_information|string',
+            'show_room_information.date_function' => 'nullable|date_format:Y-m-d',
+            'show_room_information.time_function' => 'nullable|date_format:H:i:s',
+
             // SPD
             'last_valid_payment_date' => 'required_if:type_document_id,=,24|date_format:Y-m-d',
             'payment_reference' => 'required_if:type_document_id,=,24|string',
@@ -196,7 +207,7 @@ class EqDocRequest extends FormRequest
             // Document
             'type_document_id' => [
                 'required',
-                'in:15, 19, 24',
+                'in:15, 16, 19, 24',
                 'exists:type_documents,id',
                 new ResolutionSetting(),
             ],
