@@ -209,7 +209,7 @@
                         <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'], 2)}}</td>
                         <td class="text-right">{{number_format($item['tax_totals'][0]['percent'], 2)}}</td>
                         @if(isset($item['allowance_charges']))
-                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount'] ?>
+                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + ($item['allowance_charges'][0]['amount']) ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'], 2)}}</td>
                             <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                         @else
@@ -258,7 +258,7 @@
                         @endif
 
                         @if(isset($item['allowance_charges']))
-                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + ($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity']) ?>
+                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + ($item['allowance_charges'][0]['amount']) ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
                             <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                             <td class="text-right">{{number_format($item['invoiced_quantity'] * $item['price_amount'] - $item['allowance_charges'][0]['amount'], 2)}}</td>
