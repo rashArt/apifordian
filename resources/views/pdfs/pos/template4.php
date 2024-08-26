@@ -207,7 +207,9 @@
                         <td class="text-right">{{number_format($item['price_amount'], 2)}}</td>
                         <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'], 2)}}</td>
                         @if(isset($item['allowance_charges']))
-                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount'] ?>
+                            <?php \Log::debug($item);
+                                  $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount']
+                            ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'], 2)}}</td>
                         @else
                             <td class="text-right">{{number_format("0", 2)}}</td>
