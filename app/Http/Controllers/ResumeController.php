@@ -152,6 +152,7 @@ class ResumeController extends Controller
         $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
         $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
         $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
+        $p = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 15)->whereDate('date_issue', '>=', $desde)->whereDate('date_issue', '<=', $hasta)->get();
 
         $invoice = (object)[
             'type_document_id' => 1,
@@ -174,10 +175,17 @@ class ResumeController extends Controller
             'documents' => $d
         ];
 
+        $pos = (object)[
+            'type_document_id' => 15,
+            'name' => 'Documento Equivalente POS',
+            'count' => count($p),
+            'documents' => $p
+        ];
+
         return [
             'success' => true,
             'message' => 'NIT Encontrado',
-            'data'=> array($invoice, $credit_note, $debit_note),
+            'data'=> array($invoice, $credit_note, $debit_note, $pos),
             'company' => $company->user->name
         ];
     }
@@ -202,6 +210,7 @@ class ResumeController extends Controller
         $i = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 1)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
         $c = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 4)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
         $d = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 5)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
+        $p = Document::where('state_document_id', 1)->where('identification_number', $company->identification_number)->where('type_document_id', 15)->skip(($page - 1) * $perPage)->take($perPage)->oldest()->get();
 
         $invoice = (object)[
             'name' => 'Factura de Venta Nacional',
@@ -221,10 +230,16 @@ class ResumeController extends Controller
             'documents' => $d
         ];
 
+        $pos = (object)[
+            'name' => 'Documento Equivalente POS',
+            'count' => count($p),
+            'documents' => $p
+        ];
+
         return [
             'success' => true,
             'message' => 'NIT Encontrado',
-            'data'=> array($invoice, $credit_note, $debit_note),
+            'data'=> array($invoice, $credit_note, $debit_note, $pos),
             'company' => $company->user->name
         ];
     }
