@@ -98,9 +98,9 @@ class InvoiceController extends Controller
             $idcurrency = null;
             $calculationrate = null;
             $calculationratedate = null;
-//            $idcurrency = TypeCurrency::findOrFail(35);
-//            $calculationrate = 1;
-//            $calculationratedate = Carbon::now()->format('Y-m-d');
+            // $idcurrency = TypeCurrency::findOrFail(35);
+            // $calculationrate = 1;
+            // $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
@@ -149,11 +149,11 @@ class InvoiceController extends Controller
 
         // Retenciones globales
         $withHoldingTaxTotal = collect();
-//        $withHoldingTaxTotalCount = 0;
-//        $holdingTaxTotal = $request->holding_tax_total;
+        // $withHoldingTaxTotalCount = 0;
+        // $holdingTaxTotal = $request->holding_tax_total;
         foreach($request->with_holding_tax_total ?? [] as $item) {
-//            $withHoldingTaxTotalCount++;
-//            $holdingTaxTotal = $request->holding_tax_total;
+            // $withHoldingTaxTotalCount++;
+            // $holdingTaxTotal = $request->holding_tax_total;
             $withHoldingTaxTotal->push(new TaxTotal($item));
         }
 
@@ -291,7 +291,7 @@ class InvoiceController extends Controller
         $invoice_doc->version_ubl_id = 1;
         $invoice_doc->ambient_id = 1;
         $invoice_doc->identification_number = $company->identification_number;
-//        $invoice_doc->save();
+        // $invoice_doc->save();
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
@@ -346,16 +346,15 @@ class InvoiceController extends Controller
             $idcurrency = null;
             $calculationrate = null;
             $calculationratedate = null;
-//            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
-//            $calculationrate = 1;
-//            $calculationratedate = Carbon::now()->format('Y-m-d');
+            // $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+            // $calculationrate = 1;
+            // $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
         $request->resolution->number = $request->number;
         $resolution = $request->resolution;
-
-        if(env('VALIDATE_BEFORE_SENDING', false)){
+        if(config('system_configuration.validate_before_sending')){
             $doc = Document::where('type_document_id', $request->type_document_id)->where('identification_number', $company->identification_number)->where('prefix', $resolution->prefix)->where('number', $request->number)->where('state_document_id', 1)->get();
             if(count($doc) > 0)
                 return [
@@ -408,11 +407,11 @@ class InvoiceController extends Controller
 
         // Retenciones globales
         $withHoldingTaxTotal = collect();
-//        $withHoldingTaxTotalCount = 0;
-//        $holdingTaxTotal = $request->holding_tax_total;
+        // $withHoldingTaxTotalCount = 0;
+        // $holdingTaxTotal = $request->holding_tax_total;
         foreach($request->with_holding_tax_total ?? [] as $item) {
-//            $withHoldingTaxTotalCount++;
-//            $holdingTaxTotal = $request->holding_tax_total;
+            // $withHoldingTaxTotalCount++;
+            // $holdingTaxTotal = $request->holding_tax_total;
             $withHoldingTaxTotal->push(new TaxTotal($item));
         }
 
@@ -441,7 +440,7 @@ class InvoiceController extends Controller
         $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'prepaidpayments', 'delivery', 'deliveryparty', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
 
         // Register Customer
-        if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))
+        if(config('system_configuration.apply_send_customer_credentials'))
             $this->registerCustomer($customer, $request->sendmail);
         else
             $this->registerCustomer($customer, $request->send_customer_credentials);
@@ -503,7 +502,7 @@ class InvoiceController extends Controller
         $filename = '';
         $respuestadian = '';
         $typeDocument = TypeDocument::findOrFail(7);
-//        $xml = new \DOMDocument;
+        // $xml = new \DOMDocument;
         $ar = new \DOMDocument;
         if ($request->GuardarEn){
             try{
@@ -511,7 +510,22 @@ class InvoiceController extends Controller
                 if(isset($respuestadian->html))
                     return [
                         'success' => false,
-                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde..."
+                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...",
+                        'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
+                        'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
+                        'ResponseDian' => $respuestadian,
+                        'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
+                        'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
+                        'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
+                        'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
+                        'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
+                        'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
+                        'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+                        'urlinvoiceattached'=>"{$filename}.xml",
+                        'cufe' => $signInvoice->ConsultarCUFE(),
+                        'QRStr' => $QRStr,
+                        'certificate_days_left' => $certificate_days_left,
+                        'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
                     ];
 
                 if($respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->IsValid == 'true'){
@@ -523,7 +537,7 @@ class InvoiceController extends Controller
                     $invoice_doc->cufe = $cufecude;
                     $invoice_doc->save();
                     $signedxml = file_get_contents(storage_path("app/xml/{$company->id}/".$respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->XmlFileName.".xml"));
-//                    $xml->loadXML($signedxml);
+                    // $xml->loadXML($signedxml);
                     if(strpos($signedxml, "</Invoice>") > 0)
                         $td = '/Invoice';
                     else
@@ -544,9 +558,9 @@ class InvoiceController extends Controller
                     $signAttachedDocument->GuardarEn = $GuardarEn."\\{$filename}.xml";
 
                     $at = $signAttachedDocument->sign($attacheddocument)->xml;
-//                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+                    // $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                     $file = fopen($GuardarEn."\\{$filename}".".xml", "w");
-//                    $file = fopen($GuardarEn."\\Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml", "w");
+                    // $file = fopen($GuardarEn."\\Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml", "w");
                     fwrite($file, $at);
                     fclose($file);
                     if(isset($request->annexes))
@@ -585,7 +599,27 @@ class InvoiceController extends Controller
                   $at = '';
                 }
             } catch (\Exception $e) {
-                return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
+                // return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
+                \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
+                return [
+                    'success' => false,
+                    'message' => "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}",
+                    'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
+                    'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
+                    'ResponseDian' => $respuestadian,
+                    'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
+                    'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
+                    'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
+                    'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
+                    'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
+                    'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
+                    'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+                    'urlinvoiceattached'=>"{$filename}.xml",
+                    'cufe' => $signInvoice->ConsultarCUFE(),
+                    'QRStr' => $QRStr,
+                    'certificate_days_left' => $certificate_days_left,
+                    'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
+                ];
             }
             return [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
@@ -613,9 +647,25 @@ class InvoiceController extends Controller
                 if(isset($respuestadian->html))
                     return [
                         'success' => false,
-                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde..."
+                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...",
+                        'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
+                        'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
+                        'ResponseDian' => $respuestadian,
+                        'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
+                        'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
+                        'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
+                        'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
+                        'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
+                        'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
+                        'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+                        'urlinvoiceattached'=>"{$filename}.xml",
+                        'cufe' => $signInvoice->ConsultarCUFE(),
+                        'QRStr' => $QRStr,
+                        'certificate_days_left' => $certificate_days_left,
+                        'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
                     ];
 
+                // throw new \Exception('Forzando un error para probar el catch.');
                 if($respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->IsValid == 'true'){
                     $filename = str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->XmlFileName)));
                     if($request->atacheddocument_name_prefix)
@@ -625,7 +675,7 @@ class InvoiceController extends Controller
                     $invoice_doc->cufe = $cufecude;
                     $invoice_doc->save();
                     $signedxml = file_get_contents(storage_path("app/xml/{$company->id}/".$respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->XmlFileName.".xml"));
-//                    $xml->loadXML($signedxml);
+                    // $xml->loadXML($signedxml);
                     if(strpos($signedxml, "</Invoice>") > 0)
                         $td = '/Invoice';
                     else
@@ -646,9 +696,9 @@ class InvoiceController extends Controller
                     $signAttachedDocument->GuardarEn = storage_path("app/public/{$company->identification_number}/{$filename}.xml");
 
                     $at = $signAttachedDocument->sign($attacheddocument)->xml;
-//                    $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
+                    // $at = str_replace("&gt;", ">", str_replace("&quot;", '"', str_replace("&lt;", "<", $at)));
                     $file = fopen(storage_path("app/public/{$company->identification_number}/{$filename}".".xml"), "w");
-//                    $file = fopen(storage_path("app/public/{$company->identification_number}/Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml"), "w");
+                    // $file = fopen(storage_path("app/public/{$company->identification_number}/Attachment-".$this->valueXML($signedxml, $td."/cbc:ID/").".xml"), "w");
                     fwrite($file, $at);
                     fclose($file);
                     if(isset($request->annexes))
@@ -687,7 +737,26 @@ class InvoiceController extends Controller
                   $at = '';
                 }
             } catch (\Exception $e) {
-                return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
+                \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
+                return [
+                    'success' => false,
+                    'message' => "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}",
+                    'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
+                    'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
+                    'ResponseDian' => $respuestadian,
+                    'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
+                    'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
+                    'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
+                    'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
+                    'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
+                    'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
+                    'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+                    'urlinvoiceattached'=>"{$filename}.xml",
+                    'cufe' => $signInvoice->ConsultarCUFE(),
+                    'QRStr' => $QRStr,
+                    'certificate_days_left' => $certificate_days_left,
+                    'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
+                ];
             }
             return [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
@@ -757,7 +826,7 @@ class InvoiceController extends Controller
         $invoice_doc->version_ubl_id = 1;
         $invoice_doc->ambient_id = 1;
         $invoice_doc->identification_number = $company->identification_number;
-//        $invoice_doc->save();
+        // $invoice_doc->save();
 
         // Type document
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
@@ -806,9 +875,9 @@ class InvoiceController extends Controller
             $idcurrency = null;
             $calculationrate = null;
             $calculationratedate = null;
-//            $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
-//            $calculationrate = 1;
-//            $calculationratedate = Carbon::now()->format('Y-m-d');
+            // $idcurrency = TypeCurrency::findOrFail($invoice_doc->currency_id);
+            // $calculationrate = 1;
+            // $calculationratedate = Carbon::now()->format('Y-m-d');
         }
 
         // Resolution
@@ -816,7 +885,7 @@ class InvoiceController extends Controller
         $request->resolution->number = $request->number;
         $resolution = $request->resolution;
 
-        if(env('VALIDATE_BEFORE_SENDING', false)){
+        if(config('system_configuration.validate_before_sending')){
             $doc = Document::where('type_document_id', $request->type_document_id)->where('identification_number', $company->identification_number)->where('prefix', $resolution->prefix)->where('number', $request->number)->where('state_document_id', 1)->get();
             if(count($doc) > 0)
                 return [
@@ -869,11 +938,11 @@ class InvoiceController extends Controller
 
         // Retenciones globales
         $withHoldingTaxTotal = collect();
-//        $withHoldingTaxTotalCount = 0;
-//        $holdingTaxTotal = $request->holding_tax_total;
+        // $withHoldingTaxTotalCount = 0;
+        // $holdingTaxTotal = $request->holding_tax_total;
         foreach($request->with_holding_tax_total ?? [] as $item) {
-//            $withHoldingTaxTotalCount++;
-//            $holdingTaxTotal = $request->holding_tax_total;
+            // $withHoldingTaxTotalCount++;
+            // $holdingTaxTotal = $request->holding_tax_total;
             $withHoldingTaxTotal->push(new TaxTotal($item));
         }
 
@@ -903,7 +972,7 @@ class InvoiceController extends Controller
         $invoice = $this->createXML(compact('user', 'company', 'customer', 'taxTotals', 'withHoldingTaxTotal', 'resolution', 'paymentForm', 'typeDocument', 'invoiceLines', 'allowanceCharges', 'legalMonetaryTotals', 'date', 'time', 'notes', 'typeoperation', 'orderreference', 'prepaidpayment', 'prepaidpayments', 'delivery', 'deliveryparty', 'request', 'idcurrency', 'calculationrate', 'calculationratedate', 'healthfields'));
 
         // Register Customer
-        if(env('APPLY_SEND_CUSTOMER_CREDENTIALS', TRUE))
+        if(config('system_configuration.apply_send_customer_credentials'))
             $this->registerCustomer($customer, $request->sendmail);
         else
             $this->registerCustomer($customer, $request->send_customer_credentials);
