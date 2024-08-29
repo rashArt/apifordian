@@ -285,6 +285,7 @@ class InvoiceController extends Controller
         //Document
         $invoice_doc = new Document();
         $invoice_doc->request_api = json_encode($request->all());
+        $invoice_doc->response_api = null;
         $invoice_doc->state_document_id = 0;
         $invoice_doc->type_document_id = $request->type_document_id;
         $invoice_doc->number = $request->number;
@@ -597,7 +598,7 @@ class InvoiceController extends Controller
             } catch (\Exception $e) {
                 return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
             }
-            return [
+            $response = [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
                 'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
                 'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
@@ -616,6 +617,9 @@ class InvoiceController extends Controller
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
+            $invoice_doc->response_api = json_encode($response);
+            $invoice_doc->save();
+            return $response;
         }
         else{
             try{
@@ -699,7 +703,7 @@ class InvoiceController extends Controller
             } catch (\Exception $e) {
                 return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
             }
-            return [
+            $response = [
                 'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
                 'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
                 'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
@@ -718,6 +722,9 @@ class InvoiceController extends Controller
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
+            $invoice_doc->response_api = json_encode($response);
+            $invoice_doc->save();
+            return $response;
         }
     }
 
@@ -761,6 +768,7 @@ class InvoiceController extends Controller
         //Document
         $invoice_doc = new Document();
         $invoice_doc->request_api = json_encode($request->all());
+        $invoice_doc->response_api = null;
         $invoice_doc->state_document_id = 0;
         $invoice_doc->type_document_id = $request->type_document_id;
         $invoice_doc->number = $request->number;
