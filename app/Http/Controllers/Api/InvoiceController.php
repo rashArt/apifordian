@@ -617,8 +617,10 @@ class InvoiceController extends Controller
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
-//            $invoice_doc->response_api = json_encode($response);
-            $invoice_doc->save();
+            if(env('SAVE_RESPONSE_DIAN_TO_DB', FALSE)){
+                $invoice_doc->response_api = json_encode($response);
+                $invoice_doc->save();
+            }
             return $response;
         }
         else{
@@ -722,8 +724,10 @@ class InvoiceController extends Controller
                 'certificate_days_left' => $certificate_days_left,
                 'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
             ];
-//            $invoice_doc->response_api = json_encode($response);
-            $invoice_doc->save();
+            if(env('SAVE_RESPONSE_DIAN_TO_DB', FALSE)){
+                $invoice_doc->response_api = json_encode($response);
+                $invoice_doc->save();
+            }
             return $response;
         }
     }
