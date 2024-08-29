@@ -68,6 +68,16 @@ class InvoiceContingencyController extends Controller
         // User company
         $company = $user->company;
 
+        // Verificar la disponibilidad de la DIAN antes de continuar
+        $dian_url = $company->software->url;
+        if (!$this->verificarEstadoDIAN($dian_url)) {
+            // Manejar la indisponibilidad del servicio, por ejemplo:
+            return [
+                'success' => false,
+                'message' => 'El servicio de la DIAN no está disponible en este momento. Por favor, inténtelo más tarde.',
+            ];
+        }
+
         // Verify Certificate
         $certificate_days_left = 0;
         $c = $this->verify_certificate();
@@ -579,6 +589,16 @@ class InvoiceContingencyController extends Controller
         // User company
         $company = $user->company;
 
+        // Verificar la disponibilidad de la DIAN antes de continuar
+        $dian_url = $company->software->url;
+        if (!$this->verificarEstadoDIAN($dian_url)) {
+            // Manejar la indisponibilidad del servicio, por ejemplo:
+            return [
+                'success' => false,
+                'message' => 'El servicio de la DIAN no está disponible en este momento. Por favor, inténtelo más tarde.',
+            ];
+        }
+
         // Verify Certificate
         $certificate_days_left = 0;
         $c = $this->verify_certificate();
@@ -990,6 +1010,16 @@ class InvoiceContingencyController extends Controller
         // User company
         $company = $user->company;
 
+        // Verificar la disponibilidad de la DIAN antes de continuar
+        $dian_url = $company->software->url;
+        if (!$this->verificarEstadoDIAN($dian_url)) {
+            // Manejar la indisponibilidad del servicio, por ejemplo:
+            return [
+                'success' => false,
+                'message' => 'El servicio de la DIAN no está disponible en este momento. Por favor, inténtelo más tarde.',
+            ];
+        }
+
         // Verify Certificate
         $certificate_days_left = 0;
         $c = $this->verify_certificate();
@@ -1068,6 +1098,16 @@ class InvoiceContingencyController extends Controller
 
         // User company
         $company = $user->company;
+
+        // Verificar la disponibilidad de la DIAN antes de continuar
+        $dian_url = $company->software->url;
+        if (!$this->verificarEstadoDIAN($dian_url)) {
+            // Manejar la indisponibilidad del servicio, por ejemplo:
+            return [
+                'success' => false,
+                'message' => 'El servicio de la DIAN no está disponible en este momento. Por favor, inténtelo más tarde.',
+            ];
+        }
 
         // Verify Certificate
         $certificate_days_left = 0;

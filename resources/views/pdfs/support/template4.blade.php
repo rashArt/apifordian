@@ -21,14 +21,14 @@
     @endif
     <table style="font-size: 10px">
         <tr>
-            <td class="vertical-align-top" style="width: 60%;">
+            <td class="vertical-align-top" style="width: 30%;">
                 <table>
                     <tr>
                         <td>CC o NIT:</td>
                         <td>{{$customer->company->identification_number}}-{{$request->customer['dv'] ?? NULL}} </td>
                     </tr>
                     <tr>
-                        <td>Cliente:</td>
+                        <td>Proveedor:</td>
                         <td>{{$customer->name}}</td>
                     </tr>
                     <tr>
@@ -79,59 +79,16 @@
                         <td>Fecha Vencimiento:</td>
                         <td>{{$paymentForm->payment_due_date}}</td>
                     </tr>
-                    @if(isset($request['order_reference']['id_order']))
-                    <tr>
-                        <td>Número Pedido:</td>
-                        <td>{{$request['order_reference']['id_order']}}</td>
-                    </tr>
-                    @endif
-                    @if(isset($request['order_reference']['issue_date_order']))
-                    <tr>
-                        <td>Fecha Pedido:</td>
-                        <td>{{$request['order_reference']['issue_date_order']}}</td>
-                    </tr>
-                    @endif
-                    @if(isset($healthfields))
-                    <tr>
-                        <td>Inicio Periodo Facturación:</td>
-                        <td>{{$healthfields->invoice_period_start_date}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fin Periodo Facturación:</td>
-                        <td>{{$healthfields->invoice_period_end_date}}</td>
-                    </tr>
-                    @endif
                     @if(isset($request['number_account']))
                     <tr>
                         <td>Número de cuenta:</td>
-                        <td>{{$request['number_account'] }}</td>
-                    </tr>
-                    @endif
-                    @if(isset($request['deliveryterms']))
-                    <tr>
-                        <td>Terminos de Entrega:</td>
-                        <td>{{$request['deliveryterms']['loss_risk_responsibility_code']}} - {{ $request['deliveryterms']['loss_risk'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>T.R.M:</td>
-                        <td>{{number_format($request['calculationrate'], 2)}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fecha T.R.M:</td>
-                        <td>{{$request['calculationratedate']}}</td>
-                    </tr>
-                    <tr>
-                        @inject('currency', 'App\TypeCurrency')
-                        <td>Tipo Moneda:</td>
-                        <td>{{$currency->findOrFail($request['idcurrency'])['name']}}</td>
+                        <td>{{ $request['number_account'] }}</td>
                     </tr>
                     @endif
                 </table>
             </td>
-        </tr>
-        <tr>
-            <td class="horizontal-align-right" style="width: 80%; text-align: right">
-                <img style="width: 100px;" src="{{$imageQr}}">
+            <td class="vertical-align-top" style="width: 30%; text-align: right">
+                <img style="width: 150px;" src="{{$imageQr}}">
             </td>
         </tr>
     </table>
@@ -177,21 +134,23 @@
         </table>
         <br>
     @endisset
-    <table class="table" style="width: 100%;font-size: 8px">
+    <table class="table" style="width: 100%;">
         <thead>
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">Código</th>
                 <th class="text-center">Descripción</th>
-                <th class="text-center">Cant</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">UM</th>
                 <th class="text-center">Val. Unit</th>
                 <th class="text-center">IVA/IC</th>
                 <th class="text-center">Dcto</th>
+                <th class="text-center">%</th>
                 <th class="text-center">Val. Item</th>
             </tr>
         </thead>
         <tbody>
-            <?php $ItemNro = 0; $TotalDescuentosEnLineas = 0; ?>
+            <?php $ItemNro = 0; ?>
             @foreach($request['invoice_lines'] as $item)
                 <?php $ItemNro = $ItemNro + 1; ?>
                 <tr>
@@ -207,62 +166,61 @@
                         <td class="text-right">{{number_format($item['price_amount'], 2)}}</td>
                         <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'], 2)}}</td>
                         @if(isset($item['allowance_charges']))
-                            <?php \Log::debug($item);
-                                  $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount']
-                            ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'], 2)}}</td>
                         @else
                             <td class="text-right">{{number_format("0", 2)}}</td>
                         @endif
                         <td class="text-right">{{number_format($item['invoiced_quantity'] * $item['price_amount'], 2)}}</td>
                     @else
-                        <td><p style="font-size: 8px">{{$ItemNro}}</p></td>
-                        <td><p style="font-size: 8px">{{$item['code']}}</p></td>
+                        <td>{{$ItemNro}}</td>
+                        <td>{{$item['code']}}</td>
                         <td>
                             @if(isset($item['notes']))
-                            <p style="font-size: 8px">{{$item['description']}}</p>
-                                <p style="font-style: italic; font-size: 6px"><strong>Nota: {{$item['notes']}}</strong></p>
+                                {{$item['description']}}
+                                <p style="font-style: italic; font-size: 7px"><strong>Nota: {{$item['notes']}}</strong></p>
                             @else
-                                <p style="font-size: 8px">{{$item['description']}}</p>
+                                {{$item['description']}}
                             @endif
                         </td>
-                        <td class="text-right"><p style="font-size: 8px">{{number_format($item['invoiced_quantity'], 2)}}</p></td>
+                        <td class="text-right">{{number_format($item['invoiced_quantity'], 2)}}</td>
+                        <td class="text-right">{{$um->findOrFail($item['unit_measure_id'])['name']}}</td>
 
                         @if(isset($item['tax_totals']))
                             @if(isset($item['allowance_charges']))
-                                <td class="text-right"><p style="font-size: 8px">{{number_format(($item['line_extension_amount'] + $item['allowance_charges'][0]['amount']) / $item['invoiced_quantity'], 2)}}</p></td>
+                                <td class="text-right">{{number_format(($item['line_extension_amount'] + $item['allowance_charges'][0]['amount']) / $item['invoiced_quantity'], 2)}}</td>
                             @else
-                                <td class="text-right"><p style="font-size: 8px">{{number_format($item['line_extension_amount'] / $item['invoiced_quantity'], 2)}}</p></td>
+                                <td class="text-right">{{number_format($item['line_extension_amount'] / $item['invoiced_quantity'], 2)}}</td>
                             @endif
                         @else
                             @if(isset($item['allowance_charges']))
-                                <td class="text-right"><p style="font-size: 8px">{{number_format(($item['line_extension_amount'] + $item['allowance_charges'][0]['amount']) / $item['invoiced_quantity'], 2)}}</p></td>
+                                <td class="text-right">{{number_format(($item['line_extension_amount'] + $item['allowance_charges'][0]['amount']) / $item['invoiced_quantity'], 2)}}</td>
                             @else
-                                <td class="text-right"><p style="font-size: 8px">{{number_format($item['line_extension_amount'] / $item['invoiced_quantity'], 2)}}</p></td>
+                                <td class="text-right">{{number_format($item['line_extension_amount'] / $item['invoiced_quantity'], 2)}}</td>
                             @endif
                         @endif
 
                         @if(isset($item['tax_totals']))
                             @if(isset($item['tax_totals'][0]['tax_amount']))
-                                <td class="text-right"><p style="font-size: 8px">{{number_format($item['tax_totals'][0]['tax_amount'] / $item['invoiced_quantity'], 2)}}</p></td>
+                                <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'] / $item['invoiced_quantity'], 2)}}</td>
                             @else
-                                <td class="text-right"><p style="font-size: 8px">{{number_format(0, 2)}}</p></td>
+                                <td class="text-right">{{number_format(0, 2)}}</td>
                             @endif
                         @else
-                            <td class="text-right"><p style="font-size: 8px">E</p></td>
+                            <td class="text-right">E</td>
                         @endif
 
                         @if(isset($item['allowance_charges']))
-                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + ($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity']) ?>
-                            <td class="text-right"><p style="font-size: 8px">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</p></td>
+                            <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
+                            <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                             @if(isset($item['tax_totals']))
-                                <td class="text-right"><p style="font-size: 8px">{{number_format(($item['line_extension_amount'] + ($item['tax_totals'][0]['tax_amount'])), 2)}}</p></td>
+                                <td class="text-right">{{number_format(($item['line_extension_amount'] + $item['tax_totals'][0]['tax_amount']), 2)}}</td>
                             @else
-                                <td class="text-right"><p style="font-size: 8px">{{number_format(($item['line_extension_amount']), 2)}}</p></td>
+                                <td class="text-right">{{number_format(($item['line_extension_amount']), 2)}}</td>
                             @endif
                         @else
-                            <td class="text-right"><p style="font-size: 8px">{{number_format("0", 2)}}</p></td>
-                            <td class="text-right"><p style="font-size: 8px">{{number_format($item['invoiced_quantity'] * ($item['line_extension_amount'] / $item['invoiced_quantity']), 2)}}</p></td>
+                            <td class="text-right">{{number_format("0", 2)}}</td>
+                            <td class="text-right">{{number_format("0", 2)}}</td>
+                            <td class="text-right">{{number_format($item['invoiced_quantity'] * $item['line_extension_amount'], 2)}}</td>
                         @endif
                     @endif
                 </tr>
@@ -364,79 +322,23 @@
                                 <td class="text-right">{{number_format($TotalRetenciones, 2)}}</td>
                             </tr>
                             <tr>
-                                <td>Descuentos En Lineas:</td>
-                                <td class="text-right">{{number_format($TotalDescuentosEnLineas, 2)}}</td>
-                            </tr>
-                            <tr>
-                                <td>Descuentos Globales:</td>
+                                <td>Descuentos:</td>
                                 @if(isset($request->legal_monetary_totals['allowance_total_amount']))
                                     <td class="text-right">{{number_format($request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
                                 @else
                                     <td class="text-right">{{number_format(0, 2)}}</td>
                                 @endif
                             </tr>
-                            @if(isset($request->previous_balance))
-                                @if($request->previous_balance > 0)
-                                    <tr>
-                                        <td>Saldo Anterior:</td>
-                                        <td class="text-right">{{number_format($request->previous_balance, 2)}}</td>
-                                    </tr>
-                                @endif
-                            @endif
-                            <tr>
-                                <td>Total Factura - Descuentos:</td>
-                                @if(isset($request->tarifaica))
-{{--                                    @if(isset($request->legal_monetary_totals['allowance_total_amount']))
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
-                                        @endif
-                                    @else       --}}
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0, 2)}}</td>
-                                        @endif
-{{--                                    @endif  --}}
-                                @else
-                                    @if(isset($request->previous_balance))
-                                        <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2)}}</td>
-                                    @else
-                                        <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'], 2)}}</td>
-                                    @endif
-                                @endif
-                            </tr>
                             <tr>
                                 <td>Total Factura:</td>
                                 @if(isset($request->tarifaica))
-{{--                                    @if(isset($request->legal_monetary_totals['allowance_total_amount']))
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
-                                        @endif
-                                    @else   --}}
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0, 2)}}</td>
-                                        @endif
-{{--                                    @endif  --}}
+                                    @if(isset($request->legal_monetary_totals['allowance_total_amount']))
+                                        <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
+                                    @else
+                                        <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + 0, 2)}}</td>
+                                    @endif
                                 @else
-{{--                                    @if(isset($request->legal_monetary_totals['allowance_total_amount']))
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
-                                        @endif
-                                    @else   --}}
-                                        @if(isset($request->previous_balance))
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2)}}</td>
-                                        @else
-                                            <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'], 2)}}</td>
-                                        @endif
-{{--                                    @endif  --}}
+                                    <td class="text-right">{{number_format($request->legal_monetary_totals['payable_amount'], 2)}}</td>
                                 @endif
                             </tr>
                         </tbody>
@@ -450,28 +352,16 @@
         <div class="text-word" id="note">
             @inject('Varios', 'App\Custom\NumberSpellOut')
             <p><strong>NOTAS:</strong></p>
-            <p style="font-style: italic; font-size: 5px">{{$notes}}</p>
+            <p style="font-style: italic; font-size: 9px">{{$notes}}</p>
             <br>
             @if(isset($request->tarifaica))
-{{--                @if(isset($request->legal_monetary_totals['allowance_total_amount']))
-                    @if(isset($request->previous_balance))
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'] + $request->previous_balance, $request->idcurrency, 2))}} M/CTE*********.</p>
-                    @else
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], $request->idcurrency, 2))}} M/CTE*********.</p>
-                    @endif
-                @else   --}}
-                    @if(isset($request->previous_balance))
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0 + $request->previous_balance, 2))}} M/CTE*********.</p>
-                    @else
-                        <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0, 2))}} M/CTE*********.</p>
-                    @endif
-{{--                @endif  --}}
-            @else
-                @if(isset($request->previous_balance))
-                    <p style="font-style: italic; font-size: 5px"><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->previous_balance, 2), $request->idcurrency)}} M/CTE*********.</p>
+                @if(isset($request->legal_monetary_totals['allowance_total_amount']))
+                    <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + $request->legal_monetary_totals['allowance_total_amount'], 2), $request->idcurrency)}} M/CTE*********.</p>
                 @else
-                    <p style="font-style: italic; font-size: 5px"><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'], 2), $request->idcurrency)}} M/CTE*********.</p>
+                    <p> <strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'] + 0, 2), $request->idcurrency)}} M/CTE*********.</p>
                 @endif
+            @else
+                <p><strong>SON</strong>: {{$Varios->convertir(round($request->legal_monetary_totals['payable_amount'], 2), $request->idcurrency)}} M/CTE*********.</p>
             @endif
         </div>
     </div>
@@ -480,7 +370,7 @@
         <div class="text-word" id="note">
             @if(isset($request->disable_confirmation_text))
                 @if(!$request->disable_confirmation_text)
-                    <p style="font-style: italic;">INFORME EL PAGO AL TELEFONO {{$company->phone}} o al e-mail {{$user->email}}<br>
+                    <p style="font-style: italic;">SE INFORMARA EL PAGO AL TELEFONO {{$customer->phone}} o al e-mail {{$customer->email}}<br>
                         {{-- <br>
                         <div id="firma">
                             <p><strong>FIRMA ACEPTACIÓN:</strong></p><br>
@@ -491,15 +381,6 @@
                 @endif
             @endif
         </div>
-        @if(isset($firma_facturacion) and !is_null($firma_facturacion))
-            <table style="font-size: 10px">
-                <tr>
-                    <td class="vertical-align-top" style="width: 50%; text-align: right">
-                        <img style="width: 250px;" src="{{$firma_facturacion}}">
-                    </td>
-                </tr>
-            </table>
-        @endif
     </div>
 </body>
 </html>

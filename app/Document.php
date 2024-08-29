@@ -32,7 +32,7 @@ class Document extends Model
      *
      * @var array
      */
-    protected $fillable = ['identification_number','state_document_id', 'type_document_id', 'prefix', 'number', 'xml', 'cufe', 'acknowledgment_received', 'type_invoice_id', 'client_id', 'client', 'currency_id', 'date_issue', 'date_expiration', 'observation', 'reference_id', 'note_concept_id', 'sale', 'total_discount', 'taxes', 'total_tax', 'subtotal', 'total', 'version_ubl_id', 'ambient_id', 'response_api', 'payment_form_id', 'payment_method_id', 'time_days_credit', 'response_api_status', 'correlative_api', 'request_api', 'pdf', 'customer', 'aceptacion', 'cude_aceptacion', 'payload_aceptacion', 'send_email_success', 'send_email_date_time'];
+    protected $fillable = ['identification_number','state_document_id', 'type_document_id', 'prefix', 'number', 'xml', 'cufe', 'acknowledgment_received', 'type_invoice_id', 'client_id', 'client', 'currency_id', 'date_issue', 'date_expiration', 'observation', 'reference_id', 'note_concept_id', 'sale', 'total_discount', 'taxes', 'total_tax', 'subtotal', 'total', 'version_ubl_id', 'ambient_id', 'response_api', 'payment_form_id', 'payment_method_id', 'time_days_credit', 'response_api_status', 'correlative_api', 'request_api', 'response_api', 'pdf', 'customer', 'aceptacion', 'cude_aceptacion', 'payload_aceptacion', 'send_email_success', 'send_email_date_time'];
 
     /**
      * The attributes that should be mutated to dates.
