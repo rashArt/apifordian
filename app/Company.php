@@ -251,4 +251,13 @@ class Company extends Model
     {
         return $this->belongsTo(TypePlan::class);
     }
+
+    /**
+     * search by identification number
+     */
+    public function getRouteKeyName()
+    {
+        return 'identification_number';
+    }
+
 }

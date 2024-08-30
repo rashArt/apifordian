@@ -20,7 +20,14 @@ $cust_id = $path[2];
         <div class="nano-content">
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
-                    @if(isset(Auth::user()->email))
+                    <li class="{{ ($path[0] === 'home')?'nav-active':'' }}">
+                        <a class="nav-link" href="{{route('home')}}">
+                            <i class="fas fa-receipt" aria-hidden="true"></i>
+                            <span>Empresas</span>
+                        </a>
+                    </li>
+
+                    {{-- @if(isset(Auth::user()->email))
                         <li class="{{ ($path[0] === 'dashboard')?'nav-active':'' }}">
                             <a class="nav-link" href="{{route('documents_index')}}">
                                 <i class="fas fa-receipt" aria-hidden="true"></i>
@@ -73,7 +80,7 @@ $cust_id = $path[2];
                                 <input type="submit" id="action-button2" style="display: none;" >
                             </form>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
             </nav>
         </div>

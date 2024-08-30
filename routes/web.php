@@ -11,7 +11,10 @@
 |
 */
 /**/
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false
+]);
 Route::get('/ownerapilogin', 'OwnerApiLoginController@ShowOwnerLoginForm');
 Route::get('/okownerlogin', 'OwnerApiLoginController@PasswordOwnerVerify')->name('homeowner');
 Route::get('/okownersearch', 'OwnerApiLoginController@OwnerSearch')->name('ownersearch');
@@ -56,6 +59,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/company/{company}', 'HomeController@company')->name('company');
+    Route::get('/company/{company}/document/{cufe}', 'HomeController@getXml')->name('getXml');
     Route::get('/documents', 'HomeController@listDocuments')->name('listdocuments');
     Route::get('/taxes', 'HomeController@listTaxes')->name('listtaxes');
     Route::get('/listconfigurations', 'HomeController@listConfigurations')->name('listconfigurations');

@@ -1,0 +1,122 @@
+@extends('layouts.app')
+@section('content')
+<div class="card">
+    <div class="card-header">
+        {{
+            $company->identification_number
+        }}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Descargas</th>
+                    <th>Ambiente</th>
+                    <th>DIAN</th>
+                    <th>Fecha</th>
+                    <th>Número</th>
+                    <th>Cliente</th>
+                    <th>Tipo de Documento</th>
+                    <th class="text-right">Impuesto</th>
+                    <th class="text-right">Subtotal</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($documents as $row)
+                    <tr class="table-light">
+                        <td>{{ $loop->iteration }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-xs text-white"
+                                role="button"
+                                href="{{ '/storage/'.$row->identification_number.'/'.$row->xml }}" target="_BLANK">
+                                XML
+                            </a>
+                            <a class="btn btn-primary btn-xs text-white  mt-1"
+                                role="button"
+                                href="{{ '/storage/'.$row->identification_number.'/'.$row->pdf }}" target="_BLANK">
+                                PDF
+                            </a>
+                            <br>
+                            @if($row->cufe)
+                                <button type="button" class="btn btn-primary btn-xs makeApiRequest mt-1"
+                                    data-id="{{ $row->cufe }}">
+                                    CUFE
+                                </button>
+                            @endif
+                        </td>
+                        <td>{{ $row->ambient_id === 2 ? 'Habilitación' : 'Producción' }}</td>
+                        <td class="text-center">{{ $row->state_document_id === 1 ? 'Si' : 'No' }}</td>
+                        <td>{{ $row->date_issue }}</td>
+                        <td>{{ $row->prefix }}{{ $row->number }}</td>
+                        <td>
+                            @inject('typeDocuments', 'App\TypeDocumentIdentification')
+                            @php
+                                $doc_id = $row->client->type_document_identification_id;
+                                $document_type = $typeDocuments->where('id', $doc_id)->first();
+                            @endphp
+                            {{ $row->client->name }}<br>
+                            {{ $document_type->name }} {{ $row->client->identification_number }}-{{ $row->client->dv }}</td>
+                        <td>{{ $row->type_document->name }}</td>
+                        <td class="text-right">{{ round($row->total_tax, 2) }}</td>
+                        <td class="text-right">{{ round($row->subtotal, 2) }}</td>
+                        <td class="text-right">{{ round($row->total, 2) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">Consulta de CUFE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <pre id="modalBodyContent"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('.makeApiRequest').click(function() {
+        // Obtener el ID dinámico desde el atributo data-id
+        var cufe = $(this).data('id');
+        var $button = $(this);
+        $button.prop('disabled', true);
+
+        $.ajax({
+            url: '{{ url('/company/'.$company->identification_number.'/document/') }}/' + cufe,
+            method: 'GET',
+            success: function(response) {
+                // Mostrar la respuesta en el modal
+                $('#modalBodyContent').html(JSON.stringify(response, null, 2));
+                $('#resultModal').modal('show');
+            },
+            error: function(xhr) {
+                // Manejar errores
+                $('#modalBodyContent').html('Ocurrió un error: ' + xhr.status + ' ' + xhr.statusText);
+                $('#resultModal').modal('show');
+            },
+            complete: function() {
+                $button.prop('disabled', false);
+            }
+        });
+    });
+});
+</script>
+@endpush
