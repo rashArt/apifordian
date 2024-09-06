@@ -518,26 +518,10 @@ class InvoiceController extends Controller
         if ($request->GuardarEn){
             try{
                 $respuestadian = $sendBillSync->signToSend($request->GuardarEn."\\ReqFE-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\RptaFE-{$resolution->next_consecutive}.xml");
-                if(isset($respuestadian->html))
-                    return [
-                        'success' => false,
-                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...",
-                        'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                        'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                        'ResponseDian' => $respuestadian,
-                        'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
-                        'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
-                        'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
-                        'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-                        'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
-                        'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                        'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                        'urlinvoiceattached'=>"{$filename}.xml",
-                        'cufe' => $signInvoice->ConsultarCUFE(),
-                        'QRStr' => $QRStr,
-                        'certificate_days_left' => $certificate_days_left,
-                        'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-                    ];
+                if(isset($respuestadian->html)) {
+                    $message = 'El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...';
+                    return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+                }
 
                 if($respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->IsValid == 'true'){
                     $filename = str_replace('nd', 'ad', str_replace('nc', 'ad', str_replace('fv', 'ad', $respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->XmlFileName)));
@@ -612,74 +596,19 @@ class InvoiceController extends Controller
             } catch (\Exception $e) {
                 // return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
                 \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
-                return [
-                    'success' => false,
-                    'message' => "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}",
-                    'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                    'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                    'ResponseDian' => $respuestadian,
-                    'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
-                    'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
-                    'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
-                    'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-                    'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
-                    'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                    'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                    'urlinvoiceattached'=>"{$filename}.xml",
-                    'cufe' => $signInvoice->ConsultarCUFE(),
-                    'QRStr' => $QRStr,
-                    'certificate_days_left' => $certificate_days_left,
-                    'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-                ];
+                $message = "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}";
+                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
             }
-            $response = [
-                'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
-                'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                'ResponseDian' => $respuestadian,
-                'invoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\FES-{$resolution->next_consecutive}.xml")),
-                'zipinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\FES-{$resolution->next_consecutive}.zip")),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents($request->GuardarEn."\\FE-{$resolution->next_consecutive}.xml")),
-                'reqfe'=>base64_encode(file_get_contents($request->GuardarEn."\\ReqFE-{$resolution->next_consecutive}.xml")),
-                'rptafe'=>base64_encode(file_get_contents($request->GuardarEn."\\RptaFE-{$resolution->next_consecutive}.xml")),
-                'attacheddocument'=>base64_encode($at),
-                'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                'urlinvoiceattached'=>"{$filename}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr,
-                'certificate_days_left' => $certificate_days_left,
-                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-            ];
-            if(env('SAVE_RESPONSE_DIAN_TO_DB', FALSE)){
-                $invoice_doc->response_api = json_encode($response);
-                $invoice_doc->save();
-            }
-            return $response;
+            $message = "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito";
+            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
         }
         else{
             try{
                 $respuestadian = $sendBillSync->signToSend(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))->getResponseToObject(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"));
-                if(isset($respuestadian->html))
-                    return [
-                        'success' => false,
-                        'message' => "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...",
-                        'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                        'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                        'ResponseDian' => $respuestadian,
-                        'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
-                        'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
-                        'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
-                        'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-                        'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
-                        'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                        'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                        'urlinvoiceattached'=>"{$filename}.xml",
-                        'cufe' => $signInvoice->ConsultarCUFE(),
-                        'QRStr' => $QRStr,
-                        'certificate_days_left' => $certificate_days_left,
-                        'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-                    ];
+                if(isset($respuestadian->html)) {
+                    $message = "El servicio DIAN no se encuentra disponible en el momento, reintente mas tarde...";
+                    return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+                }
 
                 // throw new \Exception('Forzando un error para probar el catch.');
                 if($respuestadian->Envelope->Body->SendBillSyncResponse->SendBillSyncResult->IsValid == 'true'){
@@ -754,51 +683,67 @@ class InvoiceController extends Controller
                 }
             } catch (\Exception $e) {
                 \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
-                return [
-                    'success' => false,
-                    'message' => "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}",
-                    'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                    'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                    'ResponseDian' => $respuestadian,
-                    'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
-                    'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
-                    'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
-                    'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-                    'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
-                    'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                    'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                    'urlinvoiceattached'=>"{$filename}.xml",
-                    'cufe' => $signInvoice->ConsultarCUFE(),
-                    'QRStr' => $QRStr,
-                    'certificate_days_left' => $certificate_days_left,
-                    'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-                ];
+                $message = "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}";
+                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
             }
-            $response = [
-                'message' => "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito",
-                'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
-                'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
-                'ResponseDian' => $respuestadian,
-                'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
-                'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
-                'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
-                'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-                'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
-                'attacheddocument'=>base64_encode($at),
-                'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
-                'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
-                'urlinvoiceattached'=>"{$filename}.xml",
-                'cufe' => $signInvoice->ConsultarCUFE(),
-                'QRStr' => $QRStr,
-                'certificate_days_left' => $certificate_days_left,
-                'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
-            ];
-            if(env('SAVE_RESPONSE_DIAN_TO_DB', FALSE)){
-                $invoice_doc->response_api = json_encode($response);
-                $invoice_doc->save();
-            }
-            return $response;
+            $message = "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito";
+            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
         }
+    }
+
+    /**
+     * GENERIC RESPONSE
+     * se centraliza la respuesta
+     * se permite guardar el cufe en casos de respuestas falsas
+     * se guarda el response completo segun parametro de configuracion
+     *
+     * @param Bool $success
+     * @param String $message
+     * @param Illuminate\Http\Request $request
+     * @param App\Document $invoice_doc
+     * @param ubl21dian\XAdES\SignInvoice $signInvoice
+     * @param Null|String $respuestadian
+     * @param Object $resolution
+     * @param App\Company $company
+     * @param String $QRStr
+     * @param Integer $certificate_days_left
+     * @param String $filename
+     *
+     */
+    public function responseStore($success, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename)
+    {
+        $generateCufe = $signInvoice->ConsultarCUFE();
+        if(empty($invoice_doc->cufe)) {
+            $invoice_doc->cufe = $generateCufe;
+            $invoice_doc->save();
+        }
+
+        $response = [
+            'success' => $success,
+            'message' => $message,
+            'send_email_success' => (null !== $invoice && $request->sendmail == true) ?? $invoice[0]->send_email_success == 1,
+            'send_email_date_time' => (null !== $invoice && $request->sendmail == true) ?? Carbon::now()->format('Y-m-d H:i'),
+            'urlinvoicexml'=>"FES-{$resolution->next_consecutive}.xml",
+            'urlinvoicepdf'=>"FES-{$resolution->next_consecutive}.pdf",
+            'urlinvoiceattached'=>"{$filename}.xml",
+            'cufe' => $generateCufe,
+            'QRStr' => $QRStr,
+            'certificate_days_left' => $certificate_days_left,
+            'resolution_days_left' => $this->days_between_dates(Carbon::now()->format('Y-m-d'), $resolution->date_to),
+            'ResponseDian' => $respuestadian,
+            'invoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.xml"))),
+            'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
+            'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
+            'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
+            'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml")))
+        ];
+
+        if(config('system_configuration.save_response_dian_to_db')){
+            $invoice_doc->response_api = json_encode($response);
+            $invoice_doc->save();
+        }
+
+        return $response;
     }
 
     /**
