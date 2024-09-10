@@ -17,3 +17,4 @@ habilitacion.bat
 /storage/api-docs
 composer.lock
 usuario_admin.txt
+.vscode/

@@ -42,3 +42,6 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 * Script de actualización
 [Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Proceso%20de%20actualizacion%20APIDIAN.txt?ref_type=heads)
+
+* Imagen docker instalación api
+[Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/api_docker.zip?ref_type=heads)
