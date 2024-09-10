@@ -515,6 +515,7 @@ class InvoiceController extends Controller
         $typeDocument = TypeDocument::findOrFail(7);
         // $xml = new \DOMDocument;
         $ar = new \DOMDocument;
+        $at = '';
         if ($request->GuardarEn){
             try{
                 $respuestadian = $sendBillSync->signToSend($request->GuardarEn."\\ReqFE-{$resolution->next_consecutive}.xml")->getResponseToObject($request->GuardarEn."\\RptaFE-{$resolution->next_consecutive}.xml");
@@ -597,10 +598,10 @@ class InvoiceController extends Controller
                 // return $e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian));
                 \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
                 $message = "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}";
-                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename, $at);
             }
             $message = "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito";
-            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename, $at);
         }
         else{
             try{
@@ -684,10 +685,10 @@ class InvoiceController extends Controller
             } catch (\Exception $e) {
                 \Log::error($e->getMessage().' '.preg_replace("/[\r\n|\n|\r]+/", "", json_encode($respuestadian)));
                 $message = "Problema con el documento : {$typeDocument->name} #{$resolution->next_consecutive}";
-                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+                return $this->responseStore(false, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename, $at);
             }
             $message = "{$typeDocument->name} #{$resolution->next_consecutive} generada con éxito";
-            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename);
+            return $this->responseStore(true, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename, $at);
         }
     }
 
@@ -710,7 +711,7 @@ class InvoiceController extends Controller
      * @param String $filename
      *
      */
-    public function responseStore($success, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename)
+    public function responseStore($success, $message, $request, $invoice_doc, $signInvoice, $invoice, $respuestadian, $resolution, $company, $QRStr, $certificate_days_left, $filename, $at)
     {
         $generateCufe = $signInvoice->ConsultarCUFE();
         if(empty($invoice_doc->cufe)) {
@@ -735,7 +736,8 @@ class InvoiceController extends Controller
             'zipinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FES-{$resolution->next_consecutive}.zip"))),
             'unsignedinvoicexml'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/FE-{$resolution->next_consecutive}.xml"))),
             'reqfe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/ReqFE-{$resolution->next_consecutive}.xml"))),
-            'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml")))
+            'rptafe'=>base64_encode(file_get_contents(storage_path("app/public/{$company->identification_number}/RptaFE-{$resolution->next_consecutive}.xml"))),
+            'attacheddocument'=>base64_encode($at)
         ];
 
         if(config('system_configuration.save_response_dian_to_db')){
