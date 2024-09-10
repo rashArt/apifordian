@@ -136,6 +136,7 @@
     </table>
     <br>
     @isset($healthfields)
+        @if($healthfields->print_users_info_to_pdf)
         <table class="table" style="width: 100%;">
             <thead>
                 <tr>
@@ -147,6 +148,7 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 12%;">Cod Prestador</th>
+                    <th class="text-center" style="width: 25%;">Datos Usuario</th>
                     <th class="text-center" style="width: 25%;">Info. Contrat./Cobertura</th>
                     <th class="text-center" style="width: 18%;">Info. de Pagos</th>
                 </tr>
@@ -157,6 +159,19 @@
                         <td>
                             <p style="font-size: 8px">{{$item->provider_code}}</p>
                         </td>
+                        @if($item->identification_number && $item->first_name && $item->surname && $item->health_type_document_identification_id)
+                            <td>
+                                <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
+                                <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->middle_name}} {{$item->surname}} {{$item->second_surname}}</p>
+                                <p style="font-size: 8px">Tipo Documento: {{$item->health_type_document_identification()->name}}</p>
+                            </td>
+                        @else
+                            <td>
+                                <p style="font-size: 8px">Nro ID: </p>
+                                <p style="font-size: 8px">Nombre: </p>
+                                <p style="font-size: 8px">Tipo Documento: </p>
+                            </td>
+                        @endif
                         <td>
                             <p style="font-size: 8px">Modalidad Contratación: {{$item->health_contracting_payment_method()->name}}</p>
                             <p style="font-size: 8px">Nro. Contrato: {{$item->contract_number}}</p>
@@ -172,6 +187,7 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
         <br>
     @endisset
     <table class="table" style="width: 100%;">
@@ -443,20 +459,20 @@
                 @php
                     // Inicializamos con payable_amount
                     $totalAmount = $request->legal_monetary_totals['payable_amount'];
-    
+
                     // Verificamos si existe previous_balance
                     if (isset($request->previous_balance)) {
                         $totalAmount += $request->previous_balance;
                     }
-    
+
                     // Verificamos si existen retenciones y las restamos
                     if (isset($TotalRetenciones)) {
                         $totalAmount -= $TotalRetenciones;
                     }
-    
+
                     // Finalmente, redondeamos el total a dos decimales
                     $totalAmount = round($totalAmount, 2);
-                    
+
                     // Definimos la moneda
                     $idcurrency = $request->idcurrency ?? null;
                 @endphp
@@ -464,10 +480,10 @@
             </p>
         </div>
     </div>
-    
+
         @if(isset($notes))
         <div class="summarys">
-            <div class="text-word" id="note">           
+            <div class="text-word" id="note">
                 <p><strong>NOTAS:</strong></p>
                 <p style="font-style: italic; font-size: 9px">{{$notes}}</p>
             </div>
@@ -500,7 +516,7 @@
             </table>
         @endif
     </div>
-    
+
     --}}
 </body>
 </html>

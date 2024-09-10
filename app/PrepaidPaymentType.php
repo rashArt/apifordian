@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PrepaidPayment extends Model
+class PrepaidPaymentType extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class PrepaidPayment extends Model
      * @var array
      */
     protected $fillable = [
-        'idpayment', 'prepaid_payment_type_id', 'paidamount', 'receiveddate', 'paiddate', 'instructionid',
+        'name', 'code',
     ];
 }

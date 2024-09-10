@@ -13,7 +13,7 @@ class HealthField extends Model
      * @var array
      */
     protected $fillable = [
-        'users_info', 'invoice_period_start_date', 'invoice_period_end_date', 'health_type_operation_id'
+        'users_info', 'invoice_period_start_date', 'invoice_period_end_date', 'health_type_operation_id', 'print_users_info_to_pdf'
     ];
 
     public function __construct(array $attributes = array())

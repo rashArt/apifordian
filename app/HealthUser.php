@@ -14,8 +14,9 @@ class HealthUser extends Model
      */
     protected $fillable = [
         'provider_code', 'health_contracting_payment_method_id', 'health_coverage_id',
+        'identification_number', 'surname', 'second_surname', 'first_name', 'middle_name',
         'contract_number', 'policy_number', 'co_payment', 'moderating_fee',
-        'shared_payment', 'advance_payment'
+        'shared_payment', 'advance_payment', 'health_type_document_identification_id'
     ];
 
     public function __construct(array $attributes = array())
