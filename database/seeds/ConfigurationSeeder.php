@@ -143,6 +143,9 @@ class ConfigurationSeeder extends Seeder
         'type_spds' => [
             'columns' => 'id, name, code, @created_at, @updated_at',
         ],
+        'prepaid_payment_types' => [
+            'columns' => 'id, name, code, @created_at, @updated_at',
+        ],
     ];
 
     /**

@@ -247,11 +247,18 @@ class InvoiceRequest extends FormRequest
 
             // Health Fields
             'health_fields' => 'nullable|array',
+            'health_fields.print_users_info_to_pdf' => 'nullable|boolean',
             'health_fields.invoice_period_start_date' => 'nullable|required_with:health_fields|date_format:Y-m-d',
             'health_fields.invoice_period_end_date' => 'nullable|required_with:health_fields|date_format:Y-m-d',
             'health_fields.health_type_operation_id' => 'nullable|required_with:health_fields|exists:health_type_operations,id',
             'health_fields.*.users_info' => 'nullable|array',
             'health_fields.*.users_info.*.provider_code' => 'nullable|string',
+            'health_fields.*.users_info.*.health_type_document_identification_id' => 'nullable|exists:health_type_document_identifications,id',
+            'health_fields.*.users_info.*.identification_number' => 'nullable|alpha_num|between:3,16',
+            'health_fields.*.users_info.*.surname' => 'nullable|string',
+            'health_fields.*.users_info.*.second_surname' => 'nullable|string',
+            'health_fields.*.users_info.*.first_name' => 'nullable|string',
+            'health_fields.*.users_info.*.middle_name' => 'nullable|string',
             'health_fields.*.users_info.*.health_contracting_payment_method_id' => 'nullable|required_with:health_fields|exists:health_contracting_payment_methods,id',
             'health_fields.*.users_info.*.health_coverage_id' => 'nullable|required_with:health_fields|exists:health_coverages,id',
             'health_fields.*.users_info.*.contract_number' => 'nullable|string',
@@ -300,13 +307,16 @@ class InvoiceRequest extends FormRequest
             // Prepaid Payment
             'prepaid_payment' => 'nullable|array',
             'prepaid_payment.idpayment' => 'nullable|string',
+            'prepaid_payment.prepaid_payment_type_id' => 'nullable|exists:prepaid_payment_types,id',
             'prepaid_payment.paidamount' => 'nullable|numeric',
             'prepaid_payment.receiveddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.paiddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payment.instructionid' => 'nullable|string',
+
             // Prepaid Payments
             'prepaid_payments' => 'nullable|array',
             'prepaid_payments.*.idpayment' => 'nullable|string',
+            'prepaid_payments.prepaid_payment_type_id' => 'nullable|exists:prepaid_payment_types,id',
             'prepaid_payments.*.paidamount' => 'nullable|numeric',
             'prepaid_payments.*.receiveddate' => 'nullable|date_format:Y-m-d',
             'prepaid_payments.*.paiddate' => 'nullable|date_format:Y-m-d',
@@ -354,5 +364,16 @@ class InvoiceRequest extends FormRequest
             'invoice_lines.*.price_amount' => 'required|numeric',
             'invoice_lines.*.base_quantity' => 'required|numeric',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if(isset($this->health_fields)){
+            $this->merge([
+                'health_fields' => array_merge($this->input('health_fields', []), [
+                    'print_users_info_to_pdf' => $this->input('health_fields.print_users_info_to_pdf', true),
+                ])
+            ]);
+        }
     }
 }
