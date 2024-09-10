@@ -368,10 +368,12 @@ class InvoiceRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'health_fields' => array_merge($this->input('health_fields', []), [
-                'print_users_info_to_pdf' => $this->input('health_fields.print_users_info_to_pdf', true),
-            ])
-        ]);
+        if(isset($this->health_fields)){
+            $this->merge([
+                'health_fields' => array_merge($this->input('health_fields', []), [
+                    'print_users_info_to_pdf' => $this->input('health_fields.print_users_info_to_pdf', true),
+                ])
+            ]);
+        }
     }
 }
