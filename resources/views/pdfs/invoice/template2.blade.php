@@ -137,56 +137,65 @@
     <br>
     @isset($healthfields)
         @if($healthfields->print_users_info_to_pdf)
-        <table class="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th class="text-center" style="width: 100%;">INFORMACION REFERENCIAL SECTOR SALUD</th>
-                </tr>
-            </thead>
-        </table>
-        <table class="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th class="text-center" style="width: 12%;">Cod Prestador</th>
-                    <th class="text-center" style="width: 25%;">Datos Usuario</th>
-                    <th class="text-center" style="width: 25%;">Info. Contrat./Cobertura</th>
-                    <th class="text-center" style="width: 18%;">Info. de Pagos</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($healthfields->users_info as $item)
+            <table class="table" style="width: 100%;">
+                <thead>
                     <tr>
-                        <td>
-                            <p style="font-size: 8px">{{$item->provider_code}}</p>
-                        </td>
-                        @if($item->identification_number && $item->first_name && $item->surname && $item->health_type_document_identification_id)
-                            <td>
-                                <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
-                                <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->middle_name}} {{$item->surname}} {{$item->second_surname}}</p>
-                                <p style="font-size: 8px">Tipo Documento: {{$item->health_type_document_identification()->name}}</p>
-                            </td>
-                        @else
-                            <td>
-                                <p style="font-size: 8px">Nro ID: </p>
-                                <p style="font-size: 8px">Nombre: </p>
-                                <p style="font-size: 8px">Tipo Documento: </p>
-                            </td>
-                        @endif
-                        <td>
-                            <p style="font-size: 8px">Modalidad Contratación: {{$item->health_contracting_payment_method()->name}}</p>
-                            <p style="font-size: 8px">Nro. Contrato: {{$item->contract_number}}</p>
-                            <p style="font-size: 8px">Cobertura: {{$item->health_coverage()->name}}</p>
-                        </td>
-                        <td>
-                            <p style="font-size: 8px">Copago: {{number_format($item->co_payment, 2)}}</p>
-                            <p style="font-size: 8px">Cuota Moderardora: {{number_format($item->moderating_fee, 2)}}</p>
-                            <p style="font-size: 8px">Pagos Compartidos: {{number_format($item->shared_payment, 2)}}</p>
-                            <p style="font-size: 8px">Anticipos: {{number_format($item->advance_payment, 2)}}</p>
-                        </td>
+                        <th class="text-center" style="width: 100%;">INFORMACION REFERENCIAL SECTOR SALUD</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+            </table>
+            <table class="table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 12%;">Cod Prestador</th>
+                        <th class="text-center" style="width: 25%;">Datos Usuario</th>
+                        <th class="text-center" style="width: 25%;">Info. Contrat./Cobertura</th>
+                        <th class="text-center" style="width: 20%;">Nros. Autoriz./MIPRES</th>
+                        <th class="text-center" style="width: 18%;">Info. de Pagos</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    @foreach($healthfields->users_info as $item)
+                        <tr>
+                            <td>
+                                <p style="font-size: 8px">{{$item->provider_code}}</p>
+                            </td>
+                            @if($item->identification_number && $item->first_name && $item->surname && $item->health_type_document_identification_id)
+                                <td>
+                                    <p style="font-size: 8px">Nro ID: {{$item->identification_number}}</p>
+                                    <p style="font-size: 8px">Nombre: {{$item->first_name}} {{$item->middle_name}} {{$item->surname}} {{$item->second_surname}}</p>
+                                    <p style="font-size: 8px">Tipo Documento: {{$item->health_type_document_identification()->name}}</p>
+                                    <p style="font-size: 8px">Tipo Usuario: {{$item->health_type_user()->name}}</p>
+                                </td>
+                            @else
+                                <td>
+                                    <p style="font-size: 8px">Nro ID: </p>
+                                    <p style="font-size: 8px">Nombre: </p>
+                                    <p style="font-size: 8px">Tipo Documento: </p>
+                                    <p style="font-size: 8px">Tipo Usuario: </p>
+                                </td>
+                            @endif
+                            <td>
+                                <p style="font-size: 8px">Modalidad Contratación: {{$item->health_contracting_payment_method()->name}}</p>
+                                <p style="font-size: 8px">Nro. Contrato: {{$item->contract_number}}</p>
+                                <p style="font-size: 8px">Cobertura: {{$item->health_coverage()->name}}</p>
+                            </td>
+                            <td>
+                                <p style="font-size: 8px">Nros Autorización: {{$item->autorization_numbers}}</p>
+                                <p style="font-size: 8px">Nro MIPRES: {{$item->mipres}}</p>
+                                <p style="font-size: 8px">Entrega MIPRES: {{$item->mipres_delivery}}</p>
+                                <p style="font-size: 8px">Nro Poliza: {{$item->policy_number}}</p>
+                            </td>
+                            <td>
+                                <p style="font-size: 8px">Copago: {{number_format($item->co_payment, 2)}}</p>
+                                <p style="font-size: 8px">Cuota Moderardora: {{number_format($item->moderating_fee, 2)}}</p>
+                                <p style="font-size: 8px">Pagos Compartidos: {{number_format($item->shared_payment, 2)}}</p>
+                                <p style="font-size: 8px">Anticipos: {{number_format($item->advance_payment, 2)}}</p>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @endif
         <br>
     @endisset
