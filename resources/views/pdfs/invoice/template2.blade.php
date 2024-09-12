@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-{{-- <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>FACTURA ELECTRONICA Nro: {{$resolution->prefix}} - {{$request->number}}</title>
-</head> --}}
+	<title>FACTURA ELECTRONICA DE VENTA Nro: {{$resolution->prefix}} - {{$request->number}}</title>
+</head>
 
 <body>
     <hr>
@@ -490,22 +490,21 @@
         </div>
     </div>
 
-        @if(isset($notes))
+    @if(isset($notes))
         <div class="summarys">
             <div class="text-word" id="note">
                 <p><strong>NOTAS:</strong></p>
                 <p style="font-style: italic; font-size: 9px">{{$notes}}</p>
             </div>
         </div>
-        @endif
+    @endif
 
-    {{--
     <div class="summary" >
         <div class="text-word" id="note">
             @if(isset($request->disable_confirmation_text))
                 @if(!$request->disable_confirmation_text)
                     <p style="font-style: italic;">INFORME EL PAGO AL TELEFONO {{$company->phone}} o al e-mail {{$user->email}}<br>
-                        {{-- <br>
+                        <br>
                         <div id="firma">
                             <p><strong>FIRMA ACEPTACIÓN:</strong></p><br>
                             <p><strong>CC:</strong></p><br>
@@ -525,7 +524,5 @@
             </table>
         @endif
     </div>
-
-    --}}
 </body>
 </html>

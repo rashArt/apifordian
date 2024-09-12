@@ -271,6 +271,7 @@ class InvoiceRequest extends FormRequest
             'health_fields.*.users_info.*.moderating_fee' => 'nullable|numeric|min:0|not_in:0',
             'health_fields.*.users_info.*.recovery_fee' => 'nullable|numeric|min:0|not_in:0',
             'health_fields.*.users_info.*.shared_payment' => 'nullable|numeric|min:0|not_in:0',
+            'health_fields.*.users_info.*.advance_payment' => 'nullable|numeric|min:0|not_in:0',
 
             // Payment form
             'payment_form' => 'nullable|array',
