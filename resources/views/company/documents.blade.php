@@ -2,9 +2,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        {{
-            $company->identification_number
-        }}
+        Listado de documentos generados
     </div>
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover">

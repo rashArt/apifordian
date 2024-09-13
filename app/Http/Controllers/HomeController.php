@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\Company;
 use App\Document;
+use App\ReceivedDocument;
+use App\DocumentPayroll;
 
 
 class HomeController extends Controller
@@ -66,5 +68,18 @@ class HomeController extends Controller
                 'body' => $responseBody,
             ], $response->getStatusCode());
         }
+    }
+
+    // replica de SellerLoginController@SellersRadianEventsView
+    public function events($company_idnumber){
+        $documents = ReceivedDocument::where('customer','=',$company_idnumber)->where('state_document_id', '=', 1)->paginate(10);
+        return view('company.events', compact('documents', 'company_idnumber'));
+    }
+
+    // replica de SellerLoginController@SellersPayrolls
+    public function payrolls($company_idnumber)
+    {
+        $documents = DocumentPayroll::where('state_document_id', '=', 1)->where('identification_number', $company_idnumber)->paginate(20);
+        return view('company.payrolls', compact('documents', 'company_idnumber'));
     }
 }
