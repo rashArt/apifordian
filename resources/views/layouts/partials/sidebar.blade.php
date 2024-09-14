@@ -26,6 +26,20 @@ $cust_id = $path[2];
                             <span>Empresas</span>
                         </a>
                     </li>
+                    @if(Request::is('company*'))
+                        <li class="{{ Route::is('company.events') ? 'nav-active' : '' }}">
+                            <a class="nav-link" href="{{route('company.events', request()->segment(2))}}">
+                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <span>Eventos RADIAN</span>
+                            </a>
+                        </li>
+                        <li class="{{ Route::is('company.payrolls') ? 'nav-active' : '' }}">
+                            <a class="nav-link" href="{{route('company.payrolls', request()->segment(2))}}">
+                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <span>Nominas emitidas</span>
+                            </a>
+                        </li>
+                    @endif
 
                     {{-- @if(isset(Auth::user()->email))
                         <li class="{{ ($path[0] === 'dashboard')?'nav-active':'' }}">

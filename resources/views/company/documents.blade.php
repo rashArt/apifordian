@@ -2,9 +2,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        {{
-            $company->identification_number
-        }}
+        Listado de documentos generados
     </div>
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover">
@@ -45,6 +43,12 @@
                                     CUFE
                                 </button>
                             @endif
+                            @if($row->cufe)
+                                <button type="button" class="btn btn-primary btn-xs modalApiResponse mt-1"
+                                    data-content="{{ $row->response_api }}">
+                                    Response
+                                </button>
+                            @endif
                         </td>
                         <td>{{ $row->ambient_id === 2 ? 'Habilitación' : 'Producción' }}</td>
                         <td class="text-center">{{ $row->state_document_id === 1 ? 'Si' : 'No' }}</td>
@@ -53,11 +57,12 @@
                         <td>
                             @inject('typeDocuments', 'App\TypeDocumentIdentification')
                             @php
-                                $doc_id = $row->client->type_document_identification_id;
-                                $document_type = $typeDocuments->where('id', $doc_id)->first();
+                                $doc_id = $row->client->type_document_identification_id ?? null;
+                                $document_type = $typeDocuments->where('id', $doc_id)->first() ?? null;
+                                // dd($document_type);
                             @endphp
                             {{ $row->client->name }}<br>
-                            {{ $document_type->name }} {{ $row->client->identification_number }}-{{ $row->client->dv ? $row->client->dv : ""}}</td>
+                            {{ $document_type->name ?? "" }} {{ $row->client->identification_number }}-{{ $row->client->dv ?? ""}}</td>
                         <td>{{ $row->type_document->name }}</td>
                         <td class="text-right">{{ round($row->total_tax, 2) }}</td>
                         <td class="text-right">{{ round($row->subtotal, 2) }}</td>
@@ -88,13 +93,31 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responseModalLabel">Respuesta dada por el API</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <pre id="modalBodyResponse"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
 $(document).ready(function() {
     $('.makeApiRequest').click(function() {
-        // Obtener el ID dinámico desde el atributo data-id
         var cufe = $(this).data('id');
         var $button = $(this);
         $button.prop('disabled', true);
@@ -116,6 +139,11 @@ $(document).ready(function() {
                 $button.prop('disabled', false);
             }
         });
+    });
+    $('.modalApiResponse').click(function() {
+        var content = $(this).data('content');
+        $('#modalBodyResponse').html(JSON.stringify(content, null, 2));
+        $('#responseModal').modal('show');
     });
 });
 </script>

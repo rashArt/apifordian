@@ -15,6 +15,8 @@ Auth::routes([
     'register' => false,
     'reset' => false
 ]);
+
+// rutas listado de documentos
 Route::get('/ownerapilogin', 'OwnerApiLoginController@ShowOwnerLoginForm');
 Route::get('/okownerlogin', 'OwnerApiLoginController@PasswordOwnerVerify')->name('homeowner');
 Route::get('/okownersearch', 'OwnerApiLoginController@OwnerSearch')->name('ownersearch');
@@ -23,6 +25,7 @@ Route::get('/okownerpayrolls', 'OwnerApiLoginController@OwnerPayrolls')->name('o
 Route::get('/owner-password', 'OwnerApiLoginController@OwnerPassword')->name('owner-password');
 Route::post('/reset-owner-password', 'OwnerApiLoginController@ResetOwnerPassword')->name('resetownerpassword');
 
+// acciones para empleados de nomina
 Route::get('/employeelogin/{company_idnumber}/{employee_idnumber}', 'EmployeeLoginController@ShowEmployeeLoginForm');
 Route::post('/okemployeelogin/{company_idnumber}/{employee_idnumber}', 'EmployeeLoginController@PasswordEmployeeVerify')->name('homeemployees');
 Route::get('/employee-password/{company_idnumber}/{employee_idnumber}', 'EmployeeLoginController@EmployeePassword')->name('employee-password');
@@ -61,6 +64,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/company/{company}', 'HomeController@company')->name('company');
     Route::get('/company/{company}/document/{cufe}', 'HomeController@getXml')->name('getXml');
+    Route::get('/company/{company}/events', 'HomeController@events')->name('company.events');
+    Route::get('/company/{company}/payrolls', 'HomeController@payrolls')->name('company.payrolls');
     Route::get('/documents', 'HomeController@listDocuments')->name('listdocuments');
     Route::get('/taxes', 'HomeController@listTaxes')->name('listtaxes');
     Route::get('/listconfigurations', 'HomeController@listConfigurations')->name('listconfigurations');
