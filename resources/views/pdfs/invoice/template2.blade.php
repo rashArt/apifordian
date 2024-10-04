@@ -215,7 +215,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php $ItemNro = 0; ?>
+            <?php $ItemNro = 0; $TotalDescuentosEnLineas = 0; ?>
             @foreach($request['invoice_lines'] as $item)
                 <?php $ItemNro = $ItemNro + 1; ?>
                 <tr>
@@ -231,6 +231,7 @@
                         <td class="text-right">{{number_format($item['price_amount'], 2)}}</td>
                         <td class="text-right">{{number_format($item['tax_totals'][0]['tax_amount'], 2)}}</td>
                         @if(isset($item['allowance_charges']))
+                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + $item['allowance_charges'][0]['amount'] ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'], 2)}}</td>
                             <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                         @else
@@ -277,6 +278,7 @@
                         @endif
 
                         @if(isset($item['allowance_charges']))
+                            <?php $TotalDescuentosEnLineas = $TotalDescuentosEnLineas + ($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity']) ?>
                             <td class="text-right">{{number_format($item['allowance_charges'][0]['amount'] / $item['invoiced_quantity'], 2)}}</td>
                             <td class="text-right">{{number_format(($item['allowance_charges'][0]['amount'] * 100) / $item['allowance_charges'][0]['base_amount'], 2)}}</td>
                             @if(isset($item['tax_totals']))
@@ -389,13 +391,36 @@
                                 <td class="text-right">{{number_format($TotalRetenciones, 2)}}</td>
                             </tr>
                             <tr>
-                                <td>Descuentos:</td>
+                                <td>Descuentos En Lineas:</td>
+                                <td class="text-right">{{number_format($TotalDescuentosEnLineas, 2)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Descuentos Globales:</td>
                                 @if(isset($request->legal_monetary_totals['allowance_total_amount']))
                                     <td class="text-right">{{number_format($request->legal_monetary_totals['allowance_total_amount'], 2)}}</td>
                                 @else
                                     <td class="text-right">{{number_format(0, 2)}}</td>
                                 @endif
                             </tr>
+
+                            @if(isset($request->legal_monetary_totals['charge_total_amount']))
+                                @if($request->legal_monetary_totals['charge_total_amount'] > 0)
+                                    <?php $charge_number = 0; ?>
+                                    @foreach($request['allowance_charges'] as $allowance_charge)
+                                        @if(isset($allowance_charge))
+                                            @if($allowance_charge['charge_indicator'] == true)
+                                                <?php $charge_number++; ?>
+                                                <tr>
+                                                    <td>{{$allowance_charge['allowance_charge_reason'] ?? "Cargo Global Nro: ".$charge_number}}</td>
+                                                    <td class="text-right">{{number_format($allowance_charge['amount'], 2)}}</td>
+                                                </tr>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endif
+
+
                             @if(isset($request->previous_balance))
                                 @if($request->previous_balance > 0)
                                     <tr>

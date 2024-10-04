@@ -10,7 +10,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2">
     {{-- UBLExtensions --}}
-    @include('xml._ubl_extensions')
+    @include('xml._ubl_extensions_appresponse')
     <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>1</cbc:CustomizationID>
     <cbc:ProfileID>DIAN 2.1: ApplicationResponse de la Factura Electrónica de Venta</cbc:ProfileID>
