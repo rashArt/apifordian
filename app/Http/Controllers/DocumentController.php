@@ -22,13 +22,13 @@ class DocumentController extends Controller
 
 
     public function index()
-    {   
+    {
        // $list =  new CompaniesCollection(User::all());
         //return json_encode($list);
-        return view('documents.index') ; 
+        return view('documents.index') ;
     }
 
-   
+
 
     public function records(Request $request)
     {
@@ -51,14 +51,17 @@ class DocumentController extends Controller
         //$invoice =  Document::find($id);
        // return response()->download(storage_path("app\FES-SETP{$invoice->number}.xml"));
     }
-   
 
+    public function changeState(Request $request)
+    {
+        $document = Document::findOrFail($request->document_id);
 
+        if($document) {
+            $document->state_document_id = 1;
+            $document->save();
+        }
 
-
- 
-
-    
-
+        return redirect()->back();
+    }
 
 }

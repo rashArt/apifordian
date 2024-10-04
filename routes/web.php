@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('documents/records', 'DocumentController@records');
     Route::get('documents/downloadxml/{xml}', 'DocumentController@downloadxml');
     Route::get('documents/downloadpdf/{pdf}', 'DocumentController@downloadpdf');
+    Route::post('document/change-state', 'DocumentController@changeState')->name('document.change-state');
 
 });
 

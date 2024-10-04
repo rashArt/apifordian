@@ -742,8 +742,9 @@ class InvoiceController extends Controller
 
         if(config('system_configuration.save_response_dian_to_db')){
             $invoice_doc->response_api = json_encode($response);
-            $invoice_doc->save();
         }
+        $invoice_doc->response_dian = json_encode($respuestadian);
+        $invoice_doc->save();
 
         return $response;
     }

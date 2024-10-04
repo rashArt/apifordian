@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     public function company(Company $company)
     {
-        $documents = Document::where('identification_number', $company->identification_number)->orderBy('id', 'DESC')->get();
+        $documents = Document::where('identification_number', $company->identification_number)->orderBy('id', 'DESC')->paginate(20);
 
         return view('company.documents', ['company' => $company, 'documents' => $documents]);
     }
