@@ -2,36 +2,30 @@
     <tr>
         <td style="width: 25%;" class="text-center vertical-align-top">
             <div id="reference">
-                @if($request->type_document_id == 9)
-                    <p style="font-weight: 700;"><strong>DOCUMENTO SOPORTE DE PAGO DE NOMINA ELECTRONICA No</strong></p>
-                @else
-                  @if($request->type_note == 1)
-                      <p style="font-weight: 700;"><strong>DOCUMENTO SOPORTE DE NOMINA ELECTRONICA DE AJUSTE - REEMPLAZAR No</strong></p>
-                  @else
-                      <p style="font-weight: 700;"><strong>DOCUMENTO SOPORTE DE NOMINA ELECTRONICA DE AJUSTE - ELIMINAR No</strong></p>
-                  @endif
-                @endif
+                <p style="font-weight: 700;"><strong>DOCUMENTO SOPORTE ELECTRONICO No</strong></p>
                 <br>
                 <p style="color: red;
                     font-weight: bold;
                     font-size: 14px;
                     margin-bottom: 8px;
+                    border: 1px solid #000;
                     padding: 5px 8px;
                     line-height: 1;
                     display: inline-block;
-                    border-radius: 6px;">{{$resolution->prefix}} - {{$request->consecutive}}</p>
+                    border-radius: 6px;">{{$resolution->prefix}} - {{$request->number}}</p>
                     <br>
                 <p style="color: red;
                     font-weight: bold;
                     font-size: 11px;
                     margin-bottom: 8px;
+                    border: 1px solid #000;
                     padding: 5px 8px;
                     line-height: 1;
                     display: inline-block;
-                    border-radius: 6px;">Fecha Emisión: {{$period->issue_date}}</p>
+                    border-radius: 6px;">Fecha Emisión: {{$date}}</p>
                     <br>
-                <p>Fecha Validación DIAN: {{$period->issue_date}}<br>
-                    Hora Validación DIAN: {{Carbon\Carbon::now()->format('H:i:s')}}</p>
+                <p>Fecha Validación DIAN: {{$date}}<br>
+                    Hora Validación DIAN: {{$time}}</p>
             </div>
         </td>
         <td style="width: 50%; padding: 0 1rem;" class="text-center vertical-align-top">
@@ -72,7 +66,9 @@
                     ?>
                     Regimen SEZE Año: {{$aseze}} Constitución Sociedad Año: {{$asociedad}}<br>
                 @endif
-                REPRESENTACION GRAFICA DE COMPROBANTE DE NOMINA ELECTRONICA<br>
+                Resolución de Facturación Electronica No. {{$resolution->resolution}} <br>
+                de {{$resolution->resolution_date}}, Rango {{$resolution->from}} Al {{$resolution->to}} - Vigencia Desde: {{$resolution->date_from}} Hasta: {{$resolution->date_to}}<br>
+                REPRESENTACION GRAFICA DE DOCUMENTO SOPORTE ELECTRONICO A NO OBLIGADOS<br>
                 @if(isset($request->establishment_address))
                     {{$request->establishment_address}} -
                 @else
