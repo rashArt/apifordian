@@ -345,6 +345,13 @@ class EqDocController extends Controller
         else
             $sendBillSync->contentFile = $this->zipBase64($company, $resolution, $signInvoice->sign($invoice), storage_path("app/public/{$company->identification_number}/{$pfs}-{$resolution->next_consecutive}"));
 
+        if($request->query_uuid)
+            return [
+                'success' => true,
+                'message' => 'Consulta del UUID del documento: '.$request->prefix.'-'.$request->number.', realizada con exito: ',
+                'uuid' => $signInvoice->ConsultarCUFE(),
+            ];
+
         $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), $pf, $withHoldingTaxTotal, $notes, $healthfields);
 
         $invoice_doc->prefix = $resolution->prefix;

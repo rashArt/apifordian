@@ -70,6 +70,9 @@ class InvoiceRequest extends FormRequest
             // Invoice template name
             'invoice_template' => 'nullable|string',
 
+            // Just query document uuid don't send
+            'query_uuid' => 'nullable|boolean',
+
             // Dynamic field
             'dynamic_field' => 'nullable|array',
             'dynamic_field.name' => 'nullable|required_with:dynamic_field|string',
