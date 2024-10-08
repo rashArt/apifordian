@@ -86,8 +86,6 @@
         </td>
         <td style="width: 25%; text-align: right;" class="vertical-align-top">
             <br>
-            <br>
-            <br>
             <img  style="width: 150px; height: auto;" src="{{$imgLogo}}" alt="logo">
         </td>
     </tr>
