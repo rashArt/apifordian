@@ -382,13 +382,21 @@ class RegeneratePDFController extends Controller
             else
                 $discrepancydescription = NULL;
 
-            // Payment form default
-            $paymentFormAll = (object) array_merge($this->paymentFormDefault, $request->payment_form ?? []);
-            $paymentForm = PaymentForm::findOrFail($paymentFormAll->payment_form_id);
-            $paymentForm->payment_method_code = PaymentMethod::findOrFail($paymentFormAll->payment_method_id)->code;
-            $paymentForm->nameMethod = PaymentMethod::findOrFail($paymentFormAll->payment_method_id)->name;
-            $paymentForm->payment_due_date = $paymentFormAll->payment_due_date ?? null;
-            $paymentForm->duration_measure = $paymentFormAll->duration_measure ?? null;
+            // Payment form
+            if(isset($request->payment_form['payment_form_id']))
+                $paymentFormAll = [(array) $request->payment_form];
+            else
+                $paymentFormAll = $request->payment_form;
+
+            $paymentForm = collect();
+            foreach ($paymentFormAll ?? [$this->paymentFormDefault] as $paymentF) {
+                $payment = PaymentForm::findOrFail($paymentF['payment_form_id']);
+                $payment['payment_method_code'] = PaymentMethod::findOrFail($paymentF['payment_method_id'])->code;
+                $payment['nameMethod'] = PaymentMethod::findOrFail($paymentF['payment_method_id'])->name;
+                $payment['payment_due_date'] = $paymentF['payment_due_date'] ?? null;
+                $payment['duration_measure'] = $paymentF['duration_measure'] ?? null;
+                $paymentForm->push($payment);
+            }
 
             // Allowance charges
             $allowanceCharges = collect();

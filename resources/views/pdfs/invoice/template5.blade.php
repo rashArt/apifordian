@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <td style="padding: 0; width: 40%;">Forma de Pago:</td>
-                        <td style="padding: 0;">{{$paymentForm->name}}</td>
+                        <td style="padding: 0;">{{$paymentForm[0]->name}}</td>
                     </tr>
                 </table>
             </td>
@@ -69,8 +69,12 @@
                     </tr>
                     <br>
                     <tr>
-                        <td style="padding: 0; width: 50%;">Medio de Pago:</td>
-                        <td style="padding: 0;">{{$paymentForm->nameMethod}}</td>
+                        <td style="padding: 0; width: 50%;">Medios de Pago:</td>
+                        <td style="padding: 0;">
+                            @foreach ($paymentForm as $paymentF)
+                                {{$paymentF->nameMethod}}<br>
+                            @endforeach
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -125,11 +129,11 @@
                     @endif
                     <tr>
                         <td style="padding: 0; width: 50%;">Plazo Para Pagar:</td>
-                        <td style="padding: 0;">{{$paymentForm->duration_measure}} Dias</td>
+                        <td style="padding: 0;">{{$paymentForm[0]->duration_measure}} Dias</td>
                     </tr>
                     <tr>
                         <td style="padding: 0; width: 50%;">Fecha Vencimiento:</td>
-                        <td style="padding: 0;">{{$paymentForm->payment_due_date}}</td>
+                        <td style="padding: 0;">{{$paymentForm[0]->payment_due_date}}</td>
                     </tr>
                 </table>
             </td>

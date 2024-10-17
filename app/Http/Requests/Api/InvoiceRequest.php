@@ -278,10 +278,10 @@ class InvoiceRequest extends FormRequest
 
             // Payment form
             'payment_form' => 'nullable|array',
-            'payment_form.payment_form_id' => 'nullable|exists:payment_forms,id',
-            'payment_form.payment_method_id' => 'nullable|exists:payment_methods,id',
-            'payment_form.payment_due_date' => 'nullable|required_if:payment_form.payment_form_id,=,2|after_or_equal:date|date_format:Y-m-d',
-            'payment_form.duration_measure' => 'nullable|required_if:payment_form.payment_form_id,=,2|numeric|digits_between:1,3',
+            'payment_form.*.payment_form_id' => 'nullable|exists:payment_forms,id',
+            'payment_form.*.payment_method_id' => 'nullable|exists:payment_methods,id',
+            'payment_form.*.payment_due_date' => 'nullable|required_if:payment_form.*.payment_form_id,=,2|after_or_equal:date|date_format:Y-m-d',
+            'payment_form.*.duration_measure' => 'nullable|required_if:payment_form.*.payment_form_id,=,2|numeric|digits_between:1,3',
 
             // Allowance charges
             'allowance_charges' => 'nullable|array',
