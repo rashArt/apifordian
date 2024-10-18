@@ -68,7 +68,7 @@
                         <td>{{$paymentForm[0]->name}}</td>
                     </tr>
                     <tr>
-                        <td>Medioss de Pago:</td>
+                        <td>Medios de Pago:</td>
                         <td>
                             @foreach ($paymentForm as $paymentF)
                                 {{$paymentF->nameMethod}}<br>
