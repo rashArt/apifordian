@@ -36,6 +36,18 @@ use App\ReceivedDocument;
 use App\Log;
 use App\Traits\DocumentTrait;
 
+/**
+ * @OA\Info(title="Configuracion de empresa", version="ubl2.1")
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="Bearer",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     description="Token de acceso que se debe incluir en el encabezado Authorization."
+ * )
+ */
+
 class ConfigurationController extends Controller
 {
     use DocumentTrait;
@@ -96,13 +108,32 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Store.
+     * Store Company.
      *
      * @param \App\Http\Requests\Api\ConfigurationRequest $request
      * @param int                                         $nit
      * @param int                                         $dv
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\PathItem(
+     *      path="/config/{nit}/{dv}",
+     *      summary="Crear empresa",
+     *      @OA\Parameter(
+     *          name="nit",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer"),
+     *          description="NIT de la Empresa"
+     *      ),
+     *      @OA\Parameter(
+     *          name="dv",
+     *          in="path",
+     *          required=false,
+     *          @OA\Schema(type="integer"),
+     *          description="Digito de verificacion de la empresa"
+     *      )
+     * )
      */
     public function store(ConfigurationRequest $request, $nit, $dv = null)
     {
@@ -321,6 +352,9 @@ class ConfigurationController extends Controller
      * @param \App\Http\Requests\Api\ConfigurationSoftwareRequest $request
      *
      * @return \Illuminate\Http\Response
+     *
+     *
+     * @OA\PathItem(path="/config/software",summary="Crear o actualizar software")
      */
     public function storeSoftware(ConfigurationSoftwareRequest $request)
     {

@@ -86,6 +86,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('documents/downloadpdf/{pdf}', 'DocumentController@downloadpdf');
     Route::post('document/change-state', 'DocumentController@changeState')->name('document.change-state');
 
+    // documentacion
+    Route::get('documentation', '\L5Swagger\Http\Controllers\SwaggerController@api')->name('documentation');
+
 });
 
 Route::get('qr', 'QrController@generateQr');

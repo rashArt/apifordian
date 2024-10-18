@@ -40,6 +40,12 @@ $cust_id = $path[2];
                             </a>
                         </li>
                     @endif
+                    <li class="">
+                        <a href="{{route('documentation')}}" class="nav-link" target="BLANK">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <span>Documentación</span>
+                        </a>
+                    </li>
 
                     {{-- @if(isset(Auth::user()->email))
                         <li class="{{ ($path[0] === 'dashboard')?'nav-active':'' }}">
