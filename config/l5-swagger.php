@@ -18,7 +18,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'api' => 'api/ubl2.1/documentation',
+        'api' => 'documentation',
 
         /*
         |--------------------------------------------------------------------------
@@ -42,7 +42,9 @@ return [
         |--------------------------------------------------------------------------
          */
         'middleware' => [
-            'api' => [],
+            'api' => [
+                'web',
+            ],
             'asset' => [],
             'docs' => [],
             'oauth2_callback' => [],
@@ -76,11 +78,13 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Absolute path to directory containing the swagger annotations are stored.
+        | Absolute paths to directory containing the swagger annotations are stored.
         |--------------------------------------------------------------------------
         */
 
-        'annotations' => base_path('app/Http/Controllers/Api'),
+        'annotations' => [
+            base_path('app/Http/Controllers/Api'),
+        ],
 
         /*
         |--------------------------------------------------------------------------
@@ -96,7 +100,15 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'base' => env('L5_SWAGGER_BASE_PATH', null),
+        'base' => env('L5_SWAGGER_BASE_PATH', '/api/ubl2.1'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Edit to set path where swagger ui assets should be stored
+        |--------------------------------------------------------------------------
+        */
+
+        'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'vendor/swagger-api/swagger-ui/dist/'),
 
         /*
         |--------------------------------------------------------------------------
@@ -224,6 +236,6 @@ return [
     'constants' => [
         'APP_URL' => env('APP_URL'),
         'APP_VERSION' => env('APP_VERSION'),
-        'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+        'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', env('APP_URL')),
     ],
 ];
