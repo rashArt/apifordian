@@ -148,23 +148,19 @@
                 <table>
                     <tr>
                         <td>Forma de Pago:</td>
-                        <td>{{$paymentForm[0]->name}}</td>
+                        <td>{{$paymentForm->name}}</td>
                     </tr>
                     <tr>
-                        <td>Medios de Pago:</td>
-                        <td>
-                            @foreach ($paymentForm as $paymentF)
-                                {{$paymentF->nameMethod}}<br>
-                            @endforeach
-                        </td>
+                        <td>Medio de Pago:</td>
+                        <td>{{$paymentForm->nameMethod}}</td>
                     </tr>
                     <tr>
                         <td>Plazo Para Pagar:</td>
-                        <td>{{$paymentForm[0]->duration_measure}} Dias</td>
+                        <td>{{$paymentForm->duration_measure}} Dias</td>
                     </tr>
                     <tr>
                         <td>Fecha Vencimiento:</td>
-                        <td>{{$paymentForm[0]->payment_due_date}}</td>
+                        <td>{{$paymentForm->payment_due_date}}</td>
                     </tr>
                     @if(isset($request['order_reference']['id_order']))
                     <tr>
