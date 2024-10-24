@@ -23,7 +23,7 @@ $cust_id = $path[2];
                     @if(!Request::is('company*'))
                     <li class="{{ ($path[0] === 'home')?'nav-active':'' }}">
                         <a class="nav-link" href="{{route('home')}}">
-                            <i class="fas fa-receipt" aria-hidden="true"></i>
+                            <i class="fas fa-industry" aria-hidden="true"></i>
                             <span>Empresas</span>
                         </a>
                     </li>
@@ -31,19 +31,19 @@ $cust_id = $path[2];
                     @if(Request::is('company*'))
                         <li class="{{ Route::is('company') ? 'nav-active' : '' }}">
                             <a class="nav-link" href="{{route('company', request()->segment(2))}}">
-                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <i class="fas fa-list-alt" aria-hidden="true"></i>
                                 <span>Listado de documentos</span>
                             </a>
                         </li>
                         <li class="{{ Route::is('company.events') ? 'nav-active' : '' }}">
                             <a class="nav-link" href="{{route('company.events', request()->segment(2))}}">
-                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <i class="fas fa-calendar-check" aria-hidden="true"></i>
                                 <span>Eventos RADIAN</span>
                             </a>
                         </li>
                         <li class="{{ Route::is('company.payrolls') ? 'nav-active' : '' }}">
                             <a class="nav-link" href="{{route('company.payrolls', request()->segment(2))}}">
-                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <i class="fas fa-address-book" aria-hidden="true"></i>
                                 <span>Nominas emitidas</span>
                             </a>
                         </li>
@@ -51,7 +51,7 @@ $cust_id = $path[2];
                     @if(!Request::is('company*'))
                     <li class="">
                         <a href="{{route('documentation')}}" class="nav-link" target="BLANK">
-                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <i class="fa fa-server" aria-hidden="true"></i>
                             <span>Test API SWAGGER</span>
                         </a>
                     </li>
