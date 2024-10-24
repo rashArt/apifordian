@@ -66,7 +66,9 @@
 </svg>
 <div id="swagger-ui"></div>
 
-<footer style="text-align: center; margin-top: 20px; margin-bottom: 60px;">
+<footer style="font-family: Arial; text-align: center; margin-top: 20px; margin-bottom: 60px;">
+  <p>Para visualizar y testear todos los servicios del API, puede descargar y hacer pruebas con la <a href="https://gitlab.buho.la/facturalatam/co-apidian2024/-/raw/master/ApiDianV2.1.postman_collection.json?ref_type=heads&inline=false" target="BLANK">colección de Postman</a></p>
+  <br>
   <a href="/">Volver a la aplicación</a>
 </footer>
 

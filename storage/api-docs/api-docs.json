@@ -328,7 +328,7 @@
                 "tags": ["Registro de certificado"],
                 "summary": "Registro de certificado",
                 "requestBody": {
-                    "description": "Objeto para el registro de certificado.",
+                    "description": "Certificado en formato Base64. Puede utilizar sitios web como https://www.base64encode.org/ para convertir su archivo de certificado en Base64",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -434,7 +434,7 @@
                 "tags": ["Configuración de logo"],
                 "summary": "Datos del logo",
                 "requestBody": {
-                    "description": "Objeto para la configuración del logo.",
+                    "description": "Imagen en formato Base64. Puede utilizar sitios web como https://www.base64encode.org/ para convertir su archivo de imagen en Base64",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -678,6 +678,673 @@
                 ]
             }
         },
+        "/api/ubl2.1/invoice/{testSetId}": {
+            "post": {
+                "tags": [
+                    "Facturas de Venta Nacional (Entorno de Habilitación)"
+                ],
+                "summary": "Envio de Facturas de Venta Nacional (Set de pruebas)",
+                "parameters": [
+                    {
+                        "name": "testSetId",
+                        "in": "path",
+                        "description": "Test set ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Objeto para la creación de facturas de venta.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "number",
+                                    "type_document_id",
+                                    "customer",
+                                    "legal_monetary_totals",
+                                    "invoice_lines"
+                                ],
+                                "properties": {
+                                    "number": {
+                                        "description": "Número de documento",
+                                        "type": "integer"
+                                    },
+                                    "send": {
+                                        "description": "Enviar representación grafica",
+                                        "type": "boolean",
+                                        "default": "false"
+                                    },
+                                    "type_operation_id": {
+                                        "description": "Código del tipo de operación",
+                                        "type": "integer",
+                                        "default": "Tipo de operación de la empresa"
+                                    },
+                                    "type_document_id": {
+                                        "description": "Código de tipo de documento",
+                                        "type": "integer"
+                                    },
+                                    "date": {
+                                        "description": "Fecha de asunto",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "time": {
+                                        "description": "Tiempo de emisión",
+                                        "type": "string",
+                                        "format": "time"
+                                    },
+                                    "type_currency_id": {
+                                        "description": "Código del tipo moneda del documento",
+                                        "type": "integer",
+                                        "default": "Código del tipo de moneda de la empresa"
+                                    },
+                                    "invoice_period": {
+                                        "description": "Periodo de facturación",
+                                        "required": [
+                                            "start_date",
+                                            "end_date"
+                                        ],
+                                        "properties": {
+                                            "start_date": {
+                                                "description": "Fecha de inicio del periodo de facturación",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "start_time": {
+                                                "description": "Hora de inicio del periodo de facturación",
+                                                "type": "string",
+                                                "format": "time"
+                                            },
+                                            "end_date": {
+                                                "description": "Fecha de fin del periodo de facturación",
+                                                "type": "date"
+                                            },
+                                            "end_time": {
+                                                "description": "Hora de fin del periodo de facturación",
+                                                "type": "string",
+                                                "format": "time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "payment_exchange_rate": {
+                                        "description": "Tasa de cambio",
+                                        "required": [
+                                            "type_currency_id",
+                                            "calculation_rate",
+                                            "date"
+                                        ],
+                                        "properties": {
+                                            "type_currency_id": {
+                                                "description": "Código de divisa a la cual se hace la conversión",
+                                                "type": "integer"
+                                            },
+                                            "calculation_rate": {
+                                                "description": "Valor de la tasa de cambio",
+                                                "type": "double"
+                                            },
+                                            "date": {
+                                                "description": "Fecha en la que se fijó la tasa de cambio",
+                                                "type": "string",
+                                                "format": "date"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "customer": {
+                                        "description": "Datos del cliente",
+                                        "required": [
+                                            "identification_number",
+                                            "name",
+                                            "phone",
+                                            "address",
+                                            "email",
+                                            "merchant_registration"
+                                        ],
+                                        "properties": {
+                                            "identification_number": {
+                                                "description": "Número de identificación",
+                                                "type": "integer"
+                                            },
+                                            "dv": {
+                                                "description": "Dígito de verificación",
+                                                "type": "integer"
+                                            },
+                                            "type_document_identification_id": {
+                                                "description": "Código de documento de identidad",
+                                                "type": "integer",
+                                                "default": 3
+                                            },
+                                            "type_organization_id": {
+                                                "description": "Código de tipo de organización",
+                                                "type": "integer",
+                                                "default": 2
+                                            },
+                                            "language_id": {
+                                                "description": "Código de idioma",
+                                                "type": "integer",
+                                                "default": 79
+                                            },
+                                            "country_id": {
+                                                "description": "Código de pais",
+                                                "type": "integer",
+                                                "default": 46
+                                            },
+                                            "municipality_id": {
+                                                "description": "Código de municipio",
+                                                "type": "integer",
+                                                "default": 1006
+                                            },
+                                            "type_regime_id": {
+                                                "description": "Código de régimen",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "tax_id": {
+                                                "description": "Código de impuesto (Identificador del tributo del adquirente)",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "type_liability_id": {
+                                                "description": "Código de responsabilidad",
+                                                "type": "integer",
+                                                "default": 22
+                                            },
+                                            "name": {
+                                                "description": "Nombre o razon social del empresa",
+                                                "type": "string"
+                                            },
+                                            "phone": {
+                                                "description": "Teléfono",
+                                                "type": "integer"
+                                            },
+                                            "address": {
+                                                "description": "Dirección",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Correo electrónico",
+                                                "type": "string",
+                                                "format": "email"
+                                            },
+                                            "merchant_registration": {
+                                                "description": "Registro mercantil",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "payment_form": {
+                                        "description": "Forma de pago",
+                                        "properties": {
+                                            "payment_form_id": {
+                                                "description": "Código de forma de pago",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "payment_method_id": {
+                                                "description": "Código del método de pago",
+                                                "type": "integer",
+                                                "default": 10
+                                            },
+                                            "payment_due_date": {
+                                                "description": "Fecha de vencimiento del pago",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "duration_measure": {
+                                                "description": "Medida de duración en dias",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "prepaid_payments": {
+                                        "description": "Anticipos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "identifier",
+                                                "paid_amount"
+                                            ],
+                                            "properties": {
+                                                "identifier": {
+                                                    "description": "Identificación del pago",
+                                                    "type": "string"
+                                                },
+                                                "paid_amount": {
+                                                    "description": "Valor del pago",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                },
+                                                "received_date": {
+                                                    "description": "Fecha en la cual el pago fue recibido",
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "paid_date": {
+                                                    "description": "Fecha en la cual el pago fue realizado",
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "instruction_id": {
+                                                    "description": "Instrucciones relativas al pago",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "allowance_charges": {
+                                        "description": "Cargos o descuentos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "charge_indicator",
+                                                "allowance_charge_reason",
+                                                "amount",
+                                                "base_amount"
+                                            ],
+                                            "properties": {
+                                                "charge_indicator": {
+                                                    "description": "Cargo o descuento",
+                                                    "type": "boolean"
+                                                },
+                                                "discount_id": {
+                                                    "description": "Código de descuento",
+                                                    "type": "integer"
+                                                },
+                                                "allowance_charge_reason": {
+                                                    "description": "Razón del cargo o descuento",
+                                                    "type": "string"
+                                                },
+                                                "amount": {
+                                                    "description": "Cantidad",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                },
+                                                "base_amount": {
+                                                    "description": "Cantidad base",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "tax_totals": {
+                                        "description": "Totales impuestos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "tax_id",
+                                                "tax_amount",
+                                                "taxable_amount"
+                                            ],
+                                            "properties": {
+                                                "tax_id": {
+                                                    "description": "Código impuesto",
+                                                    "type": "integer"
+                                                },
+                                                "percent": {
+                                                    "description": "Porcentaje",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "tax_amount": {
+                                                    "description": "Importe del impuesto",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "taxable_amount": {
+                                                    "description": "Base imponible",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "unit_measure_id": {
+                                                    "description": "Código de unidad de medida",
+                                                    "type": "integer"
+                                                },
+                                                "per_unit_amount": {
+                                                    "description": "Por unidad de cantidad",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "base_unit_measure": {
+                                                    "description": "Medida unidad base",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "legal_monetary_totals": {
+                                        "description": "Totales monetarios legales",
+                                        "required": [
+                                            "line_extension_amount",
+                                            "tax_exclusive_amount",
+                                            "tax_inclusive_amount",
+                                            "allowance_total_amount",
+                                            "charge_total_amount",
+                                            "payable_amount"
+                                        ],
+                                        "properties": {
+                                            "line_extension_amount": {
+                                                "description": "Cantidad de extensión de línea",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "tax_exclusive_amount": {
+                                                "description": "Cantidad exclusiva de impuestos",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "tax_inclusive_amount": {
+                                                "description": "Cantidad de impuestos incluidos",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "allowance_total_amount": {
+                                                "description": "Cantidad total de la asignación",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "charge_total_amount": {
+                                                "description": "Cantidad del importe total",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "payable_amount": {
+                                                "description": "Cantidad a pagar",
+                                                "type": "integer",
+                                                "format": "double"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "invoice_lines": {
+                                        "description": "Líneas de factura",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "unit_measure_id",
+                                                "invoiced_quantity",
+                                                "line_extension_amount",
+                                                "free_of_charge_indicator",
+                                                "description",
+                                                "code",
+                                                "type_item_identification_id",
+                                                "price_amount",
+                                                "base_quantity"
+                                            ],
+                                            "properties": {
+                                                "unit_measure_id": {
+                                                    "description": "Código de unidad de medida",
+                                                    "type": "integer"
+                                                },
+                                                "invoiced_quantity": {
+                                                    "description": "Cantidad facturada",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "line_extension_amount": {
+                                                    "description": "Cantidad de extensión de línea",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "free_of_charge_indicator": {
+                                                    "description": "Indicador de libre carga",
+                                                    "type": "boolean"
+                                                },
+                                                "reference_price_id": {
+                                                    "description": "Código de referencia precios",
+                                                    "type": "integer"
+                                                },
+                                                "allowance_charges": {
+                                                    "description": "Cargos o descuentos",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "charge_indicator",
+                                                            "allowance_charge_reason",
+                                                            "amount"
+                                                        ],
+                                                        "properties": {
+                                                            "charge_indicator": {
+                                                                "description": "Cargo o descuento",
+                                                                "type": "boolean"
+                                                            },
+                                                            "allowance_charge_reason": {
+                                                                "description": "Razón del cargo o descuento",
+                                                                "type": "string"
+                                                            },
+                                                            "amount": {
+                                                                "description": "Cantidad",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "base_amount": {
+                                                                "description": "Cantidad base",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "multiplier_factor_numeric": {
+                                                                "description": "Factor multiplicador numérico",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tax_totals": {
+                                                    "description": "Totales de impuestos",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "tax_id",
+                                                            "tax_amount",
+                                                            "taxable_amount"
+                                                        ],
+                                                        "properties": {
+                                                            "tax_id": {
+                                                                "description": "Código de impuesto",
+                                                                "type": "integer"
+                                                            },
+                                                            "tax_amount": {
+                                                                "description": "Importe del impuesto",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "taxable_amount": {
+                                                                "description": "Base imponible",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "percent": {
+                                                                "description": "Porcentaje",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "unit_measure_id": {
+                                                                "description": "Código de unidad de medida",
+                                                                "type": "integer"
+                                                            },
+                                                            "per_unit_amount": {
+                                                                "description": "Por unidad de cantidad",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "base_unit_measure": {
+                                                                "description": "Medida unidad base",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "description": {
+                                                    "description": "Descripción",
+                                                    "type": "string"
+                                                },
+                                                "code": {
+                                                    "description": "Código interno",
+                                                    "type": "string"
+                                                },
+                                                "type_item_identification_id": {
+                                                    "description": "Código de identificación del artículo",
+                                                    "type": "integer"
+                                                },
+                                                "price_amount": {
+                                                    "description": "Importe del precio",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "base_quantity": {
+                                                    "description": "Cantidad base",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "number": 0,
+                                    "type_document_id": 1,
+                                    "customer": {
+                                        "identification_number": 1234567890,
+                                        "name": "Customer Test",
+                                        "phone": 1234567,
+                                        "address": "CALLE 0 0C 0",
+                                        "email": "test@test.com",
+                                        "merchant_registration": "No tiene"
+                                    },
+                                    "legal_monetary_totals": {
+                                        "line_extension_amount": "0.00",
+                                        "tax_exclusive_amount": "0.00",
+                                        "tax_inclusive_amount": "0.00",
+                                        "allowance_total_amount": "0.00",
+                                        "charge_total_amount": "0.00",
+                                        "payable_amount": "0.00"
+                                    },
+                                    "invoice_lines": [
+                                        {
+                                            "unit_measure_id": 642,
+                                            "invoiced_quantity": "1.000000",
+                                            "line_extension_amount": "0.00",
+                                            "free_of_charge_indicator": false,
+                                            "allowance_charges": [
+                                                {
+                                                    "charge_indicator": false,
+                                                    "allowance_charge_reason": "Discount",
+                                                    "amount": "0.00",
+                                                    "base_amount": "0.00"
+                                                }
+                                            ],
+                                            "tax_totals": [
+                                                {
+                                                    "tax_id": 1,
+                                                    "tax_amount": "0.00",
+                                                    "taxable_amount": "0.00",
+                                                    "percent": "19.00"
+                                                }
+                                            ],
+                                            "description": "XXXXXXXXXXX",
+                                            "code": "1234567890",
+                                            "type_item_identification_id": 3,
+                                            "price_amount": "0.00",
+                                            "base_quantity": "1.000000"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/config/environment": {
             "put": {
                 "tags": ["Cambio de entorno"],
@@ -811,6 +1478,662 @@
                                     }
                                 },
                                 "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/ubl2.1/invoice/": {
+            "post": {
+                "tags": [
+                    "Facturas de Venta Nacional (Entorno de Producción)"
+                ],
+                "summary": "Envio de Facturas de Venta Nacional, a diferencia de Habilitacion este modo no requiere un parametro en la URL",
+                "requestBody": {
+                    "description": "Objeto para la creación de facturas de venta.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "number",
+                                    "type_document_id",
+                                    "customer",
+                                    "legal_monetary_totals",
+                                    "invoice_lines"
+                                ],
+                                "properties": {
+                                    "number": {
+                                        "description": "Número de documento",
+                                        "type": "integer"
+                                    },
+                                    "send": {
+                                        "description": "Enviar representación grafica",
+                                        "type": "boolean",
+                                        "default": "false"
+                                    },
+                                    "type_operation_id": {
+                                        "description": "Código del tipo de operación",
+                                        "type": "integer",
+                                        "default": "Tipo de operación de la empresa"
+                                    },
+                                    "type_document_id": {
+                                        "description": "Código de tipo de documento",
+                                        "type": "integer"
+                                    },
+                                    "date": {
+                                        "description": "Fecha de asunto",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "time": {
+                                        "description": "Tiempo de emisión",
+                                        "type": "string",
+                                        "format": "time"
+                                    },
+                                    "type_currency_id": {
+                                        "description": "Código del tipo moneda del documento",
+                                        "type": "integer",
+                                        "default": "Código del tipo de moneda de la empresa"
+                                    },
+                                    "invoice_period": {
+                                        "description": "Periodo de facturación",
+                                        "required": [
+                                            "start_date",
+                                            "end_date"
+                                        ],
+                                        "properties": {
+                                            "start_date": {
+                                                "description": "Fecha de inicio del periodo de facturación",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "start_time": {
+                                                "description": "Hora de inicio del periodo de facturación",
+                                                "type": "string",
+                                                "format": "time"
+                                            },
+                                            "end_date": {
+                                                "description": "Fecha de fin del periodo de facturación",
+                                                "type": "date"
+                                            },
+                                            "end_time": {
+                                                "description": "Hora de fin del periodo de facturación",
+                                                "type": "string",
+                                                "format": "time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "payment_exchange_rate": {
+                                        "description": "Tasa de cambio",
+                                        "required": [
+                                            "type_currency_id",
+                                            "calculation_rate",
+                                            "date"
+                                        ],
+                                        "properties": {
+                                            "type_currency_id": {
+                                                "description": "Código de divisa a la cual se hace la conversión",
+                                                "type": "integer"
+                                            },
+                                            "calculation_rate": {
+                                                "description": "Valor de la tasa de cambio",
+                                                "type": "double"
+                                            },
+                                            "date": {
+                                                "description": "Fecha en la que se fijó la tasa de cambio",
+                                                "type": "string",
+                                                "format": "date"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "customer": {
+                                        "description": "Datos del cliente",
+                                        "required": [
+                                            "identification_number",
+                                            "name",
+                                            "phone",
+                                            "address",
+                                            "email",
+                                            "merchant_registration"
+                                        ],
+                                        "properties": {
+                                            "identification_number": {
+                                                "description": "Número de identificación",
+                                                "type": "integer"
+                                            },
+                                            "dv": {
+                                                "description": "Dígito de verificación",
+                                                "type": "integer"
+                                            },
+                                            "type_document_identification_id": {
+                                                "description": "Código de documento de identidad",
+                                                "type": "integer",
+                                                "default": 3
+                                            },
+                                            "type_organization_id": {
+                                                "description": "Código de tipo de organización",
+                                                "type": "integer",
+                                                "default": 2
+                                            },
+                                            "language_id": {
+                                                "description": "Código de idioma",
+                                                "type": "integer",
+                                                "default": 79
+                                            },
+                                            "country_id": {
+                                                "description": "Código de pais",
+                                                "type": "integer",
+                                                "default": 46
+                                            },
+                                            "municipality_id": {
+                                                "description": "Código de municipio",
+                                                "type": "integer",
+                                                "default": 1006
+                                            },
+                                            "type_regime_id": {
+                                                "description": "Código de régimen",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "tax_id": {
+                                                "description": "Código de impuesto (Identificador del tributo del adquirente)",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "type_liability_id": {
+                                                "description": "Código de responsabilidad",
+                                                "type": "integer",
+                                                "default": 22
+                                            },
+                                            "name": {
+                                                "description": "Nombre o razon social del empresa",
+                                                "type": "string"
+                                            },
+                                            "phone": {
+                                                "description": "Teléfono",
+                                                "type": "integer"
+                                            },
+                                            "address": {
+                                                "description": "Dirección",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Correo electrónico",
+                                                "type": "string",
+                                                "format": "email"
+                                            },
+                                            "merchant_registration": {
+                                                "description": "Registro mercantil",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "payment_form": {
+                                        "description": "Forma de pago",
+                                        "properties": {
+                                            "payment_form_id": {
+                                                "description": "Código de forma de pago",
+                                                "type": "integer",
+                                                "default": 1
+                                            },
+                                            "payment_method_id": {
+                                                "description": "Código del método de pago",
+                                                "type": "integer",
+                                                "default": 10
+                                            },
+                                            "payment_due_date": {
+                                                "description": "Fecha de vencimiento del pago",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "duration_measure": {
+                                                "description": "Medida de duración en dias",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "prepaid_payments": {
+                                        "description": "Anticipos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "identifier",
+                                                "paid_amount"
+                                            ],
+                                            "properties": {
+                                                "identifier": {
+                                                    "description": "Identificación del pago",
+                                                    "type": "string"
+                                                },
+                                                "paid_amount": {
+                                                    "description": "Valor del pago",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                },
+                                                "received_date": {
+                                                    "description": "Fecha en la cual el pago fue recibido",
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "paid_date": {
+                                                    "description": "Fecha en la cual el pago fue realizado",
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "instruction_id": {
+                                                    "description": "Instrucciones relativas al pago",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "allowance_charges": {
+                                        "description": "Cargos o descuentos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "charge_indicator",
+                                                "allowance_charge_reason",
+                                                "amount",
+                                                "base_amount"
+                                            ],
+                                            "properties": {
+                                                "charge_indicator": {
+                                                    "description": "Cargo o descuento",
+                                                    "type": "boolean"
+                                                },
+                                                "discount_id": {
+                                                    "description": "Código de descuento",
+                                                    "type": "integer"
+                                                },
+                                                "allowance_charge_reason": {
+                                                    "description": "Razón del cargo o descuento",
+                                                    "type": "string"
+                                                },
+                                                "amount": {
+                                                    "description": "Cantidad",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                },
+                                                "base_amount": {
+                                                    "description": "Cantidad base",
+                                                    "type": "number",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "tax_totals": {
+                                        "description": "Totales impuestos",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "tax_id",
+                                                "tax_amount",
+                                                "taxable_amount"
+                                            ],
+                                            "properties": {
+                                                "tax_id": {
+                                                    "description": "Código impuesto",
+                                                    "type": "integer"
+                                                },
+                                                "percent": {
+                                                    "description": "Porcentaje",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "tax_amount": {
+                                                    "description": "Importe del impuesto",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "taxable_amount": {
+                                                    "description": "Base imponible",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "unit_measure_id": {
+                                                    "description": "Código de unidad de medida",
+                                                    "type": "integer"
+                                                },
+                                                "per_unit_amount": {
+                                                    "description": "Por unidad de cantidad",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "base_unit_measure": {
+                                                    "description": "Medida unidad base",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "legal_monetary_totals": {
+                                        "description": "Totales monetarios legales",
+                                        "required": [
+                                            "line_extension_amount",
+                                            "tax_exclusive_amount",
+                                            "tax_inclusive_amount",
+                                            "allowance_total_amount",
+                                            "charge_total_amount",
+                                            "payable_amount"
+                                        ],
+                                        "properties": {
+                                            "line_extension_amount": {
+                                                "description": "Cantidad de extensión de línea",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "tax_exclusive_amount": {
+                                                "description": "Cantidad exclusiva de impuestos",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "tax_inclusive_amount": {
+                                                "description": "Cantidad de impuestos incluidos",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "allowance_total_amount": {
+                                                "description": "Cantidad total de la asignación",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "charge_total_amount": {
+                                                "description": "Cantidad del importe total",
+                                                "type": "integer",
+                                                "format": "double"
+                                            },
+                                            "payable_amount": {
+                                                "description": "Cantidad a pagar",
+                                                "type": "integer",
+                                                "format": "double"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "invoice_lines": {
+                                        "description": "Líneas de factura",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "unit_measure_id",
+                                                "invoiced_quantity",
+                                                "line_extension_amount",
+                                                "free_of_charge_indicator",
+                                                "description",
+                                                "code",
+                                                "type_item_identification_id",
+                                                "price_amount",
+                                                "base_quantity"
+                                            ],
+                                            "properties": {
+                                                "unit_measure_id": {
+                                                    "description": "Código de unidad de medida",
+                                                    "type": "integer"
+                                                },
+                                                "invoiced_quantity": {
+                                                    "description": "Cantidad facturada",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "line_extension_amount": {
+                                                    "description": "Cantidad de extensión de línea",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "free_of_charge_indicator": {
+                                                    "description": "Indicador de libre carga",
+                                                    "type": "boolean"
+                                                },
+                                                "reference_price_id": {
+                                                    "description": "Código de referencia precios",
+                                                    "type": "integer"
+                                                },
+                                                "allowance_charges": {
+                                                    "description": "Cargos o descuentos",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "charge_indicator",
+                                                            "allowance_charge_reason",
+                                                            "amount"
+                                                        ],
+                                                        "properties": {
+                                                            "charge_indicator": {
+                                                                "description": "Cargo o descuento",
+                                                                "type": "boolean"
+                                                            },
+                                                            "allowance_charge_reason": {
+                                                                "description": "Razón del cargo o descuento",
+                                                                "type": "string"
+                                                            },
+                                                            "amount": {
+                                                                "description": "Cantidad",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "base_amount": {
+                                                                "description": "Cantidad base",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "multiplier_factor_numeric": {
+                                                                "description": "Factor multiplicador numérico",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tax_totals": {
+                                                    "description": "Totales de impuestos",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "tax_id",
+                                                            "tax_amount",
+                                                            "taxable_amount"
+                                                        ],
+                                                        "properties": {
+                                                            "tax_id": {
+                                                                "description": "Código de impuesto",
+                                                                "type": "integer"
+                                                            },
+                                                            "tax_amount": {
+                                                                "description": "Importe del impuesto",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "taxable_amount": {
+                                                                "description": "Base imponible",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "percent": {
+                                                                "description": "Porcentaje",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "unit_measure_id": {
+                                                                "description": "Código de unidad de medida",
+                                                                "type": "integer"
+                                                            },
+                                                            "per_unit_amount": {
+                                                                "description": "Por unidad de cantidad",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            },
+                                                            "base_unit_measure": {
+                                                                "description": "Medida unidad base",
+                                                                "type": "integer",
+                                                                "format": "double"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "description": {
+                                                    "description": "Descripción",
+                                                    "type": "string"
+                                                },
+                                                "code": {
+                                                    "description": "Código interno",
+                                                    "type": "string"
+                                                },
+                                                "type_item_identification_id": {
+                                                    "description": "Código de identificación del artículo",
+                                                    "type": "integer"
+                                                },
+                                                "price_amount": {
+                                                    "description": "Importe del precio",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                },
+                                                "base_quantity": {
+                                                    "description": "Cantidad base",
+                                                    "type": "integer",
+                                                    "format": "double"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "number": 0,
+                                    "type_document_id": 1,
+                                    "customer": {
+                                        "identification_number": 1234567890,
+                                        "name": "Customer Test",
+                                        "phone": 1234567,
+                                        "address": "CALLE 0 0C 0",
+                                        "email": "test@test.com",
+                                        "merchant_registration": "No tiene"
+                                    },
+                                    "legal_monetary_totals": {
+                                        "line_extension_amount": "0.00",
+                                        "tax_exclusive_amount": "0.00",
+                                        "tax_inclusive_amount": "0.00",
+                                        "allowance_total_amount": "0.00",
+                                        "charge_total_amount": "0.00",
+                                        "payable_amount": "0.00"
+                                    },
+                                    "invoice_lines": [
+                                        {
+                                            "unit_measure_id": 642,
+                                            "invoiced_quantity": "1.000000",
+                                            "line_extension_amount": "0.00",
+                                            "free_of_charge_indicator": false,
+                                            "allowance_charges": [
+                                                {
+                                                    "charge_indicator": false,
+                                                    "allowance_charge_reason": "Discount",
+                                                    "amount": "0.00",
+                                                    "base_amount": "0.00"
+                                                }
+                                            ],
+                                            "tax_totals": [
+                                                {
+                                                    "tax_id": 1,
+                                                    "tax_amount": "0.00",
+                                                    "taxable_amount": "0.00",
+                                                    "percent": "19.00"
+                                                }
+                                            ],
+                                            "description": "XXXXXXXXXXX",
+                                            "code": "1234567890",
+                                            "type_item_identification_id": 3,
+                                            "price_amount": "0.00",
+                                            "base_quantity": "1.000000"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
