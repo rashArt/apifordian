@@ -20,13 +20,21 @@ $cust_id = $path[2];
         <div class="nano-content">
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
+                    @if(!Request::is('company*'))
                     <li class="{{ ($path[0] === 'home')?'nav-active':'' }}">
                         <a class="nav-link" href="{{route('home')}}">
                             <i class="fas fa-receipt" aria-hidden="true"></i>
                             <span>Empresas</span>
                         </a>
                     </li>
+                    @endif
                     @if(Request::is('company*'))
+                        <li class="{{ Route::is('company') ? 'nav-active' : '' }}">
+                            <a class="nav-link" href="{{route('company', request()->segment(2))}}">
+                                <i class="fas fa-receipt" aria-hidden="true"></i>
+                                <span>Listado de documentos</span>
+                            </a>
+                        </li>
                         <li class="{{ Route::is('company.events') ? 'nav-active' : '' }}">
                             <a class="nav-link" href="{{route('company.events', request()->segment(2))}}">
                                 <i class="fas fa-receipt" aria-hidden="true"></i>
@@ -40,12 +48,14 @@ $cust_id = $path[2];
                             </a>
                         </li>
                     @endif
+                    @if(!Request::is('company*'))
                     <li class="">
                         <a href="{{route('documentation')}}" class="nav-link" target="BLANK">
                             <i class="fa fa-file" aria-hidden="true"></i>
                             <span>Test API SWAGGER</span>
                         </a>
                     </li>
+                    @endif
 
                     {{-- @if(isset(Auth::user()->email))
                         <li class="{{ ($path[0] === 'dashboard')?'nav-active':'' }}">

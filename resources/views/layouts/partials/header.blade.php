@@ -1,9 +1,28 @@
 <header class="header">
     <div class="logo-container">
+        <a href="{{route('home')}}" class="logo h2">
+            <i class="fas fa-home"></i>
+        </a>
         <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
         </div>
     </div>
+    @if(Request::is('company*'))
+                <span class="separator"></span>
+                <div id="userbox" class="userbox mx-0 px-0">
+                    <div class="profile-info">
+                        @inject('model_company', 'App\Company')
+                        @php
+                            $current = $model_company->where('identification_number', request()->segment(2))->first();
+                        @endphp
+                        <span class="name text-uppercase">{{ $current->user->name }}</span>
+                        <span class="role">{{ request()->segment(2) }}</span>
+                    </div>
+                </div>
+                {{-- <span>
+                    {{request()->segment(2)}}
+                </span> --}}
+            @endif
     @if(isset(Auth::user()->email))
         <div class="header-right">
             <span class="separator"></span>
