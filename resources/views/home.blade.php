@@ -25,7 +25,7 @@
                         <td>{{ $row->user->name }}</td>
                         <td>{{ $row->user->email }}</td>
                         <td>
-                            <a href="{{ route('company', $row->identification_number)}}">Ver documentos</a>
+                            <a class="btn btn-primary text-white btn-sm" href="{{ route('company', $row->identification_number)}}">Ver documentos</a>
                         </td>
                     </tr>
                 @endforeach

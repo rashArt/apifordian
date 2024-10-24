@@ -9,7 +9,7 @@ $cust_id = $path[2];
 
 <aside id="sidebar-left" class="sidebar-left">
     <div class="sidebar-header">
-        <div class="sidebar-title">
+        <div class="sidebar-title" style="padding-left: 30px;">
             Menu
         </div>
         <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
@@ -43,7 +43,7 @@ $cust_id = $path[2];
                     <li class="">
                         <a href="{{route('documentation')}}" class="nav-link" target="BLANK">
                             <i class="fa fa-file" aria-hidden="true"></i>
-                            <span>Documentación</span>
+                            <span>Test API SWAGGER</span>
                         </a>
                     </li>
 
