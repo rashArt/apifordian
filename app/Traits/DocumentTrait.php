@@ -212,21 +212,25 @@ trait DocumentTrait
      */
     protected function createXML(array $data)
     {
-        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '25' or $data['typeDocument']['code'] === '24' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
-            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '25' or $data['typeDocument']['code'] === '24'){
-                if($data['company']['eqdocs_type_environment_id'] == 2)
-                    $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
-                else
-                    $urlquery = 'https://catalogo-vpfe.dian.gov.co';
-            }
-            else{
+        if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '25' or $data['typeDocument']['code'] === '60' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
+            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '04' or $data['typeDocument']['code'] === '05' or $data['typeDocument']['code'] === '95' or $data['typeDocument']['code'] === '91' or $data['typeDocument']['code'] === '92'){
                 if($data['company']['type_environment_id'] == 2)
                     $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
                 else
                     $urlquery = 'https://catalogo-vpfe.dian.gov.co';
             }
+            else{
+                if($data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '25' or $data['typeDocument']['code'] === '60' or $data['typeDocument']['code'] === '93' or $data['typeDocument']['code'] === '94'){
+                    if($data['company']['eqdocs_type_environment_id'] == 2)
+                        $urlquery = 'https://catalogo-vpfe-hab.dian.gov.co';
+                    else
+                        $urlquery = 'https://catalogo-vpfe.dian.gov.co';
+                }
+            }
 
             $QRCode = $urlquery.'/document/searchqr?documentkey=-----CUFECUDE-----';
+            \Log::debug($data['company']);
+            \Log::debug($QRCode);
 
 //            if($data['typeDocument']['code'] === '01' or $data['typeDocument']['code'] === '02' or $data['typeDocument']['code'] === '03' or $data['typeDocument']['code'] === '20' or $data['typeDocument']['code'] === '35' or $data['typeDocument']['code'] === '24')
 //                if(isset($data['request']['tax_totals'][0]['tax_amount']))
