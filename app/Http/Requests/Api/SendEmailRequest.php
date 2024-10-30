@@ -30,6 +30,7 @@ class SendEmailRequest extends FormRequest
             'base64graphicrepresentation' => 'nullable|string',
             'alternate_email' => 'nullable|string|email',
             'showacceptrejectbuttons' => 'nullable|boolean',
+            'only_send_to_cc_list' => 'nullable|boolean',
 
             // Lista de correos a enviar copia
             'email_cc_list' => 'nullable|array',
