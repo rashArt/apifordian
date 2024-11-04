@@ -358,6 +358,7 @@ class EqDocController extends Controller
                 'success' => true,
                 'message' => 'Consulta del UUID del documento: '.$request->prefix.'-'.$request->number.', realizada con exito: ',
                 'uuid' => $signInvoice->ConsultarCUDE(),
+                'QRStr' => $signInvoice->ConsultarQRStr(),
             ];
 
         $QRStr = $this->createPDF($user, $company, $customer, $typeDocument, $resolution, $date, $time, $paymentForm, $request, $signInvoice->ConsultarCUDE(), $pf, $withHoldingTaxTotal, $notes, $healthfields);
