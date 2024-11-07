@@ -12,11 +12,7 @@ Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watc
 
 ## 2.- Ejemplos para la API / Collection POSTMAN
 
-<<<<<<< HEAD
- Descargue [Postman](https://www.postman.com/downloads/), para ver los ejemplos o sincronizar la colección para hacer pruebas [Aquí](https://documenter.getpostman.com/view/1431398/2sAY4uCido "Click") 
-=======
-Primero descargue la herramienta POSTMAN desde internet, y luego importe el archivo collection aquí [postman collection](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/ApiDianV2.1.postman_collection.json "Click") 
->>>>>>> af099857d1ac0917480054edef96881d8ff48b20
+ Descargue [Postman](https://www.postman.com/downloads/), para ver los ejemplos o sincronizar la colección para hacer pruebas [Aquí](https://documenter.getpostman.com/view/1431398/2sAY4uCido "Click")
 
 También puedes ver la documentación online [Aquí](https://documenter.getpostman.com/view/1431398/2sAY4uCido "Click")
 
@@ -34,15 +30,15 @@ También puedes ver la documentación online [Aquí](https://documenter.getpostm
 * Video de instalación [Aquí](https://www.youtube.com/watch?v=rEgrHADjsCY)
 
 
-## 5.- Configuración / Habilitación / Producción API 
+## 5.- Configuración / Habilitación / Producción API
 * [Guía](https://www.youtube.com/watch?v=TSF2nHN4W1I)
 
 
-## 6.- Cómo pasar a producción 
+## 6.- Cómo pasar a producción
 * [Guía](https://www.youtube.com/watch?v=gBtd4XqwWtg)
 
 
-## Extras   
+## Extras
 * Actualizacion desde APIDIAN2022 y la api APIDIAN2023 [Aquí](https://www.youtube.com/watch?v=6lwLKQCYvNY)
 
 * Script de actualización
