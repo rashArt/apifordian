@@ -130,7 +130,7 @@ class DebitNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|in:4,5,6',
+            'type_operation_id' => 'nullable|numeric|in:4,5,6,30,31,32',
 
             // Billing Reference
             'billing_reference' => 'nullable|array',

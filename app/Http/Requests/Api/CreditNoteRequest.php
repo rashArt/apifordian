@@ -107,7 +107,7 @@ class CreditNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|in:7,8,12',
+            'type_operation_id' => 'nullable|numeric|in:7,8,12,30,31,32',
 
             // Resolution number for document sending
             'resolution_number' => Rule::requiredIf(function(){
