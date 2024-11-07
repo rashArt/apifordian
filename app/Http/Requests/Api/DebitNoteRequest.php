@@ -130,7 +130,7 @@ class DebitNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|in:4,5,6',
+            'type_operation_id' => 'nullable|numeric|in:4,5,6,30,31,32',
 
             // Billing Reference
             'billing_reference' => 'nullable|array',
@@ -185,6 +185,12 @@ class DebitNoteRequest extends FormRequest
             'order_reference' => 'nullable|array',
             'order_reference.id_order' => 'nullable|string',
             'order_reference.issue_date_order' => 'nullable|date_format:Y-m-d',
+
+            // Additional Document Reference
+            'additional_document_reference' => 'nullable|array',
+            'additional_document_reference.id' => 'nullable|string',
+            'additional_document_reference.date' => 'nullable|date_format:Y-m-d',
+            'additional_document_reference.type_document_id' => 'nullable|exists:type_documents,id',
 
             // Health Fields
             'health_fields' => 'nullable|array',

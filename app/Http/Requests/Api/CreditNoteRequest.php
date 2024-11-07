@@ -107,7 +107,7 @@ class CreditNoteRequest extends FormRequest
             'notes' => 'nullable|string',
 
             // Tipo operacion
-            'type_operation_id' => 'nullable|numeric|in:7,8,12',
+            'type_operation_id' => 'nullable|numeric|in:7,8,12,30,31,32',
 
             // Resolution number for document sending
             'resolution_number' => Rule::requiredIf(function(){
@@ -186,6 +186,12 @@ class CreditNoteRequest extends FormRequest
             'order_reference' => 'nullable|array',
             'order_reference.id_order' => 'nullable|string',
             'order_reference.issue_date_order' => 'nullable|date_format:Y-m-d',
+
+            // Additional Document Reference
+            'additional_document_reference' => 'nullable|array',
+            'additional_document_reference.id' => 'nullable|string',
+            'additional_document_reference.date' => 'nullable|date_format:Y-m-d',
+            'additional_document_reference.type_document_id' => 'nullable|exists:type_documents,id',
 
             // Health Fields
             'health_fields' => 'nullable|array',

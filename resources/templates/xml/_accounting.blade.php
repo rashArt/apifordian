@@ -19,31 +19,31 @@
                 <cac:Address>
                     @isset($supplier)
                         <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->code)}}</cbc:ID>
-                        <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->name)}}</cbc:CityName>
+                        <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->name))}}</cbc:CityName>
                         @if(isset($user->postal_zone_code))
                             <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->postal_zone_code)}}</cbc:PostalZone>
                         @endif
                         @if($typeDocument->id == 15)
                             <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $request['postal_zone_code'])}}</cbc:PostalZone>
                         @endif
-                        <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->name)}}</cbc:CountrySubentity>
+                        <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->department->name))}}</cbc:CountrySubentity>
                         <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->code)}}</cbc:CountrySubentityCode>
                     @else
                         @if($user->company->country->id == 46)
                             <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->code)}}</cbc:ID>
-                            <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->name)}}</cbc:CityName>
+                            <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->name))}}</cbc:CityName>
                             @if(isset($user->postal_zone_code))
                                 <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->postal_zone_code)}}</cbc:PostalZone>
                             @endif
-                            <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->name)}}</cbc:CountrySubentity>
+                            <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->department->name))}}</cbc:CountrySubentity>
                             <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->code)}}</cbc:CountrySubentityCode>
                         @else
                             <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", "00001")}}</cbc:ID>
-                            <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality_name)}}</cbc:CityName>
+                            <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality_name))}}</cbc:CityName>
                             @if(isset($user->postal_zone_code))
                                 <cbc:PostalZone>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->postal_zone_code)}}</cbc:PostalZone>
                             @endif
-                            <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->state_name)}}</cbc:CountrySubentity>
+                            <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->state_name))}}</cbc:CountrySubentity>
                             <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", "01")}}</cbc:CountrySubentityCode>
                         @endif
                     @endisset
@@ -67,13 +67,13 @@
             <cac:RegistrationAddress>
                 @if($user->company->country->id == 46)
                     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->code)}}</cbc:ID>
-                    <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->name)}}</cbc:CityName>
-                    <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->name)}}</cbc:CountrySubentity>
+                    <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->name))}}</cbc:CityName>
+                    <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality->department->name))}}</cbc:CountrySubentity>
                     <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality->department->code)}}</cbc:CountrySubentityCode>
                 @else
                     <cbc:ID>{{preg_replace("/[\r\n|\n|\r]+/", "", "00001")}}</cbc:ID>
-                    <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->municipality_name)}}</cbc:CityName>
-                    <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", $user->company->state_name)}}</cbc:CountrySubentity>
+                    <cbc:CityName>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->municipality_name))}}</cbc:CityName>
+                    <cbc:CountrySubentity>{{preg_replace("/[\r\n|\n|\r]+/", "", trim($user->company->state_name))}}</cbc:CountrySubentity>
                     <cbc:CountrySubentityCode>{{preg_replace("/[\r\n|\n|\r]+/", "", "01")}}</cbc:CountrySubentityCode>
                 @endif
                 <cac:AddressLine>

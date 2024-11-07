@@ -212,6 +212,12 @@ class InvoiceExportRequest extends FormRequest
             'order_reference.id_order' => 'nullable|string',
             'order_reference.issue_date_order' => 'nullable|date_format:Y-m-d',
 
+            // Additional Document Reference
+            'additional_document_reference' => 'nullable|array',
+            'additional_document_reference.id' => 'nullable|string',
+            'additional_document_reference.date' => 'nullable|date_format:Y-m-d',
+            'additional_document_reference.type_document_id' => 'nullable|exists:type_documents,id',
+
             // Delivery Terms
             'deliveryterms' => 'required|array',
             'deliveryterms.special_terms' => 'required|string',
