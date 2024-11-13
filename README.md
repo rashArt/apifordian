@@ -19,4 +19,4 @@ Estamos enfocados en crear herramientas y soluciones para desarrolladores de sof
 
 ## NOTA
 
-Los cambios podrán decargarse a partir de enero del 2025 progresivamente, con la documentación respectiva.
+Los cambios podrán decargarse a partir de enero del 2025 progresivamente, con la nueva documentación respectiva.
