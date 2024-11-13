@@ -4,7 +4,7 @@
 
 Estamos enfocados en crear herramientas y soluciones para desarrolladores de software, empresas medianas y pequeñas, tenemos un sueño, queremos democratizar la facturación electrónica.
 
-##ROADMAP
+## ROADMAP
 
 - Actualización a Ubuntu 22
 
@@ -16,3 +16,7 @@ Estamos enfocados en crear herramientas y soluciones para desarrolladores de sof
 
 - Cliente app Android para el api 2025
 
+
+## NOTA
+
+Los cambios podrán decargarse a partir de enero del 2025 progresivamente, con la documentación respectiva.
