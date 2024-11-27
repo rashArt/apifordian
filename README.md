@@ -1,24 +1,25 @@
-# **API REST 2024**
+# **API REST 2025**
+
 
 ## Acerca de FACTURALATAM
 
 Estamos enfocados en crear herramientas y soluciones para desarrolladores de software, empresas medianas y pequeñas, tenemos un sueño, queremos democratizar la facturación electrónica.
 
 
-## 1.- Proceso de habilitación DIAN Validación Previa UBL 2.1
+## ROADMAP
 
-Obtener parámetros para software directo - [Aquí](https://www.youtube.com/watch?v=csTmbd1Ere8)
+- Actualización a Ubuntu 22
+
+- Actualización a PHP 8
+
+- Nueva y mejorada documentación de la api 2025
+
+- Envio de facturas en lotes
+
+- Cliente app Android para el api 2025
 
 
-## 2.- Ejemplos para la API / Collection POSTMAN
-
- Descargue [Postman](https://www.postman.com/downloads/), para ver los ejemplos o sincronizar la colección para hacer pruebas [Aquí](https://documenter.getpostman.com/view/1431398/2sAY4uCido "Click")
-
-También puedes ver la documentación online [Aquí](https://documenter.getpostman.com/view/1431398/2sAY4uCido "Click")
-
-## 3.- Instalación y despliegue en local (Windows)
-* Pasos instalación Windows 2024 [Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/Comandos%20Instalacion%20API%202024%20Windows.txt?ref_type=heads)
-
+## NOTA
 
 * Video de instalación [Aquí](https://www.youtube.com/watch?v=9Ds2DR3QLGY)
 
@@ -50,3 +51,4 @@ También puedes ver la documentación online [Aquí](https://documenter.getpostm
 * Deshabilitar registro por API
   * añadir si no existe el parametro `ENABLE_API_REGISTER` en el .env con el valor en `false`
   * eliminar la cache de la aplicacion `php artisan config:cache & php artisan cache:clear`
+Los cambios podrán decargarse a partir de enero del 2025 progresivamente, con la nueva documentación respectiva.
