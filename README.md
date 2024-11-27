@@ -46,3 +46,7 @@ También puedes ver la documentación online [Aquí](https://documenter.getpostm
 
 * Imagen docker instalación api
 [Aquí](https://gitlab.buho.la/facturalatam/co-apidian2024/-/blob/master/api_docker.zip?ref_type=heads)
+
+* Deshabilitar registro por API
+  * añadir si no existe el parametro `ENABLE_API_REGISTER` en el .env con el valor en `false`
+  * eliminar la cache de la aplicacion `php artisan config:cache & php artisan cache:clear`
