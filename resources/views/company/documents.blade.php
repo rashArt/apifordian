@@ -71,8 +71,11 @@
                                 $document_type = $typeDocuments->where('id', $doc_id)->first() ?? null;
                                 // dd($document_type);
                             @endphp
-                            {{ $row->client->name }}<br>
-                            {{ $document_type->name ?? "" }} {{ $row->client->identification_number }}-{{ $row->client->dv ?? ""}}</td>
+                            {{-- @if(!$document_type)
+                                {{dd($row->client)}}
+                            @endif --}}
+                            {{ $row->client->name ?? 'Sin nombre' }}<br>
+                            {{ $document_type != null ? $document_type->name : '' }} {{ $row->client->identification_number ?? 'sin identificación' }}-{{ $row->client->dv ?? ""}}</td>
                         <td>{{ $row->type_document->name }}</td>
                         <td class="text-right">{{ round($row->total_tax, 2) }}</td>
                         <td class="text-right">{{ round($row->subtotal, 2) }}</td>
